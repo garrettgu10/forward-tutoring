@@ -19,7 +19,7 @@ Admin/mod accounts are self-explanatory.
 This is a simple static route that showcases what Forward Tutoring is about and how it works.  
 
 ## Instant tutoring
-This is a forum where tutees post questions and a TAMS student volunteer can answer them. Follow-up questions can be asked and answered. Tutees can see which TAMS student account answered their question and can rate answers. Asking a question requires "credits" which can be earned in various ways including proof of community service. At least that's how the old system works. I'm not sure if the new execs still want the credits system.  
+This is a forum where tutees post questions and a TAMS student volunteer can answer them. Follow-up questions can be asked and answered. Tutees can see which TAMS student account answered their question and can rate answers.
 
 ## Consistent tutoring
 Tutees sign up near the beginning of the semester for a limited number of positions with 1-on-1 individual tutors over Skype or any other third party communication tool.  
