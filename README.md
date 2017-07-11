@@ -2,6 +2,7 @@
 This is a website that informs people about Forward Tutoring and provides an avenue for all Forward Tutoring services. It also contains an "instant tutoring" portal and a "consistent tutoring" portal.  
 
 ## Setup
+Make sure you have meteor installed, then
 ```
 meteor npm install
 meteor
