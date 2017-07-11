@@ -22,4 +22,7 @@ This is a simple static route that showcases what Forward Tutoring is about and 
 This is a forum where tutees post questions and a TAMS student volunteer can answer them. Follow-up questions can be asked and answered. Tutees can see which TAMS student account answered their question and can rate answers.
 
 ## Consistent tutoring
-Tutees sign up near the beginning of the semester for a limited number of positions with 1-on-1 individual tutors over Skype or any other third party communication tool.  
+Tutees sign up near the beginning of the semester for a limited number of positions with 1-on-1 individual tutors over Skype or any other third party communication tool. This personal section of the website is shown to tutees once they create their account. The consistent tutors from TAMS are subject to change, as some TAMS students may not fully commit to the program due to coursework, etc.
+
+## High Schools
+The idea is to connect to 4 high schools, each in a separate state across the United States including Texas. Around 15-20 students for each school could work.
