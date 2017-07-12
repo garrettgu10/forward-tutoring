@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReactRouter from 'react-router-dom';
+import AppBar from 'material-ui/AppBar';
 import Sidebar from './Sidebar.jsx';
+import Forum from './Forum.jsx';
 
 const Router = ReactRouter.BrowserRouter;
 const Route = ReactRouter.Route;
@@ -11,10 +13,6 @@ const Switch = ReactRouter.Switch;
 //--------------------------------------------------------
 var Home = function(props) {
   return <div>HAI WE IS AT HOME</div>;
-}
-
-var Forum = function(props) {
-  return <div>HAI THIS IZ TLDR PLACE</div>;
 }
 
 var Consistent = function(props){
@@ -29,14 +27,22 @@ export default class App extends Component {
     this.state = {};
   }
 
+  toggleSidebar() {
+    this.sidebar.toggle();
+  }
+
   render() {
     return(
       <MuiThemeProvider>
         <Router>
           <div>
-            {/*probably add the top bar here*/}
-            <Sidebar />
+            <AppBar
+              title="Forward Tutoring"
+              onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
+            />
+
             <div className="main-container">
+              <Sidebar ref={(item) => {this.sidebar = item;}}/>
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/forum" component={Forum} />

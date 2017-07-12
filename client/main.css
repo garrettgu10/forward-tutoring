@@ -1,4 +1,11 @@
 /* CSS declarations go here */
 .main-container{
-  padding-left: 255px;
+  width: 80%;
+  padding-top: 50px;
+  margin: 0 auto;
+}
+
+.nav-link {
+  color: black;
+  text-decoration: none;
 }

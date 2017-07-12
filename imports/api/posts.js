@@ -18,6 +18,7 @@ Meteor.methods({
       content: content,
       owner: Meteor.userId(),
       username: Meteor.user.username,
+      date: new Date(),
       comments: []
     })
   }
