@@ -17,11 +17,11 @@ Meteor.methods({
       title: title,
       content: content,
       owner: Meteor.userId(),
-      username: Meteor.user.username,
+      username: Meteor.user().username,
       date: new Date(),
       comments: []
     })
-  }
+  },
 
   'posts.remove'(postId){
     check(postId, String);
@@ -32,7 +32,7 @@ Meteor.methods({
     }
 
     Posts.remove(postId);
-  }
+  },
 
   'posts.comment'(postId, content){
     check(content, String);
@@ -44,10 +44,10 @@ Meteor.methods({
     }
 
     const comment = {
-      _id: new Mongo.ObjectId();
+      _id: new Mongo.ObjectId(),
       content: content,
       owner: Meteor.userId(),
-      username: Meteor.user.username;
+      username: Meteor.user().usernames
     }
 
     Posts.update(postId, {$push: {comments: comment}});
