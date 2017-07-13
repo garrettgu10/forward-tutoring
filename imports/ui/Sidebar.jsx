@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactRouter from 'react-router-dom';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import FontIcon from 'material-ui/FontIcon';
 
 const NavLink = ReactRouter.NavLink;
 
@@ -11,24 +12,35 @@ export default class Sidebar extends Component{
     this.state = {open: false};
   }
 
-  toggle() {
+  handleToggle() {
     this.setState({open: !this.state.open});
   }
 
   render(){
+    var toggle = this.handleToggle.bind(this);
     return(
       <div>
-        <Drawer open={this.state.open} docked={false}>
+        <Drawer
+          open={this.state.open}
+          docked={false}
+          onRequestChange={(open) => this.setState({open})}>
 
-          <NavLink exact to='/' className='nav-link' onTouchTap={this.toggle.bind(this)}>
+          <MenuItem onTouchTap={toggle}>
+            <FontIcon
+              className="material-icons" style={{marginTop: '15px'}}>
+              arrow_back
+            </FontIcon>
+          </MenuItem>
+
+          <NavLink exact to='/' className='nav-link' onTouchTap={toggle}>
             <MenuItem>Main</MenuItem>
           </NavLink>
 
-          <NavLink to='/Forum' className='nav-link' onTouchTap={this.toggle.bind(this)}>
+          <NavLink to='/Forum' className='nav-link' onTouchTap={toggle}>
             <MenuItem>Ask Questions</MenuItem>
           </NavLink>
 
-          <NavLink to="/consistent" className='nav-link' onTouchTap={this.toggle.bind(this)}>
+          <NavLink to="/consistent" className='nav-link' onTouchTap={toggle}>
             <MenuItem>My Consistent Tutor</MenuItem>
           </NavLink>
 

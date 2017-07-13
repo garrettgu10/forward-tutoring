@@ -18,6 +18,10 @@ var Home = function(props) {
 var Consistent = function(props){
   return <div>DIS IS WARE PPL GOTS CONSISTNAT TUTERS</div>
 }
+
+var logo = function(props) {
+  return <span><span style={{fontWeight: 100}}>forward</span><span style={{fontWeight: 800}}>tutoring</span></span>
+}
 //--------------------------------------------------------
 
 
@@ -28,7 +32,7 @@ export default class App extends Component {
   }
 
   toggleSidebar() {
-    this.sidebar.toggle();
+    this.sidebar.handleToggle();
   }
 
   render() {
@@ -37,7 +41,7 @@ export default class App extends Component {
         <Router>
           <div>
             <AppBar
-              title="Forward Tutoring"
+              title={logo()}
               onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
             />
 

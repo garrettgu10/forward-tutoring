@@ -52,7 +52,6 @@ class Forum extends Component {
 
                 </CardActions>
               </Card>
-
             );
           })}
         </div>
