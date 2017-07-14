@@ -37,7 +37,11 @@ class Forum extends Component {
         <div>
           {this.props.posts.map((post) => {
             return (
-              <Post post={post} currentUser={this.props.currentUser} handleDelete={this.deletePost.bind(null, post._id)} key={post._id} />
+              <Post post={post}
+                currentUser={this.props.currentUser}
+                handleDelete={this.deletePost.bind(null, post._id)}
+                comments={post.comments}
+                key={post._id} />
             );
           })}
         </div>
@@ -47,6 +51,7 @@ class Forum extends Component {
 }
 
 export default createContainer(() => {
+  Meteor.subscribe('posts');
   return {
     posts: Posts.find({}, {sort: {date: -1}}).fetch(),
     currentUser: Meteor.user(),

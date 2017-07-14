@@ -4,6 +4,7 @@ import ReactRouter from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import Sidebar from './Sidebar.jsx';
 import Forum from './Forum.jsx';
+import RegistrationForm from './RegistrationForm.jsx';
 
 const Router = ReactRouter.BrowserRouter;
 const Route = ReactRouter.Route;
@@ -51,6 +52,7 @@ export default class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route path="/forum" component={Forum} />
                 <Route path="/consistent" component={Consistent} />
+                <Route path="/register" component={RegistrationForm} />
               </Switch>
             </div>
           </div>

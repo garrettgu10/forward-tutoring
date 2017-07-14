@@ -4,6 +4,16 @@ import {check} from 'meteor/check';
 
 export const Posts = new Mongo.Collection('posts');
 
+if(Meteor.isServer){
+  Meteor.publish('posts', function postsPublication() {
+    return Posts.find({});
+  })
+
+  Meteor.publish('comments', function commentsPublication(postId) {
+    return Posts.find({}, {fields: {comemnts: 1}});
+  })
+}
+
 Meteor.methods({
   'posts.insert'(title, content){
     check(title, String);
@@ -19,6 +29,7 @@ Meteor.methods({
       owner: Meteor.userId(),
       username: Meteor.user().username,
       date: new Date(),
+      numComments: 0,
       comments: []
     })
   },
@@ -44,10 +55,10 @@ Meteor.methods({
     }
 
     const comment = {
-      _id: new Mongo.ObjectId(),
+      _id: new Meteor.Collection.ObjectID(),
       content: content,
       owner: Meteor.userId(),
-      username: Meteor.user().usernames
+      username: Meteor.user().username
     }
 
     Posts.update(postId, {$push: {comments: comment}});
