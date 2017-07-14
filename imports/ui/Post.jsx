@@ -45,7 +45,7 @@ export default class Post extends Component {
         </CardText>
         <CardActions>
           <FlatButton
-            label={post.comments.length + " Comments"}
+            label={post.numComments + " Comments"}
             onTouchTap ={this.toggleDisplayComments.bind(this)}/>
           {this.props.currentUser._id == post.owner &&
             <FlatButton label="Delete" onTouchTap={this.props.handleDelete} />}
