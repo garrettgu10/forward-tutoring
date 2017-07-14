@@ -6,6 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 
 const NavLink = ReactRouter.NavLink;
 
+
 export default class Sidebar extends Component{
   constructor(props){
     super(props);
@@ -27,7 +28,7 @@ export default class Sidebar extends Component{
 
           <MenuItem onTouchTap={toggle}>
             <FontIcon
-              className="material-icons" style={{marginTop: '15px'}}>
+              className="material-icons" style={{paddingTop: '16px'}}>
               arrow_back
             </FontIcon>
           </MenuItem>
