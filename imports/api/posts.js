@@ -61,6 +61,6 @@ Meteor.methods({
       username: Meteor.user().username
     }
 
-    Posts.update(postId, {$push: {comments: comment}});
+    Posts.update(postId, {$push: {comments: comment}, $inc: {numComments: 1}});
   }
 })

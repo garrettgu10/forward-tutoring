@@ -37,12 +37,16 @@ export default class Sidebar extends Component{
             <MenuItem>Main</MenuItem>
           </NavLink>
 
-          <NavLink to='/Forum' className='nav-link' onTouchTap={toggle}>
+          <NavLink to='/forum' className='nav-link' onTouchTap={toggle}>
             <MenuItem>Ask Questions</MenuItem>
           </NavLink>
 
           <NavLink to="/consistent" className='nav-link' onTouchTap={toggle}>
             <MenuItem>My Consistent Tutor</MenuItem>
+          </NavLink>
+
+          <NavLink to='/register' className='nav-link' onTouchTap={toggle}>
+            <MenuItem>Register</MenuItem>
           </NavLink>
 
         </Drawer>

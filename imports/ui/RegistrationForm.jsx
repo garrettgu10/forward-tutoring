@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Accounts} from 'meteor/accounts-base';
+import { Redirect } from 'react-router-dom';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
@@ -12,7 +14,8 @@ export default class RegistrationForm extends Component {
       lastnameInputValue: "",
       emailInputValue: "",
       passwordInputValue: "",
-      passwordConfirmInputValue: ""
+      passwordConfirmInputValue: "",
+      success: false
     }
   }
 
@@ -23,10 +26,31 @@ export default class RegistrationForm extends Component {
   }
 
   handleSubmit(){
-    console.log(this.state);
+    //TODO: Add checks for stuff
+
+    Accounts.createUser({
+      username: this.state.usernameInputValue,
+      email: this.state.emailInputValue,
+      password: this.state.passwordInputValue,
+      profile: {
+        fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue
+      }
+    }, function createUserCallback(err) {
+      if(err){
+        alert(err);
+      }else{
+        this.setState({ success: true });
+      }
+    }.bind(this))
   }
 
   render() {
+    const from = this.props.from || '/';
+
+    if(this.state.success){
+      return <Redirect to={from} />
+    }
+
     return (
       <div>
         <TextField
@@ -58,13 +82,15 @@ export default class RegistrationForm extends Component {
           floatingLabelText="Password"
           fullWidth={true}
           value={this.state.passwordInputValue}
-          onChange={this.handleInputChange.bind(this, 'password')} />
+          onChange={this.handleInputChange.bind(this, 'password')}
+          type="password" />
         <TextField
           ref="passwordConfirm"
           floatingLabelText="Password Confirm"
           fullWidth={true}
           value={this.state.passwordConfirmInputValue}
-          onChange={this.handleInputChange.bind(this, 'passwordConfirm')} />
+          onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
+          type="password" />
         <br />
         <br />
         <RaisedButton label="Submit" primary={true} onClick={this.handleSubmit.bind(this)} />

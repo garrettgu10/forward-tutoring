@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactRouter from 'react-router-dom';
+import ReactRouter, {Link} from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
@@ -21,8 +21,8 @@ class Forum extends Component {
     if(!this.props.currentUser) {
       return (
         <div>
-          You need to log in. &nbsp;&nbsp;
-          <AccountsUIWrapper />
+          You need to log in. &nbsp;
+          <Link to="/login">Log in</Link>
         </div>
       )
     }
@@ -30,7 +30,6 @@ class Forum extends Component {
     return (
       <div>
         <div>Hello user {this.props.currentUser.username}</div>
-        <AccountsUIWrapper />
         <br />
         <PostForm />
 
