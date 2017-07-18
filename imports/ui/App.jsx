@@ -30,7 +30,8 @@ var logo = function(props) {
 
 var RightButtons = function(props) {
   const buttonStyle= {
-    color: 'white'
+    color: 'white',
+    marginTop: "5px"
   }
   if(props.currentUser == null){
     return(

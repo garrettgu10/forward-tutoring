@@ -21,7 +21,9 @@ export default class LoginForm extends Component{
     });
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    if(e) e.preventDefault();
+    
     Meteor.loginWithPassword(this.state.usernameInputValue, this.state.passwordInputValue, (err) => {
       if(err){
         alert(err)
@@ -35,7 +37,7 @@ export default class LoginForm extends Component{
 
   render() {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         {this.state.success && <div>success</div>}
         <TextField
           ref="username"
@@ -52,8 +54,8 @@ export default class LoginForm extends Component{
           type="password" />
         <br />
         <br />
-        <RaisedButton label="Submit" primary={true} onClick={this.handleSubmit.bind(this)} />
-      </div>
+        <RaisedButton label="Submit" primary={true} type="submit" />
+      </form>
     )
   }
 }

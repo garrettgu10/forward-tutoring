@@ -25,7 +25,8 @@ export default class RegistrationForm extends Component {
     });
   }
 
-  handleSubmit(){
+  handleSubmit(e){
+    if(e) e.preventDefault();
     //TODO: Add checks for stuff
 
     Accounts.createUser({
@@ -52,7 +53,7 @@ export default class RegistrationForm extends Component {
     }
 
     return (
-      <div>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         <TextField
           ref="username"
           floatingLabelText="Username"
@@ -93,9 +94,9 @@ export default class RegistrationForm extends Component {
           type="password" />
         <br />
         <br />
-        <RaisedButton label="Submit" primary={true} onClick={this.handleSubmit.bind(this)} />
+        <RaisedButton label="Submit" primary={true} type="submit" />
 
-      </div>
+      </form>
     )
   }
 }
