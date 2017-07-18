@@ -45,10 +45,6 @@ export default class Sidebar extends Component{
             <MenuItem>My Consistent Tutor</MenuItem>
           </NavLink>
 
-          <NavLink to='/register' className='nav-link' onTouchTap={toggle}>
-            <MenuItem>Register</MenuItem>
-          </NavLink>
-
         </Drawer>
       </div>
     )
