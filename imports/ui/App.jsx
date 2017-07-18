@@ -7,6 +7,7 @@ import Forum from './Forum.jsx';
 import LoginForm from './LoginForm.jsx';
 import RegistrationForm from './RegistrationForm.jsx';
 import FlatButton from 'material-ui/FlatButton';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const NavLink = ReactRouter.NavLink;
 const Router = ReactRouter.BrowserRouter;
@@ -31,21 +32,38 @@ var RightButtons = function(props) {
   const buttonStyle= {
     color: 'white'
   }
-  return(
-    <div>
-      <NavLink to="/login">
-        <FlatButton style={buttonStyle} label="Login" />
-      </NavLink>
-      <NavLink to="/register">
-        <FlatButton style={buttonStyle} label="Register" />
-      </NavLink>
-    </div>
-  )
+  if(props.currentUser == null){
+    return(
+      <div>
+        <NavLink to="/login">
+          <FlatButton style={buttonStyle} label="Login" />
+        </NavLink>
+        <NavLink to="/register">
+          <FlatButton style={buttonStyle} label="Register" />
+        </NavLink>
+      </div>
+    )
+  }else{
+    return (
+      <div>
+        <NavLink to={"profile/" + props.currentUser.username}>
+          <FlatButton style={buttonStyle} label={props.currentUser.username} />
+        </NavLink>
+        <FlatButton style={buttonStyle} label="Logout" onClick={Logout}/>
+      </div>
+    )
+  }
+}
+
+var Logout = function() {
+  Meteor.logout(function(err){
+    if(err) alert(err);
+  });
 }
 //--------------------------------------------------------
 
 
-export default class App extends Component {
+class App extends Component {
   constructor(props){
     super(props);
     this.state = {};
@@ -63,18 +81,23 @@ export default class App extends Component {
             <AppBar
               title={logo()}
               onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
-              iconElementRight={<RightButtons />}
+              iconElementRight={<RightButtons currentUser={this.props.currentUser}/>}
             />
 
             <div className="main-container">
               <Sidebar ref={(item) => {this.sidebar = item;}}/>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/forum" component={Forum} />
+                <Route path="/forum" component={
+                  (props) => {
+                    return <Forum currentUser={this.props.currentUser} />;
+                  }
+                } />
                 <Route path="/consistent" component={Consistent} />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
               </Switch>
+              <Route path="/logout" component={Logout} />
             </div>
           </div>
         </Router>
@@ -82,3 +105,9 @@ export default class App extends Component {
     )
   }
 }
+
+export default createContainer(() => {
+  return {
+    currentUser: Meteor.user(),
+  }
+}, App);

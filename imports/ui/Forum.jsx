@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ReactRouter, {Link} from 'react-router-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 import PostForm from "./PostForm.jsx";
 
 import {Posts} from '../api/posts.js';
@@ -52,7 +51,6 @@ class Forum extends Component {
 export default createContainer(() => {
   Meteor.subscribe('posts');
   return {
-    posts: Posts.find({}, {sort: {date: -1}}).fetch(),
-    currentUser: Meteor.user(),
+    posts: Posts.find({}, {sort: {date: -1}}).fetch()
   }
 }, Forum);
