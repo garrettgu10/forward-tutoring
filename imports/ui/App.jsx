@@ -36,7 +36,7 @@ var Consistent = function(props){
 }
 
 var logo = function(props) {
-  return <span><span style={{fontWeight: 100}}>forward</span><span style={{fontWeight: 800}}>tutoring</span></span>
+  return <span><span style={{fontWeight: 800}}>forward</span><span style={{fontWeight: 100}}>tutoring</span></span>
 }
 
 var RightButtons = function(props) {

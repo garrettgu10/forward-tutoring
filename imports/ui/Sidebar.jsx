@@ -30,16 +30,9 @@ export default class Sidebar extends Component{
 
           <NavLink exact to='/' className='nav-link' onTouchTap={toggle}>
             <MenuItem style={{fontSize: "25px", lineHeight: "64px"}}>
-              <span style={{fontWeight: 100}}>forward</span><span style={{fontWeight: 800}}>tutoring</span>
+              <span style={{fontWeight: 800}}>forward</span><span style={{fontWeight: 100}}>tutoring</span>
             </MenuItem>
           </NavLink>
-
-          <MenuItem onTouchTap={toggle}>
-            <FontIcon
-              className="material-icons" style={{paddingTop: '16px'}}>
-              arrow_back
-            </FontIcon>
-          </MenuItem>
 
           <NavLink exact to='/' className='nav-link' onTouchTap={toggle}>
             <MenuItem>Main</MenuItem>
