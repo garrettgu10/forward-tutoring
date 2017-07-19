@@ -11,6 +11,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import Home from './Home.jsx'
 
 const NavLink = ReactRouter.NavLink;
+const Link = ReactRouter.Link;
 const Router = ReactRouter.BrowserRouter;
 const Route = ReactRouter.Route;
 const Switch = ReactRouter.Switch;
@@ -36,7 +37,14 @@ var Consistent = function(props){
 }
 
 var logo = function(props) {
-  return <span><span style={{fontWeight: 800}}>forward</span><span style={{fontWeight: 100}}>tutoring</span></span>
+  return (
+    <Link className="logo" to="/">
+      <span>
+        <span style={{fontWeight: 800}}>forward</span>
+        <span style={{fontWeight: 100}}>tutoring</span>
+      </span>
+    </Link>
+  );
 }
 
 var RightButtons = function(props) {
