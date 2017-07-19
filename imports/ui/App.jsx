@@ -48,11 +48,11 @@ var RightButtons = function(props) {
   if(props.currentUser == null){
     return(
       <div>
-        <NavLink to="/login">
-          <FlatButton style={buttonStyle} label="Login" />
-        </NavLink>
         <NavLink to="/register">
-          <FlatButton style={buttonStyle} label="Register" />
+          <FlatButton style={buttonStyle} label="Sign up" />
+        </NavLink>
+        <NavLink to="/login">
+          <FlatButton style={buttonStyle} label="Log in" />
         </NavLink>
       </div>
     )
