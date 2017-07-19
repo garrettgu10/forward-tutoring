@@ -1,0 +1,36 @@
+.home_container{
+  text-align: center !important;
+}
+
+.home_title{
+  font-weight: 100 !important;
+  font-size: 70px !important;
+  margin: 10px 0 !important;
+}
+
+.home_subtitle{
+  font-weight: 100 !important;
+  font-size: 30px !important;
+  color: #9E9E9E !important;
+}
+
+.home_logo{
+  margin-top: 75px !important;
+  width: 150px !important;
+}
+
+.home_button{
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+@media screen and (max-width: 700px){
+  .home_title{
+    font-size: 35px !important;
+  }
+
+
+  .home_subtitle{
+    font-size: 25px !important;
+  }
+}

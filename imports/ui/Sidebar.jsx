@@ -26,6 +26,14 @@ export default class Sidebar extends Component{
           docked={false}
           onRequestChange={(open) => this.setState({open})}>
 
+          <div style={{lineHeight: "8px"}}>&nbsp;</div>
+
+          <NavLink exact to='/' className='nav-link' onTouchTap={toggle}>
+            <MenuItem style={{fontSize: "25px", lineHeight: "64px"}}>
+              <span style={{fontWeight: 100}}>forward</span><span style={{fontWeight: 800}}>tutoring</span>
+            </MenuItem>
+          </NavLink>
+
           <MenuItem onTouchTap={toggle}>
             <FontIcon
               className="material-icons" style={{paddingTop: '16px'}}>

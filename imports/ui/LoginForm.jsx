@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Accounts} from 'meteor/accounts-base';
-import { Redirect } from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 
 export default class LoginForm extends Component{
   constructor(props) {
@@ -23,7 +23,7 @@ export default class LoginForm extends Component{
 
   handleSubmit(e) {
     if(e) e.preventDefault();
-    
+
     Meteor.loginWithPassword(this.state.usernameInputValue, this.state.passwordInputValue, (err) => {
       if(err){
         alert(err)
@@ -52,9 +52,17 @@ export default class LoginForm extends Component{
           value={this.state.passwordInputValue}
           onChange={this.handleInputChange.bind(this, 'password')}
           type="password" />
-        <br />
-        <br />
-        <RaisedButton label="Submit" primary={true} type="submit" />
+        <div style={{marginTop: "15px"}}>
+          <RaisedButton label="Submit" primary={true} type="submit" />
+          <span style={{float: 'right', lineHeight: "36px"}}>
+            <Link to="/register" className="link">
+              Sign up
+            </Link>
+            <Link to="/forgot" className="link">
+              Forgot password
+            </Link>
+          </span>
+        </div>
       </form>
     )
   }

@@ -3,7 +3,9 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Accounts} from 'meteor/accounts-base';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
@@ -15,6 +17,7 @@ export default class RegistrationForm extends Component {
       emailInputValue: "",
       passwordInputValue: "",
       passwordConfirmInputValue: "",
+      roleInputValue: 0, //0 -- student, 1 -- tutor, 2 -- admin
       success: false
     }
   }
@@ -23,6 +26,12 @@ export default class RegistrationForm extends Component {
     this.setState({
       [field + "InputValue"]: event.target.value
     });
+  }
+
+  handleRoleInputChange(event, value){
+    this.setState({
+      roleInputValue: value
+    })
   }
 
   handleSubmit(e){
@@ -34,7 +43,8 @@ export default class RegistrationForm extends Component {
       email: this.state.emailInputValue,
       password: this.state.passwordInputValue,
       profile: {
-        fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue
+        fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue,
+        role: this.state.roleInputValue
       }
     }, function createUserCallback(err) {
       if(err){
@@ -92,6 +102,20 @@ export default class RegistrationForm extends Component {
           value={this.state.passwordConfirmInputValue}
           onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
           type="password" />
+        <SelectField name="role"
+          value={this.state.roleInputValue}
+          onChange={this.handleRoleInputChange.bind(this)}
+          floatingLabelText="I am a">
+          <MenuItem
+            value={0}
+            primaryText="Student" />
+          <MenuItem
+            value={1}
+            primaryText="Tutor" />
+          <MenuItem
+            value={2}
+            primaryText="Admin" />
+        </SelectField>
         <br />
         <br />
         <RaisedButton label="Submit" primary={true} type="submit" />

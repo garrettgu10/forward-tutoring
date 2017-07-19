@@ -9,6 +9,7 @@ import Post from './Post.jsx';
 
 const Router = ReactRouter.BrowserRouter;
 const Route = ReactRouter.Route;
+const Redirect = ReactRouter.Redirect;
 
 class Forum extends Component {
 
@@ -19,10 +20,7 @@ class Forum extends Component {
   render () {
     if(!this.props.currentUser) {
       return (
-        <div>
-          You need to log in. &nbsp;
-          <Link to="/login">Log in</Link>
-        </div>
+        <Redirect to="/login" />
       )
     }
 

@@ -18,3 +18,14 @@ body {
   text-decoration: none;
   color: white;
 }
+
+.link{
+  text-decoration: none;
+  color: #757575;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.link:hover{
+  color: #212121;
+}

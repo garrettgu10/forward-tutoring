@@ -8,6 +8,7 @@ import LoginForm from './LoginForm.jsx';
 import RegistrationForm from './RegistrationForm.jsx';
 import FlatButton from 'material-ui/FlatButton';
 import { createContainer } from 'meteor/react-meteor-data';
+import Home from './Home.jsx'
 
 const NavLink = ReactRouter.NavLink;
 const Router = ReactRouter.BrowserRouter;
@@ -16,12 +17,22 @@ const Switch = ReactRouter.Switch;
 
 //STUB COMPONENTS FOR TESTING ROUTES, WILL BE IN THEIR OWN FILES
 //--------------------------------------------------------
-var Home = function(props) {
-  return <div>HAI WE IS AT HOME</div>;
+
+var NotFound = function(props){
+  return(
+    <div>
+      Not found. I probably haven't written this yet.
+    </div>
+  )
 }
 
 var Consistent = function(props){
-  return <div>DIS IS WARE PPL GOTS CONSISTNAT TUTERS</div>
+  return (
+    <div>
+      DIS IS WARE PPL GOTS CONSISTNAT TUTERS<br />
+      I HAZ NOT BUILT THIS PART YET
+    </div>
+  )
 }
 
 var logo = function(props) {
@@ -31,7 +42,8 @@ var logo = function(props) {
 var RightButtons = function(props) {
   const buttonStyle= {
     color: 'white',
-    marginTop: "5px"
+    marginTop: "4.5px",
+    marginLeft: "2px"
   }
   if(props.currentUser == null){
     return(
@@ -97,6 +109,7 @@ class App extends Component {
                 <Route path="/consistent" component={Consistent} />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
+                <Route path="/" component={NotFound} />
               </Switch>
               <Route path="/logout" component={Logout} />
             </div>
