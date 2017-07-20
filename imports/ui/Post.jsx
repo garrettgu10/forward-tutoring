@@ -50,20 +50,26 @@ export default class Post extends Component {
           {this.props.currentUser._id == post.owner &&
             <FlatButton label="Delete" onTouchTap={this.props.handleDelete} />}
 
-          {this.state.displayComments && post.comments.map(function(comment){
-            return <div key={comment._id}><b>{comment.username}</b>: {comment.content}</div>;
-          })}
+          {this.state.displayComments &&
+            post.comments.map(function(comment){
+              return <div key={comment._id}><b>{comment.username}</b>: {comment.content}</div>;
+            })
+          }
 
-          <TextField
-            id="comment-input"
-            floatingLabelText="Comment"
-            multiLine={true}
-            rows={2}
-            fullWidth={true}
-            value={this.state.commentInputValue}
-            onChange={this.handleCommentInputChange.bind(this)} />
-          <br />
-          <RaisedButton label="Submit" primary={true} onClick={this.handleCommentSubmit.bind(this)} />
+          {this.state.displayComments &&
+            <div>
+              <TextField
+                id="comment-input"
+                floatingLabelText="Comment"
+                multiLine={true}
+                rows={2}
+                fullWidth={true}
+                value={this.state.commentInputValue}
+                onChange={this.handleCommentInputChange.bind(this)} />
+              <br />
+              <RaisedButton label="Submit" primary={true} onClick={this.handleCommentSubmit.bind(this)} />
+            </div>
+          }
 
         </CardActions>
       </Card>

@@ -36,8 +36,6 @@ class Forum extends Component {
 
     return (
       <div>
-        <div>Hello user {this.props.currentUser.username}</div>
-        <br />
         <PostForm />
 
         <div>
