@@ -8,7 +8,8 @@ import LoginForm from './LoginForm.jsx';
 import RegistrationForm from './RegistrationForm.jsx';
 import FlatButton from 'material-ui/FlatButton';
 import { createContainer } from 'meteor/react-meteor-data';
-import Home from './Home.jsx'
+import Home from './Home.jsx';
+import UserProfile from './UserProfile.jsx';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -117,6 +118,7 @@ class App extends Component {
                 <Route path="/consistent" component={Consistent} />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
+                <Route path="/profile/:username" component={UserProfile} />
                 <Route path="/" component={NotFound} />
               </Switch>
               <Route path="/logout" component={Logout} />

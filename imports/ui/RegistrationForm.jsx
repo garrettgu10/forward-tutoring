@@ -18,6 +18,7 @@ export default class RegistrationForm extends Component {
       passwordInputValue: "",
       passwordConfirmInputValue: "",
       roleInputValue: 0, //0 -- student, 1 -- tutor, 2 -- admin
+      roleKeyInputValue: "",
       success: false
     }
   }
@@ -43,9 +44,10 @@ export default class RegistrationForm extends Component {
       email: this.state.emailInputValue,
       password: this.state.passwordInputValue,
       profile: {
-        fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue,
-        role: this.state.roleInputValue
-      }
+        fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue
+      },
+      role: this.state.roleInputValue,
+      roleKey: this.state.roleKeyInputValue
     }, function createUserCallback(err) {
       if(err){
         alert(err);
@@ -116,6 +118,11 @@ export default class RegistrationForm extends Component {
             value={2}
             primaryText="Admin" />
         </SelectField>
+        <TextField
+          floatingLabelText="Registration Key"
+          fullWidth={true}
+          value={this.state.roleKeyInputValue}
+          onChange={this.handleInputChange.bind(this, 'roleKey')} />
         <br />
         <br />
         <RaisedButton label="Submit" primary={true} type="submit" />

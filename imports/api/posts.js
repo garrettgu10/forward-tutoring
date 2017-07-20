@@ -7,11 +7,11 @@ export const Posts = new Mongo.Collection('posts');
 if(Meteor.isServer){
   Meteor.publish('posts', function postsPublication() {
     return Posts.find({});
-  })
+  });
 
   Meteor.publish('comments', function commentsPublication(postId) {
     return Posts.find({}, {fields: {comemnts: 1}});
-  })
+  });
 }
 
 Meteor.methods({
