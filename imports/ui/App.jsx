@@ -68,7 +68,7 @@ var RightButtons = function(props) {
   }else{
     return (
       <div>
-        <NavLink to={"profile/" + props.currentUser.username}>
+        <NavLink to={"/profile/" + props.currentUser.username}>
           <FlatButton style={buttonStyle} label={props.currentUser.username} />
         </NavLink>
         <FlatButton style={buttonStyle} label="Logout" onClick={Logout}/>

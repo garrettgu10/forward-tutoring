@@ -13,11 +13,12 @@ Accounts.validateNewUser((user) => {
 
 Accounts.onCreateUser((options, user) => {
   user.roleKey = options.roleKey || "";
+  user.role = options.role || 0;
 
   user.profile = options.profile || {};
   return user;
 });
 
 Meteor.publish("user", (username) => {
-  return Meteor.users.find({username: username});
+  return Meteor.users.find({username: username}, {fields: {emails: 1, profile: 1, username: 1, createdAt: 1, role: 1}});
 });

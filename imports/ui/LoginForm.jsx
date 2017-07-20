@@ -38,7 +38,9 @@ export default class LoginForm extends Component{
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        {this.state.success && <div>success</div>}
+        {this.state.success &&
+          <Redirect to="/" />
+        }
         <TextField
           ref="username"
           floatingLabelText="Username"

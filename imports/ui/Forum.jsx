@@ -11,6 +11,8 @@ const Router = ReactRouter.BrowserRouter;
 const Route = ReactRouter.Route;
 const Redirect = ReactRouter.Redirect;
 
+import CircularProgress from 'material-ui/CircularProgress';
+
 class Forum extends Component {
 
   deletePost(postId){
@@ -21,6 +23,14 @@ class Forum extends Component {
     if(!this.props.currentUser) {
       return (
         <Redirect to="/login" />
+      )
+    }
+
+    if(!this.props.ready){
+      return (
+        <div style={{textAlign: "center"}}>
+          <CircularProgress size={80} thickness={5} />
+        </div>
       )
     }
 
@@ -47,8 +57,9 @@ class Forum extends Component {
 }
 
 export default createContainer(() => {
-  Meteor.subscribe('posts');
+  const subscription = Meteor.subscribe('posts');
   return {
-    posts: Posts.find({}, {sort: {date: -1}}).fetch()
+    posts: Posts.find({}, {sort: {date: -1}}).fetch(),
+    ready: subscription.ready()
   }
 }, Forum);
