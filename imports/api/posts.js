@@ -55,12 +55,31 @@ Meteor.methods({
     }
 
     const comment = {
-      _id: new Meteor.Collection.ObjectID(),
+      _id: new Meteor.Collection.ObjectID()._str,
       content: content,
       owner: Meteor.userId(),
       username: Meteor.user().username
     }
 
     Posts.update(postId, {$push: {comments: comment}, $inc: {numComments: 1}});
+  },
+
+  'posts.deleteComment'(postId, commentId){
+    check(postId, String);
+    check(commentId, String);
+
+    const post = Posts.findOne(postId);
+
+    const comment = post.comments.filter((comment) => comment._id == commentId)[0];
+
+    if(!comment){
+      throw new Meteor.Error('comment-not-found');
+    }
+
+    if(Meteor.userId() !== comment.owner){
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Posts.update(postId, {$pull: {comments: {_id: commentId}}, $inc: {numComments: -1}});
   }
-})
+});

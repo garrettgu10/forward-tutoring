@@ -4,6 +4,8 @@ import FlatButton from 'material-ui/FlatButton';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
+import IconButton from 'material-ui/IconButton';
 
 export default class Post extends Component {
 
@@ -31,6 +33,11 @@ export default class Post extends Component {
     })
   }
 
+  deleteComment(commentId){
+    const postId = this.props.post._id;
+    Meteor.call('posts.deleteComment', postId, commentId);
+  }
+
   render() {
     var post = this.props.post;
     if(!post.comments) post.comments = [];
@@ -52,8 +59,24 @@ export default class Post extends Component {
 
           {this.state.displayComments &&
             post.comments.map(function(comment){
-              return <div key={comment._id}><b>{comment.username}</b>: {comment.content}</div>;
-            })
+              return (
+                <div key={comment._id}>
+                  <div style={{margin: '10px 0', overflow: "auto"}}>
+                    <IconButton
+                      iconClassName="material-icons"
+                      onTouchTap={this.deleteComment.bind(this, comment._id)}
+                      style={{float: "right"}}>
+                      clear
+                    </IconButton>
+                    <span>
+                      <b>{comment.username}</b>: {comment.content}
+                    </span>
+
+                  </div>
+                  <Divider />
+                </div>
+              );
+            }.bind(this))
           }
 
           {this.state.displayComments &&

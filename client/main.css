@@ -24,6 +24,10 @@ body {
   color: white;
 }
 
+.active.nav-link > div {
+  background-color: rgba(0,0,0, 0.2);
+}
+
 .link{
   text-decoration: none;
   color: #757575;

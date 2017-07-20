@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import FontIcon from 'material-ui/FontIcon';
 
 const NavLink = ReactRouter.NavLink;
+const Link = ReactRouter.Link;
 
 
 export default class Sidebar extends Component{
@@ -19,10 +20,7 @@ export default class Sidebar extends Component{
 
   render(){
     var toggle = this.handleToggle.bind(this);
-    const menuItemActiveStyle = {
-      backgroundColor: "rgba(0,0,0,1)",
-      fontWeight: "bold"
-    };
+    const menuItemActiveStyle = {};
     return(
       <div>
         <Drawer
@@ -32,11 +30,11 @@ export default class Sidebar extends Component{
 
           <div style={{lineHeight: "8px"}}>&nbsp;</div>
 
-          <NavLink activeStyle={menuItemActiveStyle} exact to='/' className='nav-link' onTouchTap={toggle}>
+          <Link to='/' className='nav-link' onTouchTap={toggle}>
             <MenuItem style={{fontSize: "25px", lineHeight: "64px"}}>
               <span style={{fontWeight: 800}}>forward</span><span style={{fontWeight: 100}}>tutoring</span>
             </MenuItem>
-          </NavLink>
+          </Link>
 
           <NavLink activeStyle={menuItemActiveStyle} exact to='/' className='nav-link' onTouchTap={toggle}>
             <MenuItem>Main</MenuItem>
