@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
+import UserLink from './UserLink.jsx';
 
 export default class Post extends Component {
 
@@ -45,8 +46,9 @@ export default class Post extends Component {
       <Card key={post._id} style={{marginTop: '25px'}}>
         <CardHeader
           title={post.title}
-          subtitle={post.username}
+          subtitle={<UserLink username={post.username} />}
         />
+
         <CardText>
           {post.content}
         </CardText>
