@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { createContainer } from 'meteor/react-meteor-data';
 import Home from './Home.jsx';
 import UserProfile from './UserProfile.jsx';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -82,6 +83,14 @@ var Logout = function() {
     if(err) alert(err);
   });
 }
+
+var Loading = function(){
+  return(
+    <div style={{textAlign: "center"}}>
+      <CircularProgress size={80} thickness={5} />
+    </div>
+  )
+}
 //--------------------------------------------------------
 
 
@@ -109,11 +118,13 @@ class App extends Component {
             <div className="main-container">
               <Sidebar ref={(item) => {this.sidebar = item;}}/>
               <Switch>
+                {!this.props.ready &&
+                  <Route path="/(forum|consistent)/" component={Loading} />
+                }
+
                 <Route exact path="/" component={() => <Home loggedIn={this.props.currentUser !== null} />} />
                 <Route path="/forum" component={
-                  (props) => {
-                    return <Forum currentUser={this.props.currentUser} />;
-                  }
+                  () => <Forum currentUser={this.props.currentUser} />
                 } />
                 <Route path="/consistent" component={Consistent} />
                 <Route path="/register" component={RegistrationForm} />
@@ -133,5 +144,6 @@ class App extends Component {
 export default createContainer(() => {
   return {
     currentUser: Meteor.user(),
+    ready: !Meteor.loggingIn()
   }
 }, App);
