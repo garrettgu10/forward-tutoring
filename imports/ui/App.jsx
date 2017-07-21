@@ -109,7 +109,7 @@ class App extends Component {
             <div className="main-container">
               <Sidebar ref={(item) => {this.sidebar = item;}}/>
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={() => <Home loggedIn={this.props.currentUser !== null} />} />
                 <Route path="/forum" component={
                   (props) => {
                     return <Forum currentUser={this.props.currentUser} />;

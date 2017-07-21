@@ -44,10 +44,11 @@ export default class Post extends Component {
     if(!post.comments) post.comments = [];
     return (
       <Card key={post._id} style={{marginTop: '25px'}}>
-        <CardHeader
+        <CardTitle
           title={post.title}
-          subtitle={<UserLink username={post.username} />}
+          style={{paddingBottom: "5px"}}
         />
+        <UserLink style={{marginLeft: "20px"}} username={post.username} />
 
         <CardText>
           {post.content}

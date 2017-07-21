@@ -30,7 +30,7 @@ export default class UserLink extends Component {
       return <Redirect to={"/profile/" + this.props.username} />;
     }
     return (
-      <Chip onTouchTap={this.handleTouchTap.bind(this)}>
+      <Chip style={this.props.style} onTouchTap={this.handleTouchTap.bind(this)}>
         <Avatar backgroundColor={"#" + this.props.username.colorCode()}>
           {this.props.username.charAt(0).toUpperCase()}
         </Avatar>
