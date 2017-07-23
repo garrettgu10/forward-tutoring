@@ -7,7 +7,7 @@ import Avatar from 'material-ui/Avatar';
 import {Link, Redirect} from 'react-router-dom';
 
 String.prototype.colorCode = function() {
-  var hash = this.split("").reduce((prev, next) => (prev << 5) - prev + next.charCodeAt(0), 0) & 0xffffff;
+  var hash = this.split("").reduce((prev, next) => ((prev << 13) - prev + next.charCodeAt(0)) & 0xffffff, 0);
 
   return ("000000"+hash.toString(16)).slice(-6);
 };

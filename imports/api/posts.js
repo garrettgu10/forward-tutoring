@@ -9,6 +9,15 @@ if(Meteor.isServer){
     return Posts.find({});
   });
 
+  Meteor.publish('myposts', function myPostsPublication(){
+    const userId = Meteor.userId();
+    if(!userId){
+      throw new Meteor.Error('not-authorized');
+    }
+
+    return Posts.find({owner: userId});
+  })
+
   Meteor.publish('comments', function commentsPublication(postId) {
     return Posts.find({}, {fields: {comemnts: 1}});
   });

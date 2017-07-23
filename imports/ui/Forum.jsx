@@ -1,22 +1,26 @@
 import React, {Component} from 'react';
-import ReactRouter, {Link} from 'react-router-dom';
-import { createContainer } from 'meteor/react-meteor-data';
+import ReactRouter, {Redirect} from 'react-router-dom';
 
 import PostForm from "./PostForm.jsx";
+import PostList from './PostList.jsx';
 
-import {Posts} from '../api/posts.js';
-import Post from './Post.jsx';
+import CheckBox from 'material-ui/CheckBox';
 
-const Router = ReactRouter.BrowserRouter;
-const Route = ReactRouter.Route;
-const Redirect = ReactRouter.Redirect;
+export default class Forum extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      onlyShowUserPosts: true
+    }
+    Session.set('Forum.onlyShowUserPosts', this.state.onlyShowUserPosts);
+  }
 
-import CircularProgress from 'material-ui/CircularProgress';
+  toggleShowUserPosts() {
+    Session.set('Forum.onlyShowUserPosts', !this.state.onlyShowUserPosts);
+    this.setState({
+      onlyShowUserPosts: !this.state.onlyShowUserPosts
+    })
 
-class Forum extends Component {
-
-  deletePost(postId){
-    Meteor.call('posts.remove', postId);
   }
 
   render () {
@@ -26,38 +30,18 @@ class Forum extends Component {
       )
     }
 
-    if(!this.props.ready){
-      return (
-        <div style={{textAlign: "center"}}>
-          <CircularProgress size={80} thickness={5} />
-        </div>
-      )
-    }
-
     return (
       <div>
         <PostForm />
 
-        <div>
-          {this.props.posts.map((post) => {
-            return (
-              <Post post={post}
-                currentUser={this.props.currentUser}
-                handleDelete={this.deletePost.bind(null, post._id)}
-                comments={post.comments}
-                key={post._id} />
-            );
-          })}
-        </div>
+        <br />
+        <CheckBox
+          label="Only show my posts"
+          checked={this.state.onlyShowUserPosts}
+          onCheck={this.toggleShowUserPosts.bind(this)} />
+
+        <PostList filterUserPosts={this.state.onlyShowUserPosts} currentUser={this.props.currentUser}/>
       </div>
     )
   }
 }
-
-export default createContainer(() => {
-  const subscription = Meteor.subscribe('posts');
-  return {
-    posts: Posts.find({}, {sort: {date: -1}}).fetch(),
-    ready: subscription.ready()
-  }
-}, Forum);

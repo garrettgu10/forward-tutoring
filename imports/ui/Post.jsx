@@ -39,6 +39,10 @@ export default class Post extends Component {
     Meteor.call('posts.deleteComment', postId, commentId);
   }
 
+  handleDelete(){
+    Meteor.call('posts.remove', this.props.post._id);
+  }
+
   render() {
     var post = this.props.post;
     if(!post.comments) post.comments = [];
@@ -58,7 +62,7 @@ export default class Post extends Component {
             label={post.numComments + " Comments"}
             onTouchTap ={this.toggleDisplayComments.bind(this)}/>
           {this.props.currentUser._id == post.owner &&
-            <FlatButton label="Delete" onTouchTap={this.props.handleDelete} />}
+            <FlatButton label="Delete" onTouchTap={this.handleDelete.bind(this)} />}
 
           {this.state.displayComments &&
             post.comments.map(function(comment){
