@@ -25,7 +25,12 @@ export default class Post extends Component {
   }
 
   handleCommentSubmit(){
-    Meteor.call('posts.comment', this.props.post._id, this.state.commentInputValue);
+    Meteor.call('posts.comment', this.props.post._id, this.state.commentInputValue,
+      function commentSubmitCallback(err) {
+        if(err){
+          alert(err);
+        }
+      });
   }
 
   toggleDisplayComments() {
@@ -36,11 +41,21 @@ export default class Post extends Component {
 
   deleteComment(commentId){
     const postId = this.props.post._id;
-    Meteor.call('posts.deleteComment', postId, commentId);
+    Meteor.call('posts.deleteComment', postId, commentId,
+      function deleteCommentCallback(err){
+        if(err){
+          alert(err);
+        }
+      });
   }
 
   handleDelete(){
-    Meteor.call('posts.remove', this.props.post._id);
+    Meteor.call('posts.remove', this.props.post._id,
+      function deletePostCallback(err){
+        if(err){
+          alert(err);
+        }
+      });
   }
 
   render() {

@@ -21,21 +21,14 @@ export default class UserLink extends Component {
     }
   }
 
-  handleTouchTap(){
-    this.setState({redirect: true});
-  }
-
   render() {
-    if(this.state.redirect){
-      return <Redirect to={"/profile/" + this.props.username} />;
-    }
     return (
-      <Chip style={this.props.style} onTouchTap={this.handleTouchTap.bind(this)}>
-        <Avatar backgroundColor={"#" + this.props.username.colorCode()}>
-          {this.props.username.charAt(0).toUpperCase()}
-        </Avatar>
-        {this.props.username}
-      </Chip>
+        <Chip style={this.props.style} onTouchTap={() => 0} containerElement={<Link to={"/profile/" + this.props.username} />}>
+          <Avatar backgroundColor={"#" + this.props.username.colorCode()}>
+            {this.props.username.charAt(0).toUpperCase()}
+          </Avatar>
+          {this.props.username}
+        </Chip>
     )
   }
 }
