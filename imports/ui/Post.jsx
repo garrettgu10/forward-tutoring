@@ -7,6 +7,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import UserLink from './UserLink.jsx';
+import ActionClear from 'material-ui/svg-icons/content/clear';
+
+import {Link} from 'react-router-dom';
 
 export default class Post extends Component {
 
@@ -24,13 +27,17 @@ export default class Post extends Component {
     })
   }
 
-  handleCommentSubmit(){
+  handleCommentSubmit(event){
+    event.preventDefault();
     Meteor.call('posts.comment', this.props.post._id, this.state.commentInputValue,
       function commentSubmitCallback(err) {
         if(err){
           alert(err);
         }
       });
+    this.setState({
+      commentInputValue: ""
+    })
   }
 
   toggleDisplayComments() {
@@ -61,6 +68,7 @@ export default class Post extends Component {
   render() {
     var post = this.props.post;
     if(!post.comments) post.comments = [];
+    var canComment = (this.props.currentUser._id === post.owner || this.props.currentUser.role !== 0);
     return (
       <Card key={post._id} style={{marginTop: '25px'}}>
         <CardTitle
@@ -79,20 +87,21 @@ export default class Post extends Component {
           {this.props.currentUser._id == post.owner &&
             <FlatButton label="Delete" onTouchTap={this.handleDelete.bind(this)} />}
 
-          {this.state.displayComments &&
+          {(this.state.displayComments) &&
             post.comments.map(function(comment){
               return (
                 <div key={comment._id}>
-                  <div style={{margin: '10px 0', overflow: "auto"}}>
+                  <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+
+                    <div style={{flexGrow: "1", margin: "10px 0"}}>
+                      <Link to={"/profile/"+comment.username}>{comment.username}</Link> &nbsp;&nbsp;
+                      {comment.content}
+                    </div>
+
                     <IconButton
-                      iconClassName="material-icons"
-                      onTouchTap={this.deleteComment.bind(this, comment._id)}
-                      style={{float: "right"}}>
-                      clear
+                      onTouchTap={this.deleteComment.bind(this, comment._id)}>
+                      <ActionClear />
                     </IconButton>
-                    <span>
-                      <b>{comment.username}</b>: {comment.content}
-                    </span>
 
                   </div>
                   <Divider />
@@ -101,19 +110,17 @@ export default class Post extends Component {
             }.bind(this))
           }
 
-          {this.state.displayComments &&
-            <div>
+          {(this.state.displayComments && canComment) &&
+            <form style={{display: 'flex', alignItems: 'center'}} onSubmit={this.handleCommentSubmit.bind(this)}>
               <TextField
                 id="comment-input"
                 floatingLabelText="Comment"
-                multiLine={true}
                 rows={2}
-                fullWidth={true}
                 value={this.state.commentInputValue}
-                onChange={this.handleCommentInputChange.bind(this)} />
-              <br />
-              <RaisedButton label="Submit" primary={true} onClick={this.handleCommentSubmit.bind(this)} />
-            </div>
+                onChange={this.handleCommentInputChange.bind(this)}
+                style={{flexGrow: '1'}} />
+              <RaisedButton label="Submit" primary={true} type="submit" />
+            </form>
           }
 
         </CardActions>

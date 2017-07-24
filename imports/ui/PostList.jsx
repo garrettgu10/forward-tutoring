@@ -34,10 +34,10 @@ export default createContainer((props) => {
 
   if(Session.get('Forum.onlyShowUserPosts')){
     var subscription = Meteor.subscribe('myposts');
-    var posts = Posts.find({owner: Meteor.userId()});
+    var posts = Posts.find({owner: Meteor.userId()}, {sort: {modifiedDate: -1}});
   }else{
     var subscription = Meteor.subscribe('posts');
-    var posts = Posts.find({});
+    var posts = Posts.find({}, {sort: {modifiedDate: -1}});
   }
 
   return{

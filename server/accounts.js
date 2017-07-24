@@ -22,3 +22,7 @@ Accounts.onCreateUser((options, user) => {
 Meteor.publish("user", (username) => {
   return Meteor.users.find({username: username}, {fields: {emails: 1, profile: 1, username: 1, createdAt: 1, role: 1}});
 });
+
+Meteor.publish("user.byId", (userId) => {
+  return Meteor.users.find(userId, {fields: {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1}})
+})

@@ -142,8 +142,17 @@ class App extends Component {
 }
 
 export default createContainer(() => {
+  if(!Meteor.loggingIn()){
+    var subscription = Meteor.subscribe('user.byId', Meteor.userId());
+  }else{
+    return {
+      currentUser: null,
+      ready: false
+    }
+  }
+
   return {
-    currentUser: Meteor.user(),
-    ready: !Meteor.loggingIn()
+    currentUser: Meteor.users.findOne(Meteor.userId(), {fields: {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1}}),
+    ready: subscription.ready()
   }
 }, App);

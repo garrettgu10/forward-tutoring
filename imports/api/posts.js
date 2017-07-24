@@ -38,6 +38,7 @@ Meteor.methods({
       owner: Meteor.userId(),
       username: Meteor.user().username,
       date: new Date(),
+      modifiedDate: new Date(),
       numComments: 0,
       comments: []
     })
@@ -57,20 +58,26 @@ Meteor.methods({
   'posts.comment'(postId, content){
     check(content, String);
 
-    //Add checks for tutor/owner status here when account system is done
+    const user = Meteor.user();
+    const post = Posts.findOne(postId);
 
-    if(!Meteor.userId()) {
+    if(!user) {
       throw new Meteor.Error('not-authorized');
+    }
+
+    if(user.role === 0 && user._id !== post.owner){ //the user is a student and not the owner of the post
+      throw new Meteor.Error('not-authorized', 'Not your post!');
     }
 
     const comment = {
       _id: new Meteor.Collection.ObjectID()._str,
       content: content,
       owner: Meteor.userId(),
-      username: Meteor.user().username
+      username: Meteor.user().username,
+      date: new Date()
     }
 
-    Posts.update(postId, {$push: {comments: comment}, $inc: {numComments: 1}});
+    Posts.update(postId, {$push: {comments: comment}, $inc: {numComments: 1}, $set: {modifiedDate: comment.date}});
   },
 
   'posts.deleteComment'(postId, commentId){
