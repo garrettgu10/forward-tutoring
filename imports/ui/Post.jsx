@@ -86,9 +86,13 @@ export default class Post extends Component {
             onTouchTap ={this.toggleDisplayComments.bind(this)}/>
           {this.props.currentUser._id == post.owner &&
             <FlatButton label="Delete" onTouchTap={this.handleDelete.bind(this)} />}
+        </CardActions>
 
-          {(this.state.displayComments) &&
-            post.comments.map(function(comment){
+        {this.state.displayComments &&
+          <CardText style={{paddingTop: "10px", paddingBottom: "0px"}}>
+            {post.comments.length !== 0 ? <Divider /> : <div>No comments yet.</div>}
+
+            {post.comments.map(function(comment){
               return (
                 <div key={comment._id}>
                   <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
@@ -107,23 +111,23 @@ export default class Post extends Component {
                   <Divider />
                 </div>
               );
-            }.bind(this))
-          }
+            }.bind(this))}
 
-          {(this.state.displayComments && canComment) &&
-            <form style={{display: 'flex', alignItems: 'center'}} onSubmit={this.handleCommentSubmit.bind(this)}>
-              <TextField
-                id="comment-input"
-                floatingLabelText="Comment"
-                rows={2}
-                value={this.state.commentInputValue}
-                onChange={this.handleCommentInputChange.bind(this)}
-                style={{flexGrow: '1'}} />
-              <RaisedButton label="Submit" primary={true} type="submit" />
-            </form>
-          }
+            {canComment &&
+              <form style={{display: 'flex', alignItems: 'center'}} onSubmit={this.handleCommentSubmit.bind(this)}>
+                <TextField
+                  id="comment-input"
+                  floatingLabelText="Comment"
+                  rows={2}
+                  value={this.state.commentInputValue}
+                  onChange={this.handleCommentInputChange.bind(this)}
+                  style={{flexGrow: '1'}} />
+                <RaisedButton label="Submit" primary={true} type="submit" />
+              </form>
+            }
 
-        </CardActions>
+          </CardText>
+        }
       </Card>
     )
   }

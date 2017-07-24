@@ -29,7 +29,19 @@ Meteor.methods({
     check(content, String);
 
     if(!Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('not-authorized', "You are not logged in");
+    }
+
+    if(title.length == 0){
+      throw new Meteor.Error('bad-title', "The title cannot be empty");
+    }
+
+    if(title.length > 500){
+      throw new Meteor.Error('bad-title', "The title is over 500 characters long");
+    }
+
+    if(contents.length > 5000){
+      throw new Meteor.Error('bad-content', 'The content is over 5000 characters long');
     }
 
     Posts.insert({
@@ -49,7 +61,7 @@ Meteor.methods({
 
     const post = Posts.findOne(postId);
     if(post.owner !== Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('not-authorized', "You do not own this post");
     }
 
     Posts.remove(postId);
@@ -62,11 +74,15 @@ Meteor.methods({
     const post = Posts.findOne(postId);
 
     if(!user) {
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('not-authorized', 'You are not logged in');
     }
 
     if(user.role === 0 && user._id !== post.owner){ //the user is a student and not the owner of the post
-      throw new Meteor.Error('not-authorized', 'Not your post!');
+      throw new Meteor.Error('not-authorized', 'You do not own this post');
+    }
+
+    if(content.length > 5000){
+      throw new Meteor.Error('bad-content', 'The content is over 5000 characters long');
     }
 
     const comment = {
@@ -93,7 +109,7 @@ Meteor.methods({
     }
 
     if(Meteor.userId() !== comment.owner){
-      throw new Meteor.Error('not-authorized');
+      throw new Meteor.Error('not-authorized', 'You do not own this post');
     }
 
     Posts.update(postId, {$pull: {comments: {_id: commentId}}, $inc: {numComments: -1}});
