@@ -23,7 +23,7 @@ export default class Forum extends Component {
       filterBySubject: 'all'
     }
 
-    if(this.props.currentUser.role !== 0){
+    if(this.props.currentUser && this.props.currentUser.role !== 0){
       this.state.onlyShowUserPosts = false; //if not student, default show all
     }
 

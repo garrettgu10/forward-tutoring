@@ -20,6 +20,7 @@ export default class CommentView extends Component {
 
   render() {
     const comment = this.props.commentObj;
+    const canDelete = (comment.owner === this.props.currentUser._id || this.props.currentUser.role === 2);
     return(
       <div key={comment._id}>
         <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
@@ -32,7 +33,7 @@ export default class CommentView extends Component {
             <DateView date={comment.date} />
           </div>
 
-          {comment.owner === this.props.currentUser._id?
+          {canDelete?
             <IconButton
               onTouchTap={this.delete.bind(this)}>
               <ActionClear />

@@ -111,7 +111,7 @@ class App extends Component {
           <div>
             <AppBar
               title={logo()}
-              style={{position: "fixed", width: "calc(100% - 16px)"}}
+              style={{position: "fixed", width: "100%"}}
               onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
               iconElementRight={<RightButtons currentUser={this.props.currentUser}/>}
             />

@@ -63,7 +63,8 @@ export default class Post extends Component {
   render() {
     var post = this.props.post;
     if(!post.comments) post.comments = [];
-    var canComment = (this.props.currentUser._id === post.owner || this.props.currentUser.role !== 0);
+    const canComment = (this.props.currentUser._id === post.owner || this.props.currentUser.role !== 0);
+    const canDelete = (this.props.currentUser._id === post.owner || this.props.currentUser.role === 2);
     return (
       <Card key={post._id} style={{marginTop: '25px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
@@ -85,7 +86,7 @@ export default class Post extends Component {
           <FlatButton
             label={post.numComments + " Comments"}
             onTouchTap ={this.toggleDisplayComments.bind(this)}/>
-          {this.props.currentUser._id == post.owner &&
+          {canDelete &&
             <FlatButton label="Delete" onTouchTap={this.handleDelete.bind(this)} />}
         </CardActions>
 

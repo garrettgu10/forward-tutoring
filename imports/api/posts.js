@@ -11,7 +11,7 @@ if(Meteor.isServer){
   });
 
   Meteor.publish('myposts', function myPostsPublication(){
-    const userId = Meteor.userId();
+    const userId = this.userId;
     if(!userId){
       throw new Meteor.Error('not-authorized');
     }
@@ -30,7 +30,7 @@ Meteor.methods({
     check(content, String);
     check(subject, String);
 
-    if(!Meteor.userId()) {
+    if(!this.userId) {
       throw new Meteor.Error('not-authorized', "You are not logged in");
     }
 
@@ -50,11 +50,13 @@ Meteor.methods({
       throw new Meteor.Error('bad-subject', 'The subject doesn\'t exist');
     }
 
+    const user = Meteor.user();
+
     Posts.insert({
       title: title,
       content: content,
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
+      owner: this.userId,
+      username: user.username,
       date: new Date(),
       modifiedDate: new Date(),
       numComments: 0,
@@ -67,7 +69,8 @@ Meteor.methods({
     check(postId, String);
 
     const post = Posts.findOne(postId);
-    if(post.owner !== Meteor.userId()) {
+    const user = Meteor.user();
+    if(post.owner !== this.userId && user.role !== 2) { //not owner and not admin
       throw new Meteor.Error('not-authorized', "You do not own this post");
     }
 
@@ -88,14 +91,18 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized', 'You do not own this post');
     }
 
+    if(content.length === 0){
+      throw new Meteor.Error('bad-content', 'The comment cannot be empty');
+    }
+
     if(content.length > 5000){
-      throw new Meteor.Error('bad-content', 'The content is over 5000 characters long');
+      throw new Meteor.Error('bad-content', 'The comment is over 5000 characters long');
     }
 
     const comment = {
       _id: new Meteor.Collection.ObjectID()._str,
       content: content,
-      owner: Meteor.userId(),
+      owner: this.userId,
       username: Meteor.user().username,
       date: new Date()
     }
@@ -115,7 +122,7 @@ Meteor.methods({
       throw new Meteor.Error('comment-not-found');
     }
 
-    if(Meteor.userId() !== comment.owner){
+    if(this.userId !== comment.owner && Meteor.user().role !== 2){
       throw new Meteor.Error('not-authorized', 'You do not own this comment');
     }
 
