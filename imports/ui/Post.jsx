@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 
 import UserLink from './UserLink.jsx';
 import DateView from './DateView.jsx';
 import CommentView from './CommentView.jsx';
+import CommentForm from './CommentForm.jsx';
 
 import {Link} from 'react-router-dom';
 
@@ -32,19 +31,6 @@ export default class Post extends Component {
     })
   }
 
-  handleCommentSubmit(event){
-    event.preventDefault();
-    Meteor.call('posts.comment', this.props.post._id, this.state.commentInputValue,
-      function commentSubmitCallback(err) {
-        if(err){
-          alert(err);
-        }
-      });
-    this.setState({
-      commentInputValue: ""
-    })
-  }
-
   toggleDisplayComments() {
     this.setState({
       displayComments: !this.state.displayComments
@@ -65,6 +51,7 @@ export default class Post extends Component {
     if(!post.comments) post.comments = [];
     const canComment = (this.props.currentUser._id === post.owner || this.props.currentUser.role !== 0);
     const canDelete = (this.props.currentUser._id === post.owner || this.props.currentUser.role === 2);
+    const canMarkAnswered = (this.props.currentUser._id === post.owner ||  this.props.currentUser.role !== 0);
     return (
       <Card key={post._id} style={{marginTop: '25px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
@@ -105,16 +92,7 @@ export default class Post extends Component {
             }.bind(this))}
 
             {canComment &&
-              <form style={{display: 'flex', alignItems: 'center'}} onSubmit={this.handleCommentSubmit.bind(this)}>
-                <TextField
-                  id="comment-input"
-                  floatingLabelText="Comment"
-                  rows={2}
-                  value={this.state.commentInputValue}
-                  onChange={this.handleCommentInputChange.bind(this)}
-                  style={{flexGrow: '1'}} />
-                <RaisedButton label="Submit" primary={true} type="submit" />
-              </form>
+              <CommentForm postId={post._id} />
             }
 
           </CardText>

@@ -61,6 +61,7 @@ Meteor.methods({
       modifiedDate: new Date(),
       numComments: 0,
       subject: subject,
+      answered: false,
       comments: []
     })
   },
@@ -127,5 +128,19 @@ Meteor.methods({
     }
 
     Posts.update(postId, {$pull: {comments: {_id: commentId}}, $inc: {numComments: -1}});
+  },
+
+  'posts.toggleAnswered'(postId){
+    check(postId, String);
+
+    const post = Posts.findOne(postId);
+    const nowAnswered = !post.answered;
+
+    if(post.owner !== this.userId && Meteor.user().role === 0){
+      throw new Meteor.Error('not-authorized', 'You do not own this post');
+    }
+
+    Posts.update(postId, {$set: {answered: !post.answered}});
+    Meteor.call('posts.comment', postId, 'marked this post '+(!nowAnswered && 'un')+'answered');
   }
 });
