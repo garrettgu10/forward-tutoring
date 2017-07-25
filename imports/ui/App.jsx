@@ -111,11 +111,12 @@ class App extends Component {
           <div>
             <AppBar
               title={logo()}
+              style={{position: "fixed", width: "calc(100% - 16px)"}}
               onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
               iconElementRight={<RightButtons currentUser={this.props.currentUser}/>}
             />
 
-            <div className="main-container">
+            <div className="main-container" style={{paddingTop: '80px'}}>
               <Sidebar ref={(item) => {this.sidebar = item;}}/>
               <Switch>
                 {!this.props.ready &&
