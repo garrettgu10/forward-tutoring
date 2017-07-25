@@ -8,14 +8,19 @@ import CheckBox from 'material-ui/CheckBox';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-import {WaysToSortPosts} from '../constants/constants.js';
+import {WaysToSortPosts, Subjects} from '../constants/constants.js';
+
+String.prototype.capitalize = function(){
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 export default class Forum extends Component {
   constructor(props){
     super(props);
     this.state = {
       onlyShowUserPosts: true,
-      sortBy: 'Latest update'
+      sortBy: 'Latest update',
+      filterBySubject: 'all'
     }
 
     if(this.props.currentUser.role !== 0){
@@ -24,6 +29,7 @@ export default class Forum extends Component {
 
     Session.set('Forum.onlyShowUserPosts', this.state.onlyShowUserPosts);
     Session.set('Forum.sortBy', this.state.sortBy);
+    Session.set('Forum.filterBySubject', this.state.filterBySubject);
   }
 
   handleShowPostsChange(event, index, value) {
@@ -39,6 +45,13 @@ export default class Forum extends Component {
     this.setState({
       sortBy: value
     });
+  }
+
+  handleFilterChange(event, index, value){
+    Session.set('Forum.filterBySubject', value);
+    this.setState({
+      filterBySubject: value
+    })
   }
 
   render () {
@@ -63,7 +76,7 @@ export default class Forum extends Component {
           value={this.state.onlyShowUserPosts}
           onChange={this.handleShowPostsChange.bind(this)} >
           <MenuItem value={true} primaryText="Only my posts" />
-          <MenuItem value={false} primaryText="All posts" />
+          <MenuItem value={false} primaryText="Everyone's posts" />
         </SelectField>
         <SelectField
           style={selectFieldStyle}
@@ -75,6 +88,18 @@ export default class Forum extends Component {
               <MenuItem key={method} value={method} primaryText={method} />
             )
           })}
+        </SelectField>
+        <SelectField
+          style={selectFieldStyle}
+          floatingLabelText="Show subjects"
+          value={this.state.filterBySubject}
+          onChange={this.handleFilterChange.bind(this)}>
+          {Subjects.map((subject) => {
+            return(
+              <MenuItem key={subject} value={subject} primaryText={subject.capitalize()} />
+            );
+          })}
+          <MenuItem key='all' value='all' primaryText='All' />
         </SelectField>
 
         <PostList filterUserPosts={this.state.onlyShowUserPosts} currentUser={this.props.currentUser}/>

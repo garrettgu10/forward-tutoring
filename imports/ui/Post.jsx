@@ -12,6 +12,10 @@ import CommentView from './CommentView.jsx';
 
 import {Link} from 'react-router-dom';
 
+String.prototype.capitalize = function(){
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 export default class Post extends Component {
 
   constructor(props){
@@ -68,7 +72,7 @@ export default class Post extends Component {
             style={{paddingBottom: "5px", flexGrow: "1"}}
           />
           <div style={{fontStyle: 'italic', color: "#9E9E9E", marginRight: '20px'}}>
-            {post.subject || 'other'}
+            {post.subject? post.subject.capitalize() : ''}
           </div>
         </div>
         <UserLink style={{marginLeft: "15px"}} username={post.username} />

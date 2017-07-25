@@ -38,7 +38,9 @@ class PostList extends Component {
 
 export default createContainer((props) => {
 
-  var sortBy = Session.get('Forum.sortBy');
+  const sortBy = Session.get('Forum.sortBy');
+
+  const subjectFilter = Session.get('Forum.filterBySubject');
 
   var query = {};
 
@@ -51,6 +53,10 @@ export default createContainer((props) => {
       break;
     default:
       var sort = {modifiedDate: -1};
+  }
+
+  if(subjectFilter !== 'all'){
+    query.subject = subjectFilter;
   }
 
   if(Session.get('Forum.onlyShowUserPosts')){
