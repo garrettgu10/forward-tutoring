@@ -7,7 +7,11 @@ import {Meteor} from 'meteor/meteor';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {Users} from '../api/users.js';
 import CircularProgress from 'material-ui/CircularProgress';
-import Roles from '../constants/roles.js';
+import {Roles} from '../constants/constants.js';
+
+String.prototype.capitalize = function(){
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 class UserProfile extends Component {
 
@@ -38,7 +42,7 @@ class UserProfile extends Component {
             avatar={user.profile.image || "/default_icon.png"}
           />
           <CardText>
-            Role: {Roles[user.role]}<br />
+            Role: {Roles[user.role].capitalize()}<br />
             Email: {user.emails[0].address}<br />
             Member since: {user.createdAt.toDateString()}
           </CardText>

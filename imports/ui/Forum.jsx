@@ -5,25 +5,47 @@ import PostForm from "./PostForm.jsx";
 import PostList from './PostList.jsx';
 
 import CheckBox from 'material-ui/CheckBox';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
+import {WaysToSortPosts} from '../constants/constants.js';
 
 export default class Forum extends Component {
   constructor(props){
     super(props);
     this.state = {
-      onlyShowUserPosts: true
+      onlyShowUserPosts: true,
+      sortBy: 'Latest update'
     }
+
+    if(this.props.currentUser.role !== 0){
+      this.state.onlyShowUserPosts = false; //if not student, default show all
+    }
+
     Session.set('Forum.onlyShowUserPosts', this.state.onlyShowUserPosts);
+    Session.set('Forum.sortBy', this.state.sortBy);
   }
 
-  toggleShowUserPosts() {
-    Session.set('Forum.onlyShowUserPosts', !this.state.onlyShowUserPosts);
+  handleShowPostsChange(event, index, value) {
+    Session.set('Forum.onlyShowUserPosts', value);
     this.setState({
-      onlyShowUserPosts: !this.state.onlyShowUserPosts
+      onlyShowUserPosts: value
     })
 
   }
 
+  handleSortByChange(event, index, value) {
+    Session.set('Forum.sortBy', value);
+    this.setState({
+      sortBy: value
+    });
+  }
+
   render () {
+    const selectFieldStyle = {
+      marginRight: '10px'
+    }
+
     if(!this.props.currentUser) {
       return (
         <Redirect to="/login" />
@@ -35,10 +57,25 @@ export default class Forum extends Component {
         <PostForm />
 
         <br />
-        <CheckBox
-          label="Only show my posts"
-          checked={this.state.onlyShowUserPosts}
-          onCheck={this.toggleShowUserPosts.bind(this)} />
+        <SelectField
+          style={selectFieldStyle}
+          floatingLabelText="Show"
+          value={this.state.onlyShowUserPosts}
+          onChange={this.handleShowPostsChange.bind(this)} >
+          <MenuItem value={true} primaryText="Only my posts" />
+          <MenuItem value={false} primaryText="All posts" />
+        </SelectField>
+        <SelectField
+          style={selectFieldStyle}
+          floatingLabelText="Sort by"
+          value={this.state.sortBy}
+          onChange={this.handleSortByChange.bind(this)}>
+          {WaysToSortPosts.map((method) => {
+            return(
+              <MenuItem key={method} value={method} primaryText={method} />
+            )
+          })}
+        </SelectField>
 
         <PostList filterUserPosts={this.state.onlyShowUserPosts} currentUser={this.props.currentUser}/>
       </div>

@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
+import {Subjects} from '../constants/constants.js';
 
 export const Posts = new Mongo.Collection('posts');
 
@@ -24,9 +25,10 @@ if(Meteor.isServer){
 }
 
 Meteor.methods({
-  'posts.insert'(title, content){
+  'posts.insert'(title, content, subject){
     check(title, String);
     check(content, String);
+    check(subject, String);
 
     if(!Meteor.userId()) {
       throw new Meteor.Error('not-authorized', "You are not logged in");
@@ -40,8 +42,12 @@ Meteor.methods({
       throw new Meteor.Error('bad-title', "The title is over 500 characters long");
     }
 
-    if(contents.length > 5000){
+    if(content.length > 5000){
       throw new Meteor.Error('bad-content', 'The content is over 5000 characters long');
+    }
+
+    if(Subjects.indexOf(subject) < 0){
+      throw new Meteor.Error('bad-subject', 'The subject doesn\'t exist');
     }
 
     Posts.insert({
@@ -52,6 +58,7 @@ Meteor.methods({
       date: new Date(),
       modifiedDate: new Date(),
       numComments: 0,
+      subject: subject,
       comments: []
     })
   },
@@ -109,7 +116,7 @@ Meteor.methods({
     }
 
     if(Meteor.userId() !== comment.owner){
-      throw new Meteor.Error('not-authorized', 'You do not own this post');
+      throw new Meteor.Error('not-authorized', 'You do not own this comment');
     }
 
     Posts.update(postId, {$pull: {comments: {_id: commentId}}, $inc: {numComments: -1}});

@@ -5,9 +5,10 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
-import IconButton from 'material-ui/IconButton';
+
 import UserLink from './UserLink.jsx';
-import ActionClear from 'material-ui/svg-icons/content/clear';
+import DateView from './DateView.jsx';
+import CommentView from './CommentView.jsx';
 
 import {Link} from 'react-router-dom';
 
@@ -46,16 +47,6 @@ export default class Post extends Component {
     })
   }
 
-  deleteComment(commentId){
-    const postId = this.props.post._id;
-    Meteor.call('posts.deleteComment', postId, commentId,
-      function deleteCommentCallback(err){
-        if(err){
-          alert(err);
-        }
-      });
-  }
-
   handleDelete(){
     Meteor.call('posts.remove', this.props.post._id,
       function deletePostCallback(err){
@@ -71,11 +62,17 @@ export default class Post extends Component {
     var canComment = (this.props.currentUser._id === post.owner || this.props.currentUser.role !== 0);
     return (
       <Card key={post._id} style={{marginTop: '25px'}}>
-        <CardTitle
-          title={post.title}
-          style={{paddingBottom: "5px"}}
-        />
-        <UserLink style={{marginLeft: "20px"}} username={post.username} />
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          <CardTitle
+            title={post.title}
+            style={{paddingBottom: "5px", flexGrow: "1"}}
+          />
+          <div style={{fontStyle: 'italic', color: "#9E9E9E", marginRight: '20px'}}>
+            {post.subject || 'other'}
+          </div>
+        </div>
+        <UserLink style={{marginLeft: "15px"}} username={post.username} />
+        <DateView date={post.date} style={{margin: '10px 16px'}}/>
 
         <CardText>
           {post.content}
@@ -94,22 +91,11 @@ export default class Post extends Component {
 
             {post.comments.map(function(comment){
               return (
-                <div key={comment._id}>
-                  <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-
-                    <div style={{flexGrow: "1", margin: "10px 0"}}>
-                      <Link to={"/profile/"+comment.username}>{comment.username}</Link> &nbsp;&nbsp;
-                      {comment.content}
-                    </div>
-
-                    <IconButton
-                      onTouchTap={this.deleteComment.bind(this, comment._id)}>
-                      <ActionClear />
-                    </IconButton>
-
-                  </div>
-                  <Divider />
-                </div>
+                <CommentView
+                  key={comment._id}
+                  commentObj={comment}
+                  postId={post._id}
+                  currentUser={this.props.currentUser} />
               );
             }.bind(this))}
 
