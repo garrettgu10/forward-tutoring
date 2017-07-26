@@ -69,7 +69,7 @@ export default class Post extends Component {
           <CardTitle
             title={
               <div style={{display: 'flex', alignItems: 'center'}}>
-                {post.answered && <ActionDone />}
+                {post.answered && <ActionDone style={{flexShrink: '0'}} />}
                 <div>{post.title}</div>
               </div>}
             style={{paddingBottom: "5px", flexGrow: "1"}}

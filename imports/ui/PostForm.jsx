@@ -54,20 +54,20 @@ export default class PostForm extends Component{
     return (
       <Card>
         <CardTitle
-          title="New post"
+          title="New question"
           style={{paddingBottom: '0'}}
           />
         <CardText style={{paddingTop: '0'}}>
           <TextField
             id="post-title-input"
-            floatingLabelText="Title"
+            floatingLabelText="Question"
             value={this.state.postTitleInputValue}
             fullWidth={true}
             onChange={this.handlePostTitleInputChange.bind(this)} />
           <br />
           <TextField
             id="post-input"
-            floatingLabelText="Post content"
+            floatingLabelText="Elaboration"
             multiLine={true}
             rows={2}
             fullWidth={true}

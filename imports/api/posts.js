@@ -35,15 +35,15 @@ Meteor.methods({
     }
 
     if(title.length == 0){
-      throw new Meteor.Error('bad-title', "The title cannot be empty");
+      throw new Meteor.Error('bad-title', "The question field cannot be empty");
     }
 
     if(title.length > 500){
-      throw new Meteor.Error('bad-title', "The title is over 500 characters long");
+      throw new Meteor.Error('bad-title', "The question is over 500 characters long");
     }
 
     if(content.length > 5000){
-      throw new Meteor.Error('bad-content', 'The content is over 5000 characters long');
+      throw new Meteor.Error('bad-content', 'The elaboration is over 5000 characters long');
     }
 
     if(Subjects.indexOf(subject) < 0){

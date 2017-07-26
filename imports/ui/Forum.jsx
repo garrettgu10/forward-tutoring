@@ -89,17 +89,6 @@ export default class Forum extends Component {
           </SelectField>
           <SelectField
             style={selectFieldStyle}
-            floatingLabelText="Sort by"
-            value={this.state.sortBy}
-            onChange={this.handleSortByChange.bind(this)}>
-            {WaysToSortPosts.map((method) => {
-              return(
-                <MenuItem key={method} value={method} primaryText={method} />
-              )
-            })}
-          </SelectField>
-          <SelectField
-            style={selectFieldStyle}
             floatingLabelText="Filter by subject"
             value={this.state.filterBySubject}
             onChange={this.handleFilterBySubjectChange.bind(this)}>
@@ -119,6 +108,17 @@ export default class Forum extends Component {
               return(
                 <MenuItem key={status} value={status} primaryText={status.capitalize()} />
               );
+            })}
+          </SelectField>
+          <SelectField
+            style={selectFieldStyle}
+            floatingLabelText="Sort by"
+            value={this.state.sortBy}
+            onChange={this.handleSortByChange.bind(this)}>
+            {WaysToSortPosts.map((method) => {
+              return(
+                <MenuItem key={method} value={method} primaryText={method} />
+              )
             })}
           </SelectField>
         </div>
