@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import ActionDone from 'material-ui/svg-icons/action/done';
+import {grey500, grey900} from 'material-ui/styles/colors';
 
 import Divider from 'material-ui/Divider';
 
@@ -46,6 +50,13 @@ export default class Post extends Component {
       });
   }
 
+  handleToggleAnswered(){
+    Meteor.call('posts.toggleAnswered', this.props.post._id,
+      function toggleAnsweredCallback(err){
+        if(err) alert(err);
+      })
+  }
+
   render() {
     var post = this.props.post;
     if(!post.comments) post.comments = [];
@@ -56,7 +67,11 @@ export default class Post extends Component {
       <Card key={post._id} style={{marginTop: '25px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
           <CardTitle
-            title={post.title}
+            title={
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                {post.answered && <ActionDone />}
+                <div>{post.title}</div>
+              </div>}
             style={{paddingBottom: "5px", flexGrow: "1"}}
           />
           <div style={{fontStyle: 'italic', color: "#9E9E9E", marginRight: '20px'}}>
@@ -69,12 +84,22 @@ export default class Post extends Component {
         <CardText>
           {post.content}
         </CardText>
-        <CardActions>
+        <CardActions style={{display: 'flex', alignItems: 'center'}}>
           <FlatButton
             label={post.numComments + " Comments"}
             onTouchTap ={this.toggleDisplayComments.bind(this)}/>
+          <div style={{flexGrow: '1'}}></div>
+          {canMarkAnswered &&
+            <IconButton
+              tooltip={"Mark "+(post.answered? "un": "")+"answered"}
+              onTouchTap={this.handleToggleAnswered.bind(this)}>
+              <ActionDone color={(post.answered? grey900: grey500)}/>
+            </IconButton>
+          }
           {canDelete &&
-            <FlatButton label="Delete" onTouchTap={this.handleDelete.bind(this)} />}
+            <IconButton tooltip="Delete" onTouchTap={this.handleDelete.bind(this)}>
+              <ActionDelete />
+            </IconButton>}
         </CardActions>
 
         {this.state.displayComments &&

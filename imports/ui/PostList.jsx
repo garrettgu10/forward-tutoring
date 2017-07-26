@@ -42,6 +42,8 @@ export default createContainer((props) => {
 
   const subjectFilter = Session.get('Forum.filterBySubject');
 
+  const statusFilter = Session.get('Forum.filterByStatus');
+
   var query = {};
 
   switch(sortBy){
@@ -53,6 +55,17 @@ export default createContainer((props) => {
       break;
     default:
       var sort = {modifiedDate: -1};
+  }
+
+  switch(statusFilter){
+    case 'Answered only':
+      query.answered = true;
+      break;
+    case 'Unanswered only':
+      query.answered = false;
+      break;
+    default:
+      //do nothing
   }
 
   if(subjectFilter !== 'all'){

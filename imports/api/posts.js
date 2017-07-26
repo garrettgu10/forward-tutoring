@@ -141,6 +141,6 @@ Meteor.methods({
     }
 
     Posts.update(postId, {$set: {answered: !post.answered}});
-    Meteor.call('posts.comment', postId, 'marked this post '+(!nowAnswered && 'un')+'answered');
+    Meteor.call('posts.comment', postId, 'marked this post '+(nowAnswered? '': 'un')+'answered');
   }
 });
