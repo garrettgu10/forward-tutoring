@@ -84,8 +84,8 @@ export default class Forum extends Component {
             floatingLabelText="Filter by ownership"
             value={this.state.onlyShowUserPosts}
             onChange={this.handleShowPostsChange.bind(this)} >
-            <MenuItem value={true} primaryText="Only my posts" />
-            <MenuItem value={false} primaryText="Everyone's posts" />
+            <MenuItem value={true} primaryText="Only my questions" />
+            <MenuItem value={false} primaryText="Everyone's questions" />
           </SelectField>
           <SelectField
             style={selectFieldStyle}

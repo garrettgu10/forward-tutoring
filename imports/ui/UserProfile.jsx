@@ -8,10 +8,19 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import {Users} from '../api/users.js';
 import CircularProgress from 'material-ui/CircularProgress';
 import {Roles} from '../constants/constants.js';
+import Avatar from 'material-ui/Avatar';
+
+import md5 from 'md5';
 
 String.prototype.capitalize = function(){
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
+
+String.prototype.colorCode = function() {
+  var hash = md5(this);
+
+  return (hash).slice(-6);
+};
 
 class UserProfile extends Component {
 
@@ -39,7 +48,11 @@ class UserProfile extends Component {
           <CardHeader
             title={user.username}
             subtitle={"Full name: " + user.profile.fullName}
-            avatar={user.profile.image || "/default_icon.png"}
+            avatar={
+              <Avatar backgroundColor={'#'+user.username.colorCode()}>
+                {user.username.charAt(0).toUpperCase()}
+              </Avatar>
+            }
           />
           <CardText>
             Role: {Roles[user.role].capitalize()}<br />

@@ -5,11 +5,12 @@ import React, {Component} from 'react';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import {Link, Redirect} from 'react-router-dom';
+import md5 from 'md5';
 
 String.prototype.colorCode = function() {
-  var hash = this.split("").reduce((prev, next) => ((prev << 13) - prev + next.charCodeAt(0)) & 0xffffff, 0);
+  var hash = md5(this);
 
-  return ("000000"+hash.toString(16)).slice(-6);
+  return (hash).slice(-6);
 };
 
 export default class UserLink extends Component {

@@ -11,6 +11,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import Home from './Home.jsx';
 import UserProfile from './UserProfile.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
+import TutorSearch from './TutorSearch.jsx';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -25,15 +26,6 @@ var NotFound = function(props){
   return(
     <div>
       Not found. I probably haven't written this yet.
-    </div>
-  )
-}
-
-var Consistent = function(props){
-  return (
-    <div>
-      DIS IS WARE PPL GOTS CONSISTNAT TUTERS<br />
-      I HAZ NOT BUILT THIS PART YET
     </div>
   )
 }
@@ -127,7 +119,7 @@ class App extends Component {
                 <Route path="/forum" component={
                   () => <Forum currentUser={this.props.currentUser} />
                 } />
-                <Route path="/consistent" component={Consistent} />
+                <Route path="/consistent" component={TutorSearch} />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
                 <Route path="/profile/:username" component={UserProfile} />
