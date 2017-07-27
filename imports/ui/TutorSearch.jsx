@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SelectField from 'material-ui/SelectField';
 import {Days} from '../constants/constants.js';
-import Checkbox from 'material-ui/Checkbox';
+import CheckBox from 'material-ui/CheckBox';
 
 Number.prototype.times = function(callback) {
   var result = [];
