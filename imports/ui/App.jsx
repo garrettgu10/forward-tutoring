@@ -12,6 +12,8 @@ import Home from './Home.jsx';
 import UserProfile from './UserProfile.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import TutorSearch from './TutorSearch.jsx';
+import {blue500, blue700, teal500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -85,6 +87,17 @@ var Loading = function(){
 }
 //--------------------------------------------------------
 
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: blue500,
+    primary2Color: blue700,
+    accent1Color: teal500,
+  },
+  appBar: {
+    height: 50,
+  },
+});
+
 
 class App extends Component {
   constructor(props){
@@ -98,17 +111,17 @@ class App extends Component {
 
   render() {
     return(
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <Router>
           <div>
             <AppBar
               title={logo()}
-              style={{position: "fixed", width: "100%"}}
+              style={{position: "fixed", width: "100%", backgroundColor: blue700}}
               onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
               iconElementRight={<RightButtons currentUser={this.props.currentUser}/>}
             />
 
-            <div className="main-container" style={{paddingTop: '80px'}}>
+            <div className="main-container" style={{paddingTop: '50px'}}>
               <Sidebar ref={(item) => {this.sidebar = item;}}/>
               <Switch>
                 {!this.props.ready &&

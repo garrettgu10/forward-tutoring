@@ -43,7 +43,7 @@ class UserProfile extends Component {
     }
 
     return (
-      <div id={user._id}>
+      <div id={user._id} className="container">
         <Card>
           <CardHeader
             title={user.username}

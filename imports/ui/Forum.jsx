@@ -74,7 +74,7 @@ export default class Forum extends Component {
     }
 
     return (
-      <div>
+      <div className="container">
         <PostForm />
 
         <br />

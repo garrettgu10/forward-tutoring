@@ -52,30 +52,32 @@ export default class TutorSearch extends Component {
 
   render() {
     return (
-      <Table selectable={false}>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn></TableHeaderColumn>
-            {5..times((i) => (<TableHeaderColumn key={i}>{i+5}pm</TableHeaderColumn>))}
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {this.state.checkMatrix.map((row, i) => {
-            return(
-              <TableRow key={i}>
-                <TableRowColumn style={{textOverflow: 'clip'}}>{Days[i]}</TableRowColumn>
-                {row.map((checked, j) => {
-                  return(
-                    <TableRowColumn key={i*5+j} onTouchTap={this.handleCheck.bind(this, i, j)}>
-                      <Checkbox checked={checked} />
-                    </TableRowColumn>
-                  )
-                })}
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
+      <div className="container">
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn></TableHeaderColumn>
+              {5..times((i) => (<TableHeaderColumn key={i}>{i+5}pm</TableHeaderColumn>))}
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {this.state.checkMatrix.map((row, i) => {
+              return(
+                <TableRow key={i}>
+                  <TableRowColumn style={{textOverflow: 'clip'}}>{Days[i]}</TableRowColumn>
+                  {row.map((checked, j) => {
+                    return(
+                      <TableRowColumn style={{cursor: 'pointer'}} key={i*5+j} onTouchTap={this.handleCheck.bind(this, i, j)}>
+                        <Checkbox checked={checked} />
+                      </TableRowColumn>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </div>
     )
   }
 }

@@ -6,17 +6,13 @@
   font-weight: 100 !important;
   font-size: 70px !important;
   margin: 10px 0 !important;
+  color: white !important;
 }
 
 .home_subtitle{
   font-weight: 100 !important;
   font-size: 30px !important;
-  color: #9E9E9E !important;
-}
-
-.home_logo{
-  margin-top: 75px !important;
-  width: 150px !important;
+  color: white !important;
 }
 
 .home_button{
@@ -33,4 +29,15 @@
   .home_subtitle{
     font-size: 25px !important;
   }
+}
+
+.home_button{
+  margin-bottom: 10px;
+}
+
+.home_logo{
+  margin-top: 125px !important;
+  border-radius: 50% !important;
+  width: 150px !important;
+  height: 150px !important;
 }

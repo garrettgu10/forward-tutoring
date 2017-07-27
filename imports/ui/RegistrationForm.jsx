@@ -65,7 +65,7 @@ export default class RegistrationForm extends Component {
     }
 
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form className="container" onSubmit={this.handleSubmit.bind(this)}>
         <TextField
           ref="username"
           floatingLabelText="Username"

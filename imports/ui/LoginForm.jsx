@@ -37,7 +37,7 @@ export default class LoginForm extends Component{
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form className="container" onSubmit={this.handleSubmit.bind(this)}>
         {this.state.success &&
           <Redirect to="/" />
         }
