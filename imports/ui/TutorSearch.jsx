@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 import SelectField from 'material-ui/SelectField';
 import {Days} from '../constants/constants.js';
-import CheckBox from 'material-ui/CheckBox';
+import Checkbox from 'material-ui/CheckBox';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 Number.prototype.times = function(callback) {
   var result = [];
@@ -33,36 +41,43 @@ export default class TutorSearch extends Component {
   }
 
   handleCheck(i, j){
-    var result = checkMatrix.map((row) => row.slice()); //copy array
+    var result = this.state.checkMatrix.map((row) => row.slice()); //copy array
 
     result[i][j] = !result[i][j];
 
-    this.setState(
+    this.setState({
       checkMatrix: result
-    )
+    })
   }
 
   render() {
     return (
-      <div>test</div>
+      <Table selectable={false}>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn></TableHeaderColumn>
+            {5..times((i) => (<TableHeaderColumn key={i}>{i+5}pm</TableHeaderColumn>))}
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          {this.state.checkMatrix.map((row, i) => {
+            return(
+              <TableRow key={i}>
+                <TableRowColumn style={{textOverflow: 'clip'}}>{Days[i]}</TableRowColumn>
+                {row.map((checked, j) => {
+                  return(
+                    <TableRowColumn key={i*5+j} onTouchTap={this.handleCheck.bind(this, i, j)}>
+                      <Checkbox checked={checked} />
+                    </TableRowColumn>
+                  )
+                })}
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
     )
   }
 }
 
-`<TableHeader>
-  <TableRow>
-    {5..times((i) => <TableHeaderColumn>{i+5}pm</TableHeaderColumn>)}
-  </TableRow>
-</TableHeader>
-<TableBody>
-  {this.state.checkMatrix.map((row, i) => {
-    <TableRow>
-      {row.map((checked, j) => {
-        <TableRowColumn>
-          {/*<Checkbox checked={checked} onCheck={this.handleCheck.bind(this, i, j)}/>*/}
-          asdfasdf
-        </TableRowColumn>
-      })}
-    </TableRow>
-  })}
-</TableBody>`
+``

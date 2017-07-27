@@ -7,7 +7,8 @@ Make sure you have meteor installed, then
 meteor npm install
 meteor
 ```
-I think that should work; I'm not sure if starting meteor makes it automatically install the necessary Atmosphere packages.
+I think that should work; I'm not sure if starting meteor makes it automatically install the necessary Atmosphere packages.  
+There's one small problem with getting material-ui's Table component to work in this environment for some reason. Replace '../Checkbox' with '../CheckBox' in material-ui/Table/TableBody.js and material-ui/Table/TableHeader.js.
 
 ## Accounts
 There are three types of accounts: student ("tutee") accounts, tutor accounts, and admin/mod accounts.  
