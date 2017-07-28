@@ -11,7 +11,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import Home from './Home.jsx';
 import UserProfile from './UserProfile.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
-import TutorSearch from './TutorSearch.jsx';
+import TutorSearch from './consistent/TutorSearch.jsx';
 import {blue500, blue700, teal500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
