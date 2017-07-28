@@ -6,3 +6,9 @@ export const Subjects = ['math', 'science', 'english', 'other'];
 export const WaysToSortPosts = ['Latest update', 'Date of creation'];
 export const PostStatusFilters = ['Answered only', 'Unanswered only', 'All'];
 export const Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+export const Timezones = [
+  {name: 'Pacific', offset: -2},
+  {name: 'Mountain', offset: -1},
+  {name: 'Central', offset: 0},
+  {name: 'Eastern', offset: 1}
+]

@@ -65,69 +65,72 @@ export default class RegistrationForm extends Component {
     }
 
     return (
-      <form className="container" onSubmit={this.handleSubmit.bind(this)}>
-        <TextField
-          ref="username"
-          floatingLabelText="Username"
-          fullWidth={true}
-          value={this.state.usernameInputValue}
-          onChange={this.handleInputChange.bind(this, 'username')} />
-        <TextField
-          ref="firstname"
-          floatingLabelText="First Name"
-          fullWidth={true}
-          value={this.state.firstnameInputValue}
-          onChange={this.handleInputChange.bind(this, 'firstname')} />
-        <TextField
-          ref="lastname"
-          floatingLabelText="Last Name"
-          fullWidth={true}
-          value={this.state.lastnameInputValue}
-          onChange={this.handleInputChange.bind(this, 'lastname')} />
-        <TextField
-          ref="email"
-          floatingLabelText="Email"
-          fullWidth={true}
-          value={this.state.emailInputValue}
-          onChange={this.handleInputChange.bind(this, 'email')} />
-        <TextField
-          ref="password"
-          floatingLabelText="Password"
-          fullWidth={true}
-          value={this.state.passwordInputValue}
-          onChange={this.handleInputChange.bind(this, 'password')}
-          type="password" />
-        <TextField
-          ref="passwordConfirm"
-          floatingLabelText="Password Confirm"
-          fullWidth={true}
-          value={this.state.passwordConfirmInputValue}
-          onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
-          type="password" />
-        <SelectField name="role"
-          value={this.state.roleInputValue}
-          onChange={this.handleRoleInputChange.bind(this)}
-          floatingLabelText="I am a">
-          <MenuItem
-            value={0}
-            primaryText="Student" />
-          <MenuItem
-            value={1}
-            primaryText="Tutor" />
-          <MenuItem
-            value={2}
-            primaryText="Admin" />
-        </SelectField>
-        <TextField
-          floatingLabelText="Registration Key"
-          fullWidth={true}
-          value={this.state.roleKeyInputValue}
-          onChange={this.handleInputChange.bind(this, 'roleKey')} />
-        <br />
-        <br />
-        <RaisedButton label="Submit" primary={true} type="submit" />
+      <div className="container">
+        <h1 style={{fontSize: '40px', fontWeight: '200', marginBottom: '0'}}>Sign up</h1>
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <TextField
+            ref="username"
+            floatingLabelText="Username"
+            fullWidth={true}
+            value={this.state.usernameInputValue}
+            onChange={this.handleInputChange.bind(this, 'username')} />
+          <TextField
+            ref="firstname"
+            floatingLabelText="First Name"
+            fullWidth={true}
+            value={this.state.firstnameInputValue}
+            onChange={this.handleInputChange.bind(this, 'firstname')} />
+          <TextField
+            ref="lastname"
+            floatingLabelText="Last Name"
+            fullWidth={true}
+            value={this.state.lastnameInputValue}
+            onChange={this.handleInputChange.bind(this, 'lastname')} />
+          <TextField
+            ref="email"
+            floatingLabelText="Email"
+            fullWidth={true}
+            value={this.state.emailInputValue}
+            onChange={this.handleInputChange.bind(this, 'email')} />
+          <TextField
+            ref="password"
+            floatingLabelText="Password"
+            fullWidth={true}
+            value={this.state.passwordInputValue}
+            onChange={this.handleInputChange.bind(this, 'password')}
+            type="password" />
+          <TextField
+            ref="passwordConfirm"
+            floatingLabelText="Password Confirm"
+            fullWidth={true}
+            value={this.state.passwordConfirmInputValue}
+            onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
+            type="password" />
+          <SelectField name="role"
+            value={this.state.roleInputValue}
+            onChange={this.handleRoleInputChange.bind(this)}
+            floatingLabelText="I am a">
+            <MenuItem
+              value={0}
+              primaryText="Student" />
+            <MenuItem
+              value={1}
+              primaryText="Tutor" />
+            <MenuItem
+              value={2}
+              primaryText="Admin" />
+          </SelectField>
+          <TextField
+            floatingLabelText="Registration Key"
+            fullWidth={true}
+            value={this.state.roleKeyInputValue}
+            onChange={this.handleInputChange.bind(this, 'roleKey')} />
+          <br />
+          <br />
+          <RaisedButton label="Submit" primary={true} type="submit" />
 
-      </form>
+        </form>
+      </div>
     )
   }
 }
