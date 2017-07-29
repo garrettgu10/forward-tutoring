@@ -10,6 +10,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import MenuItem from 'material-ui/MenuItem';
+import {grey400} from 'material-ui/styles/colors';
 
 import {Days, Timezones} from '../constants/constants.js';
 
@@ -37,15 +38,12 @@ export default class ChooseDate extends Component {
       }
     }
 
-    if(props.saveTo){
-      //initialize checkMatrix if necessary
-      const checkedTimes = Session.get(props.saveTo) || [];
-      checkedTimes.forEach((t) => {
-        const i = Math.floor(t/5);
-        const j = t%5;
-        checkMatrix[i][j] = true;
-      })
-    }
+    const checkedTimes = props.checkedTimes || [];
+    checkedTimes.forEach((t) => {
+      const i = Math.floor(t/5);
+      const j = t%5;
+      checkMatrix[i][j] = true;
+    })
 
     this.state = {
       checkMatrix: checkMatrix,
@@ -103,54 +101,57 @@ export default class ChooseDate extends Component {
     })
   }
 
-  saveToSession(){
-    const toBeSaved = [];
+  getCheckedTimes(){
+    const checkedTimes = [];
     this.state.checkMatrix.forEach((row, i) => {
       row.forEach((val, j) => {
-        if(val) toBeSaved.push(i*5+j);
+        if(val) checkedTimes.push(i*5+j);
       })
     })
-    Session.set(this.props.saveTo, toBeSaved);
+    return checkedTimes;
   }
 
   TimesTable = () => {
     return(
-      <Table selectable={false}>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-          <TableRow>
-            <TableHeaderColumn></TableHeaderColumn>
-            {5..times((i) => {
-              const startHr = i+5+this.state.offset;
+      <div>
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn></TableHeaderColumn>
+              {5..times((i) => {
+                const startHr = i+5+this.state.offset;
+                return(
+                  <TableHeaderColumn
+                    key={i}
+                    onTouchTap={this.toggleEntireColumn.bind(this, i)}
+                    style={{cursor: 'pointer'}}>
+                    {startHr}-{startHr+1}pm
+                  </TableHeaderColumn>
+                )
+              })}
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {this.state.checkMatrix.map((row, i) => {
               return(
-                <TableHeaderColumn
-                  key={i}
-                  onTouchTap={this.toggleEntireColumn.bind(this, i)}
-                  style={{cursor: 'pointer'}}>
-                  {startHr}-{startHr+1}pm
-                </TableHeaderColumn>
+                <TableRow key={i}>
+                  <TableRowColumn
+                    onTouchTap={this.toggleEntireRow.bind(this, i)}
+                    style={{textOverflow: 'clip', cursor: 'pointer'}}>{Days[i]}</TableRowColumn>
+                  {row.map((checked, j) => {
+                    return(
+                      <TableRowColumn style={{cursor: 'pointer'}} key={i*5+j} onTouchTap={this.handleCheck.bind(this, i, j)}>
+                        <Checkbox checked={checked} />
+                      </TableRowColumn>
+                    )
+                  })}
+                </TableRow>
               )
             })}
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {this.state.checkMatrix.map((row, i) => {
-            return(
-              <TableRow key={i}>
-                <TableRowColumn
-                  onTouchTap={this.toggleEntireRow.bind(this, i)}
-                  style={{textOverflow: 'clip', cursor: 'pointer'}}>{Days[i]}</TableRowColumn>
-                {row.map((checked, j) => {
-                  return(
-                    <TableRowColumn style={{cursor: 'pointer'}} key={i*5+j} onTouchTap={this.handleCheck.bind(this, i, j)}>
-                      <Checkbox checked={checked} />
-                    </TableRowColumn>
-                  )
-                })}
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+        <div style={{color: grey400, margin: '20px 25px'}}>Tip: click on a row or column header to select multiple timeslots at once.</div>
+      </div>
     )
   }
 

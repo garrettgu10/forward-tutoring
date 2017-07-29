@@ -20,7 +20,9 @@ export default class EditTutorProfile extends Component {
 
   handleNext() {
     if(this.state.activeStep == 0){
-      this.chooseDate.saveToSession();
+      this.setState({
+        checkedTimes: this.chooseDate.getCheckedTimes()
+      });
     }
     this.setState({
       activeStep: this.state.activeStep+1
@@ -35,7 +37,7 @@ export default class EditTutorProfile extends Component {
 
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
-      case 0: return <ChooseDate saveTo="Consistent.checkedTimes" ref={(ref) => {this.chooseDate = ref;}} />;
+      case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
       default: return (<div>hello</div>);
     }
   }
