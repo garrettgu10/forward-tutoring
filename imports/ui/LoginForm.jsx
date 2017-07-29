@@ -3,9 +3,10 @@ import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Accounts} from 'meteor/accounts-base';
+import {createContainer} from 'meteor/react-meteor-data';
 import {Redirect, Link} from 'react-router-dom';
 
-export default class LoginForm extends Component{
+class LoginForm extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -36,6 +37,10 @@ export default class LoginForm extends Component{
   }
 
   render() {
+    if(this.props.userId){
+      return <Redirect to="/" />
+    }
+
     return (
       <div className="container">
         <h1 style={{fontSize: '40px', fontWeight: '200', marginBottom: '0'}}>Login</h1>
@@ -72,3 +77,7 @@ export default class LoginForm extends Component{
     )
   }
 }
+
+export default createContainer((props) => ({
+  userId: Meteor.userId()
+}), LoginForm);

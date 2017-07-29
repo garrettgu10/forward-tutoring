@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import {createContainer} from 'meteor/react-meteor-data';
+
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Accounts} from 'meteor/accounts-base';
@@ -7,7 +9,7 @@ import {Redirect} from 'react-router-dom';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-export default class RegistrationForm extends Component {
+class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state={
@@ -61,7 +63,11 @@ export default class RegistrationForm extends Component {
     const from = this.props.from || '/';
 
     if(this.state.success){
-      return <Redirect to={from} />
+      return <Redirect to={from} />;
+    }
+
+    if(this.props.userId){
+      return <Redirect to="/" />;
     }
 
     return (
@@ -134,3 +140,7 @@ export default class RegistrationForm extends Component {
     )
   }
 }
+
+export default createContainer((props) => ({
+  userId: Meteor.userId()
+}), RegistrationForm);

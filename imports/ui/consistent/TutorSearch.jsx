@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ChooseDate from './ChooseDate.jsx';
+import ChooseDate from '../ChooseDate.jsx';
 import {
   Step,
   Stepper,
@@ -7,6 +7,7 @@ import {
 } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import {Redirect} from 'react-router-dom';
 
 export default class TutorSearch extends Component {
   constructor(props){
@@ -33,12 +34,18 @@ export default class TutorSearch extends Component {
 
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
-      case 0: return <ChooseDate ref={(ref) => {this.chooseDate = ref;}} />;
+      case 0: return <ChooseDate saveTo="Consistent.checkedTimes" ref={(ref) => {this.chooseDate = ref;}} />;
       default: return (<div>hello</div>);
     }
   }
 
   render() {
+    if(!this.props.currentUser) {
+      return (
+        <Redirect to="/login" />
+      )
+    }
+
     return(
       <div className="container">
         <Stepper activeStep = {this.state.activeStep}>

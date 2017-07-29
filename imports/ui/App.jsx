@@ -12,6 +12,7 @@ import Home from './Home.jsx';
 import UserProfile from './UserProfile.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import TutorSearch from './consistent/TutorSearch.jsx';
+import EditTutorProfile from './consistent-tutor/EditTutorProfile.jsx';
 import {blue500, blue700, teal500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -19,6 +20,7 @@ const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
 const Router = ReactRouter.BrowserRouter;
 const Route = ReactRouter.Route;
+const Redirect = ReactRouter.Redirect;
 const Switch = ReactRouter.Switch;
 
 //STUB COMPONENTS FOR TESTING ROUTES, WILL BE IN THEIR OWN FILES
@@ -109,6 +111,18 @@ class App extends Component {
     this.sidebar.handleToggle();
   }
 
+  ConsistentPanel = (props) => {
+    var {currentUser, ready} = this.props;
+    if(!ready) return <Loading />
+    if(!currentUser) return <Redirect to="/login" />;
+
+    switch(currentUser.role){
+      case 0: return <TutorSearch currentUser={currentUser} />;
+      case 1: return <EditTutorProfile currentUser={currentUser} />;
+      default : return (<div className="container">You must be logged in as a student or a tutor to do this.</div>);
+    }
+  }
+
   render() {
     return(
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -132,7 +146,7 @@ class App extends Component {
                 <Route path="/forum" component={
                   () => <Forum currentUser={this.props.currentUser} />
                 } />
-                <Route path="/consistent" component={TutorSearch} />
+                <Route path="/consistent" component={this.ConsistentPanel} />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
                 <Route path="/profile/:username" component={UserProfile} />
@@ -149,6 +163,12 @@ class App extends Component {
 
 export default createContainer(() => {
   if(!Meteor.loggingIn()){
+    if(!Meteor.userId()){
+      return{
+        currentUser: null,
+        ready: true
+      }
+    }
     var subscription = Meteor.subscribe('user.byId', Meteor.userId());
   }else{
     return {
