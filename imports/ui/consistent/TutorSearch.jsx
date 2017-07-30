@@ -8,6 +8,7 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router-dom';
+import ContactInfo from '../ContactInfo.jsx';
 
 export default class TutorSearch extends Component {
   constructor(props){
@@ -37,6 +38,7 @@ export default class TutorSearch extends Component {
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
       case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
+      case 2: return <ContactInfo currentUser={this.props.currentUser} />
       default: return (<div>hello</div>);
     }
   }
@@ -71,7 +73,7 @@ export default class TutorSearch extends Component {
           <RaisedButton
             onTouchTap={this.handleNext.bind(this)}
             primary={true}
-            label="Next" />
+            label={this.state.activeStep === 2? "Submit": "Next"} />
         </div>
       </div>
     )

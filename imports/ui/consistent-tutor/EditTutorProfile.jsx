@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router-dom';
 import ChooseDate from '../ChooseDate.jsx';
+import ContactInfo from '../ContactInfo.jsx';
 
 export default class EditTutorProfile extends Component {
   constructor(props){
@@ -38,7 +39,8 @@ export default class EditTutorProfile extends Component {
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
       case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
-      default: return (<div>hello</div>);
+      case 1: return <ContactInfo currentUser={this.props.currentUser} />
+      default: return (<div>Sorry, you shouldn't be here. Refresh the page and try again.</div>);
     }
   }
 
@@ -69,7 +71,7 @@ export default class EditTutorProfile extends Component {
           <RaisedButton
             onTouchTap={this.handleNext.bind(this)}
             primary={true}
-            label="Next" />
+            label={this.state.activeStep === 1? "Submit": "Next"} />
         </div>
       </div>
     )
