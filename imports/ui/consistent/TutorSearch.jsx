@@ -10,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router-dom';
 import ContactInfo from '../ContactInfo.jsx';
 
+const MAX_STEP = 2;
+
 export default class TutorSearch extends Component {
   constructor(props){
     super(props);
@@ -23,6 +25,9 @@ export default class TutorSearch extends Component {
       this.setState({
         checkedTimes: this.chooseDate.getCheckedTimes()
       });
+    }
+    if(this.state.activeStep == MAX_STEP){
+      //submit stuff
     }
     this.setState({
       activeStep: this.state.activeStep+1
@@ -73,7 +78,7 @@ export default class TutorSearch extends Component {
           <RaisedButton
             onTouchTap={this.handleNext.bind(this)}
             primary={true}
-            label={this.state.activeStep === 2? "Submit": "Next"} />
+            label={this.state.activeStep === MAX_STEP? "Submit": "Next"} />
         </div>
       </div>
     )

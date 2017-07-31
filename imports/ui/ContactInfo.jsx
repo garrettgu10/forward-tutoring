@@ -8,14 +8,16 @@ export default class ContactInfo extends Component {
     super(props);
     this.state= {
       email: this.props.currentUser.emails[0].address,
-      skype: ""
+      skype: "",
+      description: ""
     }
   }
 
   getContactInfo() {
     var result = {
       email: this.state.email,
-      skype: this.state.skype
+      skype: this.state.skype,
+      description: this.state.description
     }
     return result;
   }
@@ -48,6 +50,8 @@ export default class ContactInfo extends Component {
             multiLine={true}
             rows={2}
             floatingLabelText="Additional profile info"
+            value={this.state.description}
+            onChange={this.handleInputChange.bind(this, "description")}
             fullWidth={true} />
         }
       </form>
