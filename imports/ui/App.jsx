@@ -178,7 +178,7 @@ export default createContainer(() => {
   }
 
   return {
-    currentUser: Meteor.users.findOne(Meteor.userId(), {fields: {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1}}),
+    currentUser: Meteor.users.findOne(Meteor.userId()),
     ready: subscription.ready()
   }
 }, App);

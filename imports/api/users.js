@@ -37,6 +37,6 @@ Meteor.methods({
       throw new Meteor.Error('bad-checked-times', 'You must choose at least one time slot');
     }
 
-    Users.update(this.userId, $set: {email: email, skype: skype, tutorProfile: {times: checkedTimes, description: description}});
+    Users.update(this.userId, {$set: {email: email, skype: skype, tutorProfile: {times: checkedTimes, description: description}}});
   }
 })

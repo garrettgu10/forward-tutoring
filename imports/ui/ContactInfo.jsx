@@ -6,10 +6,11 @@ export default class ContactInfo extends Component {
 
   constructor(props){
     super(props);
+    var {currentUser, email, skype, description} = this.props;
     this.state= {
-      email: this.props.currentUser.emails[0].address,
-      skype: "",
-      description: ""
+      email: email || currentUser.emails[0].address,
+      skype: skype || (currentUser.skype || ""),
+      description: description || (currentUser.tutorProfile? currentUser.tutorProfile.description : "")
     }
   }
 

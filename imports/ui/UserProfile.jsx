@@ -9,6 +9,7 @@ import {Users} from '../api/users.js';
 import CircularProgress from 'material-ui/CircularProgress';
 import {Roles} from '../constants/constants.js';
 import Avatar from 'material-ui/Avatar';
+import {Days} from '../constants/constants.js';
 
 import md5 from 'md5';
 
@@ -21,6 +22,12 @@ String.prototype.colorCode = function() {
 
   return (hash).slice(-6);
 };
+
+function getTimeDescription(timeNum) {
+  var day = Math.floor(timeNum/5);
+  var time = timeNum%5 + 5;
+  return Days[day] + " " + time + " PM";
+}
 
 class UserProfile extends Component {
 
@@ -57,7 +64,24 @@ class UserProfile extends Component {
           <CardText>
             Role: {Roles[user.role].capitalize()}<br />
             Email: {user.emails[0].address}<br />
-            Member since: {user.createdAt.toDateString()}
+            Member since: {user.createdAt.toDateString()}<br />
+            {user.tutorProfile &&
+              <div>
+                Tutor info:
+                <div style={{paddingLeft: "20px"}}>
+                  Skype: {user.skype}<br />
+                  Description: {user.tutorProfile.description}<br />
+                  Available times: {user.tutorProfile.times.map(
+                    (timeNum, index) => (
+                      <span>
+                        {getTimeDescription(timeNum)
+                          + (index === user.tutorProfile.times.length-1? "": ", ") /*insert comma if not last element */
+                        }
+                      </span>
+                    ))}
+                </div>
+              </div>
+            }
           </CardText>
         </Card>
       </div>

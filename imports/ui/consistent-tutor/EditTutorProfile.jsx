@@ -17,9 +17,11 @@ const MAX_STEP = 1;
 export default class EditTutorProfile extends Component {
   constructor(props){
     super(props);
+    var {currentUser} = this.props;
     this.state = {
       activeStep: 0,
-      success: false
+      success: false,
+      checkedTimes: (currentUser.tutorProfile? currentUser.tutorProfile.checkedTimes: [])
     }
   }
 
@@ -30,10 +32,10 @@ export default class EditTutorProfile extends Component {
       });
     }
     if(this.state.activeStep === MAX_STEP){
-      let {email, skype, description} = this.contactInfo.getContactInfo();
+      let {email, skype, description} = this.contactInfoForm.getContactInfo();
       let checkedTimes = this.state.checkedTimes;
       Meteor.call('users.addTutorInfo', checkedTimes, email, skype, description,
-        function addContactInfoCallback(err) {
+        (err) => {
           if(err){
             alert(err);
           }else{
@@ -49,6 +51,14 @@ export default class EditTutorProfile extends Component {
   }
 
   handlePrev() {
+    if(this.state.activeStep === 1){
+      var {email, skype, description} = this.contactInfoForm.getContactInfo();
+      this.setState({
+        email: email,
+        skype: skype,
+        description: description
+      });
+    }
     this.setState({
       activeStep: this.state.activeStep-1
     })
@@ -56,8 +66,14 @@ export default class EditTutorProfile extends Component {
 
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
-      case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
-      case 1: return <ContactInfo currentUser={this.props.currentUser} ref={(ref => {this.contactInfo = ref;})} />
+      case 0: return (<ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />);
+      case 1: return (
+        <ContactInfo
+          currentUser={this.props.currentUser}
+          ref={(ref => {this.contactInfoForm = ref;})}
+          email={this.state.email}
+          skype={this.state.skype}
+          description={this.state.description} />);
       default: return (<div>Sorry, you shouldn't be here. Refresh the page and try again.</div>);
     }
   }
