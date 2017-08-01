@@ -28,3 +28,7 @@ Meteor.publish("user", (username) => {
 Meteor.publish("user.byId", (userId) => {
   return Meteor.users.find(userId, {fields: userFields})
 })
+
+Meteor.publish('user.tutorsByTimes', (times) => {
+  return Meteor.users.find({role: 1, "tutorProfile.times": {$in: times}}, {fields: userFields});
+})

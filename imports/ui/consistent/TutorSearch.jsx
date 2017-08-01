@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router-dom';
 import ContactInfo from '../ContactInfo.jsx';
+import TutorsList from './TutorsList.jsx';
 
 const MAX_STEP = 2;
 
@@ -43,8 +44,9 @@ export default class TutorSearch extends Component {
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
       case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
-      case 2: return <ContactInfo currentUser={this.props.currentUser} />
-      default: return (<div>hello</div>);
+      case 1: return <TutorsList times={this.state.checkedTimes} />;
+      case 2: return <ContactInfo currentUser={this.props.currentUser} />;
+      default: return (<div>You shouldn't be here. Please refresh this page.</div>);
     }
   }
 
