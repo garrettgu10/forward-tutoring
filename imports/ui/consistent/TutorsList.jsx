@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import CircularProgress from 'material-ui/CircularProgress';
 import {Days} from '../../constants/constants.js';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import md5 from 'md5';
@@ -47,19 +48,23 @@ class TutorView extends Component {
             <Avatar backgroundColor={'#'+tutor.username.colorCode()}>
               {tutor.username.charAt(0).toUpperCase()}
             </Avatar>
-          }
-          actAsExpander={true}
-          showExpandableButton={true}>
+          }>
         </CardHeader>
         <CardText
-          expandable={true}
           style={{paddingTop: '0'}}>
           <div>{tutor.tutorProfile.description}</div>
-          {times.intersect_sorted(tutor.tutorProfile.times).map((time) => {
-            var day = Math.floor(time/5);
-            var hour = time%5 + 5 + this.props.dateOffset;
-            return (<div key={time}>{Days[day]} {hour}-{hour+1}PM</div>);
-          })}
+          <RadioButtonGroup name="times">
+            {times.intersect_sorted(tutor.tutorProfile.times).map((time) => {
+              var day = Math.floor(time/5);
+              var hour = time%5 + 5 + this.props.dateOffset;
+              return (
+                <RadioButton
+                  key={time}
+                  label={Days[day]+" "+hour+"-"+(hour+1+"PM")}
+                  value={time} />
+              )
+            })}
+          </RadioButtonGroup>
         </CardText>
       </Card>
     );
