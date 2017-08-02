@@ -111,6 +111,10 @@ export default class ChooseDate extends Component {
     return checkedTimes;
   }
 
+  getOffset() {
+    return this.state.offset;
+  }
+
   TimesTable = () => {
     return(
       <div>

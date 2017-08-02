@@ -24,7 +24,8 @@ export default class TutorSearch extends Component {
   handleNext() {
     if(this.state.activeStep == 0){
       this.setState({
-        checkedTimes: this.chooseDate.getCheckedTimes()
+        checkedTimes: this.chooseDate.getCheckedTimes(),
+        dateOffset: this.chooseDate.getOffset()
       });
     }
     if(this.state.activeStep == MAX_STEP){
@@ -44,7 +45,7 @@ export default class TutorSearch extends Component {
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
       case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
-      case 1: return <TutorsList times={this.state.checkedTimes} />;
+      case 1: return <TutorsList dateOffset={this.state.dateOffset} times={this.state.checkedTimes} />;
       case 2: return <ContactInfo currentUser={this.props.currentUser} />;
       default: return (<div>You shouldn't be here. Please refresh this page.</div>);
     }
