@@ -123,12 +123,25 @@ class TutorsList extends Component {
     })
   }
 
+  getChoice() {
+    return {
+      tutor: this.state.tutorIndex,
+      time: this.tutorViews[this.state.tutorIndex].getChosenTime()
+    }
+  }
+
   render() {
     if(!this.props.ready){
       return (
         <div style={{textAlign: "center"}}>
           <CircularProgress size={80} thickness={5} />
         </div>
+      )
+    }
+
+    if(this.props.tutors.length === 0){
+      return (
+        <div>No tutors matching your query have been found.</div>
       )
     }
 
