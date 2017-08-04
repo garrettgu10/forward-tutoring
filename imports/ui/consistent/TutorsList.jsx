@@ -124,7 +124,14 @@ class TutorsList extends Component {
   }
 
   getChoice() {
+    if(!this.tutorViews[this.state.tutorIndex]){
+      return ({
+        valid: false
+      })
+    }
+
     return {
+      valid: true,
       tutor: this.state.tutorIndex,
       time: this.tutorViews[this.state.tutorIndex].getChosenTime()
     }
