@@ -6,18 +6,9 @@ import {Subjects} from '../constants/constants.js';
 export const Posts = new Mongo.Collection('posts');
 
 if(Meteor.isServer){
-  Meteor.publish('posts', function postsPublication() {
-    return Posts.find({});
+  Meteor.publish('posts', function postsPublication(query, sort=$natural, skip = 0, limit = Infinity) {
+    return Posts.find(query, {sort: sort, skip: skip, limit: limit});
   });
-
-  Meteor.publish('myposts', function myPostsPublication(){
-    const userId = this.userId;
-    if(!userId){
-      throw new Meteor.Error('not-authorized');
-    }
-
-    return Posts.find({owner: userId});
-  })
 
   Meteor.publish('comments', function commentsPublication(postId) {
     return Posts.find({}, {fields: {comemnts: 1}});
