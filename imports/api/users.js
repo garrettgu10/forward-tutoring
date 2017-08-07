@@ -102,8 +102,8 @@ Meteor.methods({
         throw new Meteor.Error('bad-tutor', 'The tutor already has the maximum number of students');
       }
 
-      Users.update(tutor, {$push: {'tutorProfile.students': this.userId}, $pull: {'tutorProfile.times': time}});
-      Users.update(student, {$set: { tutor: tutor }});
+      Users.update(tutor, {$push: {'tutorProfile.students': {id: student, time: time}}, $pull: {'tutorProfile.times': time}});
+      Users.update(student, {$set: { tutor: {id: tutor, time: time} }});
     }
   }
 })
