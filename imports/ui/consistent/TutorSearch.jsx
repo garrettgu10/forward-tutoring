@@ -72,6 +72,7 @@ export default class TutorSearch extends Component {
 
     return(
       <div className="container">
+        <h1 style={{fontSize: '30px', fontWeight: '200', marginBottom: '20px'}}>Find a Consistent Tutor</h1>
         <Stepper activeStep = {this.state.activeStep}>
           <Step>
             <StepLabel>Choose viable times</StepLabel>
