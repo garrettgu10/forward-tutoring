@@ -24,13 +24,14 @@ export default class TutorSearch extends Component {
   handleNext() {
     if(this.state.activeStep === 0){
       this.setState({
-        checkedTimes: this.chooseDate.getCheckedTimes(),
-        dateOffset: this.chooseDate.getOffset()
+        checkedTimes: this.chooseDateForm.getCheckedTimes(),
+        dateOffset: this.chooseDateForm.getOffset()
       });
     }
 
     if(this.state.activeStep === 1){
-      var tutorChoice = this.chooseTutor.getChoice();
+      var tutorChoice = this.chooseTutorForm.getChoice();
+      
       if(!tutorChoice.valid){
         alert("Error: no tutor chosen");
         return;
@@ -41,8 +42,22 @@ export default class TutorSearch extends Component {
     }
 
     if(this.state.activeStep == MAX_STEP){
-      //submit stuff
+      var {email, skype} = this.contactInfoForm.getContactInfo();
+      var {tutor, time} = this.state.tutorChoice;
+      Meteor.call('users.updateContactInfo', email, skype, function(err) {
+        if(err) {
+          alert(err);
+          return;
+        }
+        Meteor.call('users.chooseTutor', tutor, time, function(err) {
+          if(err) {
+            alert(err);
+          }
+        });
+      });
+      return;
     }
+
     this.setState({
       activeStep: this.state.activeStep+1
     })
@@ -56,9 +71,9 @@ export default class TutorSearch extends Component {
 
   BodyPanel = ({activeStep}) => {
     switch(activeStep) {
-      case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDate = ref;}} />;
-      case 1: return <TutorsList dateOffset={this.state.dateOffset} times={this.state.checkedTimes} ref={(ref) => {this.chooseTutor = ref;}} />;
-      case 2: return <ContactInfo currentUser={this.props.currentUser} />;
+      case 0: return <ChooseDate checkedTimes={this.state.checkedTimes} ref={(ref) => {this.chooseDateForm = ref;}} />;
+      case 1: return <TutorsList dateOffset={this.state.dateOffset} times={this.state.checkedTimes} innerRef={(ref) => {this.chooseTutorForm = ref;}} />;
+      case 2: return <ContactInfo currentUser={this.props.currentUser} ref={(ref) => {this.contactInfoForm = ref;}} />;
       default: return (<div>You shouldn't be here. Please refresh this page.</div>);
     }
   }

@@ -124,16 +124,18 @@ class TutorsList extends Component {
   }
 
   getChoice() {
-    if(!this.tutorViews[this.state.tutorIndex]){
+    if(!this.tutorViews[this.state.focusedTutor]){
       return ({
         valid: false
       })
     }
 
+    var tutorView = this.tutorViews[this.state.focusedTutor];
+
     return {
       valid: true,
-      tutor: this.state.tutorIndex,
-      time: this.tutorViews[this.state.tutorIndex].getChosenTime()
+      tutor: this.props.tutors[this.state.focusedTutor]._id,
+      time: this.tutorViews[this.state.focusedTutor].getChosenTime()
     }
   }
 
@@ -173,6 +175,7 @@ export default createContainer((props) => {
   var subscription = Meteor.subscribe('user.tutorsByTimes', props.times);
   return {
     tutors: Users.find({role: 1, "tutorProfile.times": {$in: props.times}}, {reactive: false}).fetch().shuffle(), //shuffle tutors to give an equal opportunity
-    ready: subscription.ready()
+    ready: subscription.ready(),
+    ref: props.innerRef
   }
 }, TutorsList);
