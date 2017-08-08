@@ -11,7 +11,7 @@ Accounts.validateNewUser((user) => {
   return true;
 });
 
-const userFields = {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1, tutorProfile: 1, skype: 1};
+const userFields = {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1, tutorProfile: 1, skype: 1, tutor: 1};
 
 Accounts.onCreateUser((options, user) => {
   user.roleKey = options.roleKey || "";

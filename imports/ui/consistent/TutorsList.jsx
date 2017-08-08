@@ -98,7 +98,8 @@ class TutorView extends Component {
                 <RadioButton
                   key={time}
                   label={Days[day]+" "+hour+"-"+(hour+1+"PM")}
-                  value={time} />
+                  value={time}
+                  style={{marginTop: '10px'}} />
               )
             })}
           </RadioButtonGroup>

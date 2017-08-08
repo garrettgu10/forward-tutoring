@@ -85,6 +85,14 @@ export default class TutorSearch extends Component {
       )
     }
 
+    var {currentUser} = this.props;
+
+    if(currentUser.tutor) {
+      return (
+        <div>You already have a tutor. Their id is {JSON.stringify(currentUser.tutor)}.</div>
+      )
+    }
+
     return(
       <div className="container">
         <h1 style={{fontSize: '30px', fontWeight: '200', marginBottom: '20px'}}>Find a Consistent Tutor</h1>
