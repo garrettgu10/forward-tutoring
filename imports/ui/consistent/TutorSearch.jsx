@@ -10,6 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Redirect} from 'react-router-dom';
 import ContactInfo from '../ContactInfo.jsx';
 import TutorsList from './TutorsList.jsx';
+import ShowTutor from './ShowTutor.jsx';
 
 const MAX_STEP = 2;
 
@@ -88,9 +89,10 @@ export default class TutorSearch extends Component {
     var {currentUser} = this.props;
 
     if(currentUser.tutor) {
+      const {tutor} = currentUser;
       return (
-        <div>You already have a tutor. Their id is {JSON.stringify(currentUser.tutor)}.</div>
-      )
+        <ShowTutor id={tutor.id} time={tutor.time} />
+      );
     }
 
     return(

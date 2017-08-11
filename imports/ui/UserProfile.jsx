@@ -61,7 +61,7 @@ class UserProfile extends Component {
               </Avatar>
             }
           />
-          <CardText>
+          <CardText style={{paddingTop: 0}}>
             Role: {Roles[user.role].capitalize()}<br />
             Email: {user.emails[0].address}<br />
             Member since: {user.createdAt.toDateString()}<br />
@@ -71,14 +71,20 @@ class UserProfile extends Component {
                 <div style={{paddingLeft: "20px"}}>
                   Skype: {user.skype}<br />
                   Description: {user.tutorProfile.description}<br />
-                  Available times: {user.tutorProfile.times.map(
-                    (timeNum, index) => (
-                      <span>
-                        {getTimeDescription(timeNum)
-                          + (index === user.tutorProfile.times.length-1? "": ", ") /*insert comma if not last element */
-                        }
-                      </span>
-                    ))}
+                  {this.props.time != null? 
+                    <div>Scheduled time: {getTimeDescription(this.props.time)}</div>
+                    :
+                    <div>
+                      Available times: {user.tutorProfile.times.map(
+                        (timeNum, index) => (
+                          <span key={timeNum}>
+                            {getTimeDescription(timeNum)
+                              + (index === user.tutorProfile.times.length-1? "": ", ") /*insert comma if not last element */
+                            }
+                          </span>
+                        ))}
+                    </div>
+                  }
                 </div>
               </div>
             }
@@ -91,12 +97,28 @@ class UserProfile extends Component {
 }
 
 export default createContainer((props) => {
-  const username = props.match.params.username;
+  const username = (props.match? props.match.params.username : props.username);
+  const id = (props.match? props.match.params.id : props.id);
 
-  const subscription = Meteor.subscribe('user', username);
+  var query;
+  var subscription;
+
+  if(!username && !id) {
+    return{
+      user: null,
+      ready: true
+    }
+  }else if(username) {
+    query = {username: username};
+    subscription = Meteor.subscribe('user', username);
+  }else {
+    query = {_id: id};
+    subscription = Meteor.subscribe('user.byId', id);
+  }
 
   return{
-    user: Users.find({username: username}).fetch()[0],
-    ready: subscription.ready()
+    user: Users.find(query).fetch()[0],
+    ready: subscription.ready(),
+    time: props.time
   }
 }, UserProfile);
