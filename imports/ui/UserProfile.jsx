@@ -71,9 +71,7 @@ class UserProfile extends Component {
                 <div style={{paddingLeft: "20px"}}>
                   Skype: {user.skype}<br />
                   Description: {user.tutorProfile.description}<br />
-                  {this.props.time != null? 
-                    <div>Scheduled time: {getTimeDescription(this.props.time)}</div>
-                    :
+                  {this.props.time == null &&
                     <div>
                       Available times: {user.tutorProfile.times.map(
                         (timeNum, index) => (
@@ -87,6 +85,10 @@ class UserProfile extends Component {
                   }
                 </div>
               </div>
+            }
+            {
+              this.props.time != null && 
+              <div>Scheduled time: {getTimeDescription(this.props.time)}</div>
             }
           </CardText>
         </Card>

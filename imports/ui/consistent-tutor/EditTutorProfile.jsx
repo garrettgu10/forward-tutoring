@@ -11,6 +11,7 @@ import {Redirect} from 'react-router-dom';
 import ChooseDate from '../ChooseDate.jsx';
 import ContactInfo from '../ContactInfo.jsx';
 import {Users} from '../../api/users.js';
+import UserProfile from '../UserProfile.jsx';
 
 const MAX_STEP = 1;
 
@@ -82,6 +83,22 @@ export default class EditTutorProfile extends Component {
     if(!this.props.currentUser) {
       return (
         <Redirect to="/login" />
+      )
+    }
+
+    var {students} = this.props.currentUser.tutorProfile;
+
+    if(students && students.length !== 0) {
+      return (
+        <div>
+          {
+            students.map((student) => {
+              return(
+                <UserProfile key={student.id} id={student.id} time={student.time} />
+              )
+            })
+          }
+        </div>
       )
     }
 
