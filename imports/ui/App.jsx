@@ -40,6 +40,7 @@ var logo = function(props) {
       <span>
         <span style={{fontWeight: 800}}>forward</span>
         <span style={{fontWeight: 100}}>tutoring</span>
+        <span style={{fontSize: 13}}>(alpha)</span>
       </span>
     </Link>
   );

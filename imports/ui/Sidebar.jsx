@@ -31,7 +31,9 @@ export default class Sidebar extends Component{
 
           <Link to='/' className='nav-link' onTouchTap={toggle}>
             <MenuItem style={{fontSize: "25px", lineHeight: "64px"}}>
-              <span style={{fontWeight: 800}}>forward</span><span style={{fontWeight: 100}}>tutoring</span>
+              <span style={{fontWeight: 800}}>
+                forward</span><span style={{fontWeight: 100}}>tutoring
+              </span>
             </MenuItem>
           </Link>
 
@@ -67,9 +69,6 @@ export default class Sidebar extends Component{
               </NavLink>
             </div>
           }
-
-          
-
         </Drawer>
       </div>
     )
