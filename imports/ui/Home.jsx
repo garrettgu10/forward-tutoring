@@ -12,6 +12,8 @@ export default function Home(props){
     margin: '0'
   }
 
+
+  const {currentUser} = props;
   return(
     <div>
       <div className="home_container" style={containerStyles}>
@@ -20,13 +22,17 @@ export default function Home(props){
           <h1 className="home_title">Free, high-quality tutoring</h1>
           <h2 className="home_subtitle">Brought to you by the Texas Academy of Mathematics and Science</h2>
           <div style={{height: '20px'}}></div>
-          {props.loggedIn?
+          {currentUser?
             <div>
               <Link to="/forum">
-                <RaisedButton className="home_button" label="Ask a question" />
+                <RaisedButton 
+                  className="home_button" 
+                  label={currentUser.role === 0? "Ask Questions" : "Forum"} />
               </Link>
               <Link to="/consistent">
-                <RaisedButton className="home_button" label="My consistent tutor" />
+                <RaisedButton 
+                  className="home_button" 
+                  label={currentUser.role === 0? "My Consistent Tutor" : "Consistent Tutoring"} />
               </Link>
             </div>
             :

@@ -136,13 +136,13 @@ class App extends Component {
             />
 
             <div className="main-container" style={{paddingTop: '50px'}}>
-              <Sidebar ref={(item) => {this.sidebar = item;}}/>
+              <Sidebar ref={(item) => {this.sidebar = item;}} currentUser={this.props.currentUser}/>
               <Switch>
                 {!this.props.ready &&
                   <Route path="/(forum|consistent)/" component={Loading} />
                 }
 
-                <Route exact path="/" component={() => <Home loggedIn={this.props.currentUser !== null} />} />
+                <Route exact path="/" component={() => <Home currentUser={this.props.currentUser} />} />
                 <Route path="/forum" component={
                   () => <Forum currentUser={this.props.currentUser} />
                 } />
