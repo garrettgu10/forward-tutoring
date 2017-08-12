@@ -52,6 +52,11 @@ body {
   margin-top: 20px;
 }
 
+.masthead-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
 @media screen and (max-width: 700px){
   .container {
     width: 90%;
