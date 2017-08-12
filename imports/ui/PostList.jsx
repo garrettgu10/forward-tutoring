@@ -5,7 +5,7 @@ import Post from './Post.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const INITIAL_LOAD = 5; //number of posts loaded initially
+const INITIAL_LOAD = 10; //number of posts loaded initially
 const ADDED_LOAD = 5; //number of posts loaded each time the button is pressed
 
 class PostList extends Component {
@@ -19,26 +19,28 @@ class PostList extends Component {
   }
 
   loadMore() {
-    this.setState({loadingMore: true});
-    Meteor.subscribe('posts', this.props.query, this.props.sort, this.numLoaded, this.numLoaded+ADDED_LOAD, 
+    /*this.setState({loadingMore: true});
+    Meteor.subscribe('posts', this.props.query, this.props.sort, this.numLoaded, ADDED_LOAD, 
       {onReady: () => {
         this.setState({loadingMore: false});
       }}
     );
-    this.numLoaded+=ADDED_LOAD;
+    this.numLoaded+=ADDED_LOAD;*/
+
+    Session.set('Forum.numLoaded', Session.get('Forum.numLoaded') + ADDED_LOAD);
   }
 
   render() {
-    var shouldShowLoadMore = (this.props.posts.length === this.numLoaded);
-    if(!this.props.ready){
-      return (
-        <div style={{textAlign: "center"}}>
-          <CircularProgress size={80} thickness={5} />
-        </div>
-      )
-    }
+    var shouldShowLoadMore = (Session.get('Forum.numLoaded') === this.props.posts.length);
 
     if(this.props.posts.length === 0){
+      if(!this.props.ready){
+        return (
+          <div style={{textAlign: "center"}}>
+            <CircularProgress size={80} thickness={5} />
+          </div>
+        )
+      }
       return(
         <div style={{marginTop: "20px"}}>No posts found.</div>
       )
@@ -57,6 +59,11 @@ class PostList extends Component {
         <br />
         {shouldShowLoadMore && 
           <RaisedButton onClick={this.loadMore.bind(this)} label="load more" disabled={this.state.loadingMore} primary={true} fullWidth={true} />
+        }
+        {!this.props.ready &&
+          <div style={{textAlign: "center"}}>
+            <CircularProgress size={80} thickness={5} />
+          </div>
         }
       </div>
     );
@@ -102,12 +109,15 @@ export default createContainer((props) => {
   if(Session.get('Forum.onlyShowUserPosts')){
     query.owner = Meteor.userId();
   }
+
+  Session.setDefault('Forum.numLoaded', INITIAL_LOAD);
+  const numLoaded = Session.get('Forum.numLoaded');
   
-  var subscription = Meteor.subscribe('posts', query, sort, 0, INITIAL_LOAD);
+  var subscription = Meteor.subscribe('posts', query, sort, 0, numLoaded);
 
-  var posts = Posts.find(query, {sort: sort});
+  var posts = Posts.find(query, {sort: sort, limit: numLoaded});
 
-  return{
+  return {
     ready: subscription.ready(),
     posts: posts.fetch(),
     query: query,

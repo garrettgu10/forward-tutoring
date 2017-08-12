@@ -65,11 +65,11 @@ class UserProfile extends Component {
             Role: {Roles[user.role].capitalize()}<br />
             Email: {user.emails[0].address}<br />
             Member since: {user.createdAt.toDateString()}<br />
+            {user.skype && <div>Skype: {user.skype}</div>}
             {user.tutorProfile &&
               <div>
                 Tutor info:
                 <div style={{paddingLeft: "20px"}}>
-                  Skype: {user.skype}<br />
                   Description: {user.tutorProfile.description}<br />
                   {this.props.time == null &&
                     <div>
