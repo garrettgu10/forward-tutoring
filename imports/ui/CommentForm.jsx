@@ -25,11 +25,12 @@ export default class CommentForm extends Component {
       function commentSubmitCallback(err) {
         if(err){
           alert(err);
+        }else {
+          this.setState({
+            inputValue: ""
+          })
         }
       });
-    this.setState({
-      inputValue: ""
-    })
   }
 
   render() {

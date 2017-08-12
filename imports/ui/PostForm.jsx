@@ -23,13 +23,17 @@ export default class PostForm extends Component{
 
   handleSubmit() {
     Meteor.call('posts.insert', this.state.postTitleInputValue, this.state.postInputValue, this.state.subjectValue,
-      function submitCallback(err) {
-        if(err) alert(err);
+      (err) => {
+        if(err) {
+          alert(err);
+        } else {
+          this.setState({
+            postInputValue: "",
+            postTitleInputValue: ""
+          })
+        }
       });
-    this.setState({
-      postInputValue: "",
-      postTitleInputValue: ""
-    })
+    
   }
 
   handlePostInputChange(event) {
