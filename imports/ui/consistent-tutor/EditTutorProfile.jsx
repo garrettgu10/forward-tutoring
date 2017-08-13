@@ -22,7 +22,7 @@ export default class EditTutorProfile extends Component {
     this.state = {
       activeStep: 0,
       success: false,
-      checkedTimes: (currentUser.tutorProfile? currentUser.tutorProfile.checkedTimes: [])
+      checkedTimes: (currentUser.tutorProfile? currentUser.tutorProfile.times: [])
     }
   }
 
@@ -86,20 +86,22 @@ export default class EditTutorProfile extends Component {
       )
     }
 
-    var {students} = this.props.currentUser.tutorProfile;
+    if(this.props.currentUser.tutorProfile){
+      var {students} = this.props.currentUser.tutorProfile;
 
-    if(students && students.length !== 0) {
-      return (
-        <div>
-          {
-            students.map((student) => {
-              return(
-                <UserProfile key={student.id} id={student.id} time={student.time} />
-              )
-            })
-          }
-        </div>
-      )
+      if(students && students.length !== 0) {
+        return (
+          <div>
+            {
+              students.map((student) => {
+                return(
+                  <UserProfile key={student.id} id={student.id} time={student.time} />
+                )
+              })
+            }
+          </div>
+        )
+      }
     }
 
     if(this.state.success){
