@@ -38,8 +38,8 @@ var logo = function(props) {
   return (
     <Link className="logo" to="/">
       <span>
-        <span style={{fontWeight: 800}}>forward</span>
-        <span style={{fontWeight: 100}}>tutoring</span>
+        <span style={{fontWeight: 600}}>forward</span>
+        <span style={{fontWeight: 300}}>tutoring</span>
         <span style={{fontSize: 13}}>(alpha)</span>
       </span>
     </Link>
