@@ -9,12 +9,16 @@ export default class TimedRedirect extends Component {
     };
   }
 
-  componentDidMount() {
-    setInterval(() => {
+  componentDidMount = () => {
+    this.counter = setInterval(() => {
       this.setState({
         secondsLeft: this.state.secondsLeft-1
       });
     }, 1000);
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.counter);
   }
 
   render() {
