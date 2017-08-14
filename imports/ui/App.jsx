@@ -15,6 +15,8 @@ import TutorSearch from './consistent/TutorSearch.jsx';
 import EditTutorProfile from './consistent-tutor/EditTutorProfile.jsx';
 import {blue500, blue700, teal500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import SendEmail from './verify-email/SendEmail.jsx';
+import VerifyEmail from './verify-email/VerifyEmail.jsx';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -140,7 +142,7 @@ class App extends Component {
               <Sidebar ref={(item) => {this.sidebar = item;}} currentUser={this.props.currentUser}/>
               <Switch>
                 {!this.props.ready &&
-                  <Route path="/(forum|consistent)/" component={Loading} />
+                  <Route path="/(forum|consistent|verify)/" component={Loading} />
                 }
 
                 <Route exact path="/" component={() => <Home currentUser={this.props.currentUser} />} />
@@ -148,9 +150,13 @@ class App extends Component {
                   () => <Forum currentUser={this.props.currentUser} />
                 } />
                 <Route path="/consistent" component={this.ConsistentPanel} />
+                <Route path="/verify" component={
+                  () => <SendEmail currentUser={this.props.currentUser} />
+                } />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
                 <Route path="/profile/:username" component={UserProfile} />
+                <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/" component={NotFound} />
               </Switch>
               <Route path="/logout" component={Logout} />

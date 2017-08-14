@@ -4,10 +4,24 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
+import {Email} from 'meteor/email';
+import {Accounts} from 'meteor/accounts-base'
 
 export const Users = Meteor.users;
 
 Meteor.methods({
+  'users.sendEmail'() {
+    if(!this.userId) {
+      throw new Meteor.Error('not-authorized', 'You are not logged in');
+    }
+
+    this.unblock();
+    
+    if(!this.isSimulation){
+      Accounts.sendVerificationEmail(this.userId);
+    }
+  },
+
   'users.addTutorInfo'(checkedTimes, email, skype, description) {
     check(email, String);
     check(skype, String);

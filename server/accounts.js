@@ -4,6 +4,30 @@
 import {Accounts} from 'meteor/accounts-base';
 import {Meteor} from 'meteor/meteor';
 
+Accounts.urls.verifyEmail = (token) => {
+  return Meteor.absoluteUrl("verify-email/"+token);
+}
+
+Accounts.emailTemplates.from = "Forward Tutoring <noreply@forwardtutoring.net>";
+Accounts.emailTemplates.siteName="forwardtutoring.net";
+
+
+Accounts.emailTemplates.verifyEmail = {
+  subject() {
+    return "Activate your Forward Tutoring account now!";
+  },
+  text(user, url) {
+    return `Hello ${user.profile.fullName}!
+
+Click on the link below to verify your email address. If it is not a link, simply copy and paste the URL into your browser's address bar.
+
+${url}
+
+Thanks!
+Forward Tutoring`;
+  }
+}
+
 Accounts.validateNewUser((user) => {
   if(user.roleKey !== "temp"){
     throw new Meteor.Error("bad-key", "Invalid Registration Key");
