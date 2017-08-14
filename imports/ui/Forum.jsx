@@ -7,6 +7,7 @@ import PostList from './PostList.jsx';
 import CheckBox from 'material-ui/CheckBox';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import TimedRedirect from './TimedRedirect.jsx';
 
 import {WaysToSortPosts, Subjects, PostStatusFilters} from '../constants/constants.js';
 
@@ -70,6 +71,12 @@ export default class Forum extends Component {
     if(!this.props.currentUser) {
       return (
         <Redirect to="/login" />
+      )
+    }
+
+    if(!this.props.currentUser.emails[0].verified) {
+      return (
+        <TimedRedirect redirectTo="/verify" text="You must verify your email address before continuing." seconds={10} />
       )
     }
 

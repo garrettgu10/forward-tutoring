@@ -86,6 +86,12 @@ export default class EditTutorProfile extends Component {
       )
     }
 
+    if(!this.props.currentUser.emails[0].verified) {
+      return (
+        <TimedRedirect redirectTo="/verify" text="You must verify your email address before continuing." seconds={10} />
+      )
+    }
+
     if(this.props.currentUser.tutorProfile){
       var {students} = this.props.currentUser.tutorProfile;
 

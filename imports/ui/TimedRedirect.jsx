@@ -14,7 +14,7 @@ export default class TimedRedirect extends Component {
       this.setState({
         secondsLeft: this.state.secondsLeft-1
       });
-    }, 1000)
+    }, 1000);
   }
 
   render() {

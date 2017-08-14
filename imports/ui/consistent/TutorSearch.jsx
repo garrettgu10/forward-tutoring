@@ -86,6 +86,12 @@ export default class TutorSearch extends Component {
       )
     }
 
+    if(!this.props.currentUser.emails[0].verified) {
+      return (
+        <TimedRedirect redirectTo="/verify" text="You must verify your email address before continuing." seconds={10} />
+      )
+    }
+
     var {currentUser} = this.props;
 
     if(currentUser.tutor) {
