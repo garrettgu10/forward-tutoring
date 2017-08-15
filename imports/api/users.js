@@ -22,19 +22,12 @@ Meteor.methods({
     }
   },
 
-  'users.addTutorInfo'(checkedTimes, email, skype, description) {
-    check(email, String);
+  'users.addTutorInfo'(checkedTimes, skype, description) {
     check(skype, String);
     check(description, String);
 
     if(!this.userId) {
       throw new Meteor.Error('not-authorized', 'You are not logged in');
-    }
-
-    if(email.length > 200) {
-      throw new Meteor.Error('bad-email', 'Your email is too long');
-    }else if(email.length === 0){
-      throw new Meteor.Error('bad-email', 'An email is necessary');
     }
 
     if(skype.length > 200) {
@@ -51,21 +44,14 @@ Meteor.methods({
       throw new Meteor.Error('bad-checked-times', 'You must choose at least one time slot');
     }
 
-    Users.update(this.userId, {$set: {email: email, skype: skype, tutorProfile: {times: checkedTimes, description: description, students: []}}});
+    Users.update(this.userId, {$set: {skype: skype, tutorProfile: {times: checkedTimes, description: description, students: []}}});
   },
 
-  'users.updateContactInfo'(email, skype) {
-    check(email, String);
+  'users.updateContactInfo'(skype) {
     check(skype, String);
 
     if(!this.userId) {
       throw new Meteor.Error('not-authorized', 'You are not logged in');
-    }
-    
-    if(email.length > 200) {
-      throw new Meteor.Error('bad-email', 'Your email is too long');
-    }else if(email.length === 0){
-      throw new Meteor.Error('bad-email', 'An email is necessary');
     }
 
     if(skype.length > 200) {
@@ -74,7 +60,7 @@ Meteor.methods({
       throw new Meteor.Error('bad-skype', 'A Skype username is necessary');
     }
 
-    Users.update(this.userId, {$set: {email: email, skype: skype}});
+    Users.update(this.userId, {$set: {skype: skype}});
   },
 
   'users.chooseTutor'(tutor, time) {

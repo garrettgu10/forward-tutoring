@@ -11,6 +11,7 @@ import {Redirect} from 'react-router-dom';
 import ContactInfo from '../ContactInfo.jsx';
 import TutorsList from './TutorsList.jsx';
 import ShowTutor from './ShowTutor.jsx';
+import TimedRedirect from '../TimedRedirect.jsx';
 
 const MAX_STEP = 2;
 
@@ -45,7 +46,7 @@ export default class TutorSearch extends Component {
     if(this.state.activeStep == MAX_STEP){
       var {email, skype} = this.contactInfoForm.getContactInfo();
       var {tutor, time} = this.state.tutorChoice;
-      Meteor.call('users.updateContactInfo', email, skype, function(err) {
+      Meteor.call('users.updateContactInfo', skype, function(err) {
         if(err) {
           alert(err);
           return;

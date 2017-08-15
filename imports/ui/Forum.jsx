@@ -73,13 +73,7 @@ export default class Forum extends Component {
         <Redirect to="/login" />
       )
     }
-
-    if(!this.props.currentUser.emails[0].verified) {
-      return (
-        <TimedRedirect redirectTo="/verify" text="You must verify your email address before continuing." seconds={10} />
-      )
-    }
-
+    
     return (
       <div className="container">
         <PostForm />

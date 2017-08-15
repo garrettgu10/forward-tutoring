@@ -29,6 +29,25 @@ function getTimeDescription(timeNum) {
   return Days[day] + " " + time + " PM";
 }
 
+function TimeDescriptions({times}) {
+  var result = "";
+  var shownDay = [];
+  for(time of times) {
+    var day = Math.floor(time/5);
+    var time = time%5 + 5;
+    if(!shownDay[day]) {
+      result += Days[day].slice(0,3) + " ";
+      shownDay[day] = true;
+    }
+    result += time + "-" + (time+1) + "PM, ";
+  }
+
+  result = result.slice(0, result.length-2); //cut off last comma
+  result += " (Eastern time)"
+
+  return <span>{result}</span>
+}
+
 class UserProfile extends Component {
 
   render() {
@@ -73,14 +92,8 @@ class UserProfile extends Component {
                   Description: {user.tutorProfile.description}<br />
                   {this.props.time == null &&
                     <div>
-                      Available times: {user.tutorProfile.times.map(
-                        (timeNum, index) => (
-                          <span key={timeNum}>
-                            {getTimeDescription(timeNum)
-                              + (index === user.tutorProfile.times.length-1? "": ", ") /*insert comma if not last element */
-                            }
-                          </span>
-                        ))}
+                      Available times:&nbsp;
+                      <TimeDescriptions times={user.tutorProfile.times} />
                     </div>
                   }
                 </div>

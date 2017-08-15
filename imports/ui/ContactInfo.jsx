@@ -34,6 +34,7 @@ export default class ContactInfo extends Component {
     return (
       <form>
         <TextField
+          disabled
           floatingLabelText="Email"
           value={this.state.email}
           onChange={this.handleInputChange.bind(this, "email")}

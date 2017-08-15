@@ -12,6 +12,7 @@ import ChooseDate from '../ChooseDate.jsx';
 import ContactInfo from '../ContactInfo.jsx';
 import {Users} from '../../api/users.js';
 import UserProfile from '../UserProfile.jsx';
+import TimedRedirect from '../TimedRedirect.jsx';
 
 const MAX_STEP = 1;
 
@@ -35,7 +36,7 @@ export default class EditTutorProfile extends Component {
     if(this.state.activeStep === MAX_STEP){
       let {email, skype, description} = this.contactInfoForm.getContactInfo();
       let checkedTimes = this.state.checkedTimes;
-      Meteor.call('users.addTutorInfo', checkedTimes, email, skype, description,
+      Meteor.call('users.addTutorInfo', checkedTimes, skype, description,
         (err) => {
           if(err){
             alert(err);
@@ -112,7 +113,7 @@ export default class EditTutorProfile extends Component {
 
     if(this.state.success){
       return (
-        <Redirect to="/" />
+        <TimedRedirect redirectTo="/" />
       )
     }
 
