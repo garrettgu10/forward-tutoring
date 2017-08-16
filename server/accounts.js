@@ -3,6 +3,7 @@
  */
 import {Accounts} from 'meteor/accounts-base';
 import {Meteor} from 'meteor/meteor';
+import {Schools} from '../imports/api/schools.js';
 
 Accounts.urls.verifyEmail = (token) => {
   return Meteor.absoluteUrl("verify-email/"+token);
@@ -29,8 +30,29 @@ Forward Tutoring`;
 }
 
 Accounts.validateNewUser((user) => {
-  if(user.roleKey !== "temp"){
-    throw new Meteor.Error("bad-key", "Invalid Registration Key");
+  switch(user.role) {
+    case 0:
+      var school = Schools.find({_id: user.schoolId}).fetch()[0];
+      if(!school || school.key !== user.roleKey){
+        throw new Meteor.Error('bad-key', 'Invalid registration key');
+        return false;
+      }
+      break;
+    case 1:
+      if(user.roleKey !== 'ambitiousjeans'){
+        throw new Meteor.Error('bad-key', 'Invalid registration key');
+        return false;
+      }
+      break;
+    case 2: 
+      if(user.roleKey !== 'clevercrayon'){
+        throw new Meteor.Error('bad-key', 'Invalid registration key');
+        return false;
+      }
+      break;
+    default:
+      throw new Meteor.Error('bad-role', 'Role does not exist');
+      return false;
   }
   return true;
 });
@@ -40,6 +62,8 @@ const userFields = {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, ro
 Accounts.onCreateUser((options, user) => {
   user.roleKey = options.roleKey || "";
   user.role = options.role || 0;
+  user.schoolId = options.schoolId;
+  user.school = options.school;
 
   user.profile = options.profile || {};
   return user;

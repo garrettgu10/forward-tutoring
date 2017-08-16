@@ -8,6 +8,7 @@ import {Accounts} from 'meteor/accounts-base';
 import {Redirect} from 'react-router-dom';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import {Schools} from '../api/schools.js';
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class RegistrationForm extends Component {
       emailInputValue: "",
       passwordInputValue: "",
       passwordConfirmInputValue: "",
-      roleInputValue: 0, //0 -- student, 1 -- tutor, 2 -- admin
+      schoolInputValue: 0,
       roleKeyInputValue: "",
       success: false
     }
@@ -31,16 +32,18 @@ class RegistrationForm extends Component {
     });
   }
 
-  handleRoleInputChange(event, value){
+  handleSchoolInputChange(event, value){
     this.setState({
-      roleInputValue: value
+      schoolInputValue: value
     })
   }
 
   handleSubmit(e){
     if(e) e.preventDefault();
     //TODO: Add checks for stuff
-
+    console.log(this.props.schools);
+    console.log(this.state.schoolInputValue);
+    console.log(this.props.schools[this.state.schoolInputValue]._id);
     Accounts.createUser({
       username: this.state.usernameInputValue,
       email: this.state.emailInputValue,
@@ -48,7 +51,9 @@ class RegistrationForm extends Component {
       profile: {
         fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue
       },
-      role: this.state.roleInputValue,
+      role: 0,
+      schoolId: this.props.schools[this.state.schoolInputValue]._id,
+      school: this.props.schools[this.state.schoolInputValue].name,
       roleKey: this.state.roleKeyInputValue
     }, function createUserCallback(err) {
       if(err){
@@ -61,6 +66,10 @@ class RegistrationForm extends Component {
 
   render() {
     const from = this.props.from || '/';
+
+    if(!this.props.ready) {
+      return <div>loading</div>
+    }
 
     if(this.state.success){
       return <Redirect to={from} />;
@@ -112,19 +121,16 @@ class RegistrationForm extends Component {
             value={this.state.passwordConfirmInputValue}
             onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
             type="password" />
-          <SelectField name="role"
-            value={this.state.roleInputValue}
-            onChange={this.handleRoleInputChange.bind(this)}
-            floatingLabelText="I am a">
-            <MenuItem
-              value={0}
-              primaryText="Student" />
-            <MenuItem
-              value={1}
-              primaryText="Tutor" />
-            <MenuItem
-              value={2}
-              primaryText="Admin" />
+          <SelectField name="school"
+            value={this.state.schoolInputValue}
+            onChange={this.handleSchoolInputChange.bind(this)}
+            floatingLabelText="School">
+            {this.props.schools.map((school, index) => (
+              <MenuItem
+                key={school._id}
+                value={index}
+                primaryText={school.name} />
+            ))}
           </SelectField>
           <TextField
             floatingLabelText="Registration Key"
@@ -141,6 +147,12 @@ class RegistrationForm extends Component {
   }
 }
 
-export default createContainer((props) => ({
-  userId: Meteor.userId()
-}), RegistrationForm);
+export default createContainer((props) => {
+  var subscription = Meteor.subscribe('schools');
+  
+  return {
+    ready: subscription.ready(),
+    schools: Schools.find({}).fetch(),
+    userId: Meteor.userId()
+  }
+}, RegistrationForm);

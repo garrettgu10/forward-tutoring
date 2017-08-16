@@ -5,6 +5,8 @@ import {Schools} from '../api/schools.js';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import ActionClear from 'material-ui/svg-icons/content/clear';
+import IconButton from 'material-ui/IconButton';
 
 class SchoolForm extends Component {
   constructor(props) {
@@ -54,6 +56,28 @@ class SchoolForm extends Component {
   }
 }
 
+class SchoolItem extends Component {
+  handleDelete() {
+    Meteor.call('schools.remove', this.props.school._id, (err) => {
+      if(err) alert(err);
+    })
+  }
+
+  render() {
+    var {school} = this.props;
+    return (
+      <div key={school._id}>
+        School name: {school.name} <br />
+        School key: {school.key} <br />
+        <IconButton
+          onTouchTap={this.handleDelete.bind(this, school._id)}>
+          <ActionClear />
+        </IconButton>
+      </div>
+    )
+  }
+}
+
 class SchoolsList extends Component {
   render() {
     var {ready, schools} = this.props;
@@ -75,10 +99,7 @@ class SchoolsList extends Component {
         }
 
         {schools.map((school) => (
-          <div key={school._id}>
-            School name: {school.name} <br />
-            School key: {school.key}
-          </div>
+          <SchoolItem key={school._id} school={school} />
         ))}
       </div>
     )
