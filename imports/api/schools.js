@@ -16,7 +16,37 @@ Meteor.methods({
     check(key, String);
     
     if(name.length === 0) {
-
+      throw new Meteor.Error('bad-name', 'No name supplied');
     }
+
+    if(name.length > 200) {
+      throw new Meteor.Error('bad-name', 'The name is too long');
+    }
+
+    if(key.length === 0) {
+      throw new Meteor.Error('bad-key', 'No key supplied');
+    }
+
+    if(key.length > 100) {
+      throw new Meteor.Error('bad-key', 'The key is too long');
+    }
+
+    var user = Meteor.user();
+    if(user.role !== 2) {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+
+    Schools.insert({name, key});
+  },
+
+  'schools.remove'(id) {
+    check(id, String);
+
+    var user = Meteor.user();
+    if(user.role !== 2) {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+
+    Schools.remove(id);
   }
 })

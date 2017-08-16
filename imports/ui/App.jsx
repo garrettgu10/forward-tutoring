@@ -17,6 +17,7 @@ import {blue500, blue700, teal500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SendEmail from './verify-email/SendEmail.jsx';
 import VerifyEmail from './verify-email/VerifyEmail.jsx';
+import SchoolsList from './SchoolsList.jsx';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -157,6 +158,7 @@ class App extends Component {
                 <Route path="/login" component={LoginForm} />
                 <Route path="/profile/:username" component={UserProfile} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
+                <Route path="/schools" component={SchoolsList} />
                 <Route path="/" component={NotFound} />
               </Switch>
               <Route path="/logout" component={Logout} />
