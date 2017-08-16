@@ -68,7 +68,19 @@ class RegistrationForm extends Component {
     const from = this.props.from || '/';
 
     if(!this.props.ready) {
-      return <div>loading</div>
+      return (
+        <div style={{textAlign: "center"}}>
+          <CircularProgress size={80} thickness={5} />
+        </div>
+      );
+    }
+
+    if(this.props.schools.length === 0){
+      return (
+        <div class="container">
+          Registration is not available yet. Please check back later!
+        </div>
+      )
     }
 
     if(this.state.success){
