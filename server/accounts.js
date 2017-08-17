@@ -75,8 +75,12 @@ Meteor.publish("user", (username) => {
 
 Meteor.publish("user.byId", (userId) => {
   return Meteor.users.find(userId, {fields: userFields})
-})
+});
 
 Meteor.publish('user.tutorsByTimes', (times) => {
   return Meteor.users.find({role: 1, "tutorProfile.times": {$in: times}}, {fields: userFields});
+});
+
+Meteor.publish('users.onlineTutors', () => {
+  return Meteor.users.find({'status.online': true, role: 1}, {fields: {_id: 1, username: 1, 'status.online': 1, role: 1} });
 })

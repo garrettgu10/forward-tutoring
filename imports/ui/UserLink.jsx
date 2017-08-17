@@ -14,14 +14,6 @@ String.prototype.colorCode = function() {
 };
 
 export default class UserLink extends Component {
-
-  constructor(props){
-    super(props);
-    this.state={
-      redirect: false
-    }
-  }
-
   render() {
     return (
       <Chip style={this.props.style} onTouchTap={() => 0} containerElement={<Link to={"/profile/" + this.props.username} />}>
