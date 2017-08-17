@@ -154,6 +154,12 @@ class App extends Component {
                 <Route path="/verify" component={
                   () => <SendEmail currentUser={this.props.currentUser} />
                 } />
+                <Route path="/register/tutor" component={
+                  () => <RegistrationForm role={1} />
+                } />
+                <Route path="/register/admin" component={
+                  () => <RegistrationForm role={2} />
+                } />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
                 <Route path="/profile/:username" component={UserProfile} />

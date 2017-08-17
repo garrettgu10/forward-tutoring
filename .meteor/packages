@@ -21,3 +21,4 @@ react-meteor-data
 accounts-password@1.4.0
 session
 email
+mizzao:user-status

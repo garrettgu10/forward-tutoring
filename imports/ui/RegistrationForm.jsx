@@ -8,6 +8,10 @@ import {Accounts} from 'meteor/accounts-base';
 import {Redirect} from 'react-router-dom';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import CircularProgress from 'material-ui/CircularProgress';
+
+import {Roles} from '../constants/constants.js';
+
 import {Schools} from '../api/schools.js';
 
 class RegistrationForm extends Component {
@@ -40,22 +44,27 @@ class RegistrationForm extends Component {
 
   handleSubmit(e){
     if(e) e.preventDefault();
+
     //TODO: Add checks for stuff
-    console.log(this.props.schools);
-    console.log(this.state.schoolInputValue);
-    console.log(this.props.schools[this.state.schoolInputValue]._id);
-    Accounts.createUser({
+
+    var account = {
       username: this.state.usernameInputValue,
       email: this.state.emailInputValue,
       password: this.state.passwordInputValue,
       profile: {
         fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue
       },
-      role: 0,
-      schoolId: this.props.schools[this.state.schoolInputValue]._id,
-      school: this.props.schools[this.state.schoolInputValue].name,
+      role: this.props.role || 0,
       roleKey: this.state.roleKeyInputValue
-    }, function createUserCallback(err) {
+    };
+
+
+    if(account.role === 0) {
+      account.schoolId = this.props.schools[this.state.schoolInputValue]._id;
+      account.school = this.props.schools[this.state.schoolInputValue].name;
+    }
+
+    Accounts.createUser(account, function createUserCallback(err) {
       if(err){
         alert(err);
       }else{
@@ -90,6 +99,8 @@ class RegistrationForm extends Component {
     if(this.props.userId){
       return <Redirect to="/" />;
     }
+
+    const role = this.props.role || 0;
 
     return (
       <div className="container">
@@ -133,23 +144,28 @@ class RegistrationForm extends Component {
             value={this.state.passwordConfirmInputValue}
             onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
             type="password" />
-          <SelectField name="school"
-            value={this.state.schoolInputValue}
-            onChange={this.handleSchoolInputChange.bind(this)}
-            floatingLabelText="School">
-            {this.props.schools.map((school, index) => (
-              <MenuItem
-                key={school._id}
-                value={index}
-                primaryText={school.name} />
-            ))}
-          </SelectField>
+          {role === 0 &&
+            <SelectField name="school"
+              value={this.state.schoolInputValue}
+              onChange={this.handleSchoolInputChange.bind(this)}
+              floatingLabelText="School">
+              {this.props.schools.map((school, index) => (
+                <MenuItem
+                  key={school._id}
+                  value={index}
+                  primaryText={school.name} />
+              ))}
+            </SelectField>
+          }
           <TextField
             floatingLabelText="Registration Key"
             fullWidth={true}
             value={this.state.roleKeyInputValue}
             onChange={this.handleInputChange.bind(this, 'roleKey')} />
           <br />
+          {role !== 0 &&
+            <div>Note: you are registering as a {Roles[role]}.</div>
+          }
           <br />
           <RaisedButton label="Submit" primary={true} type="submit" />
 

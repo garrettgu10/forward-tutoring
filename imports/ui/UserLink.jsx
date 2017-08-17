@@ -24,12 +24,12 @@ export default class UserLink extends Component {
 
   render() {
     return (
-        <Chip style={this.props.style} onTouchTap={() => 0} containerElement={<Link to={"/profile/" + this.props.username} />}>
-          <Avatar backgroundColor={"#" + this.props.username.colorCode()}>
-            {this.props.username.charAt(0).toUpperCase()}
-          </Avatar>
-          {this.props.username}
-        </Chip>
+      <Chip style={this.props.style} onTouchTap={() => 0} containerElement={<Link to={"/profile/" + this.props.username} />}>
+        <Avatar backgroundColor={"#" + this.props.username.colorCode()}>
+          {this.props.username.charAt(0).toUpperCase()}
+        </Avatar>
+        {this.props.username}
+      </Chip>
     )
   }
 }

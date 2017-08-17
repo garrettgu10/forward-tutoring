@@ -6,7 +6,7 @@ export const Schools = new Mongo.Collection('schools');
 
 if(Meteor.isServer) {
   Meteor.publish('schools', () => {
-    return Schools.find({});
+    return Schools.find({}, {fields: {key: 0}});
   })
 }
 
