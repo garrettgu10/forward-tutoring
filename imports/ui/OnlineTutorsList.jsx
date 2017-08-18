@@ -8,7 +8,7 @@ class OnlineTutorsList extends Component {
     if(!this.props.ready) return null;
 
     if(this.props.tutors.length === 0) {
-      return <div style={{margin: "20px 0"}}>No tutors online currently.</div>
+      return <div style={{margin: "20px"}}>No tutors online currently.</div>
     }
 
     return (
