@@ -4,6 +4,7 @@
 import {Accounts} from 'meteor/accounts-base';
 import {Meteor} from 'meteor/meteor';
 import {Schools} from '../imports/api/schools.js';
+import {TUTOR_KEY, ADMIN_KEY} from './registration-keys.js';
 
 Accounts.urls.verifyEmail = (token) => {
   return Meteor.absoluteUrl("verify-email/" + token);
@@ -72,13 +73,13 @@ Accounts.validateNewUser((user) => {
       }
       break;
     case 1:
-      if(user.roleKey !== 'ambitiousjeans'){
+      if(user.roleKey !== TUTOR_KEY){
         throw new Meteor.Error('bad-key', 'Invalid registration key');
         return false;
       }
       break;
     case 2: 
-      if(user.roleKey !== 'clevercrayon'){
+      if(user.roleKey !== ADMIN_KEY){
         throw new Meteor.Error('bad-key', 'Invalid registration key');
         return false;
       }
