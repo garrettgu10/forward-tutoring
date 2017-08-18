@@ -49,6 +49,18 @@ The Forward Tutoring team`
 }
 
 Accounts.validateNewUser((user) => {
+  if(user.username === "") {
+    throw new Meteor.Error('bad-username', "Username may not be empty");
+  }
+
+  if(user.fullName === "") {
+    throw new Meteor.Error("bad-name", "Name may not be empty");
+  }
+
+  if(user.emails[0] === "") {
+    throw new Meteor.Error('bad-email', "Email may not be empty");
+  }
+
   switch(user.role) {
     case 0:
       var school = Schools.find({_id: user.schoolId}).fetch()[0];

@@ -14,6 +14,9 @@ import {Roles} from '../constants/constants.js';
 
 import {Schools} from '../api/schools.js';
 
+//https://stackoverflow.com/questions/39356826/how-to-check-if-it-a-text-input-has-a-valid-email-format-in-reactjs
+const emailRegex = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
+
 class RegistrationForm extends Component {
   constructor(props) {
     super(props);
@@ -45,28 +48,76 @@ class RegistrationForm extends Component {
   handleSubmit(e){
     if(e) e.preventDefault();
 
-    //TODO: Add checks for stuff
+    var {usernameInputValue, 
+      emailInputValue, 
+      passwordInputValue,
+      passwordConfirmInputValue, 
+      firstnameInputValue, 
+      lastnameInputValue, 
+      roleKeyInputValue, 
+      schoolInputValue} = this.state;
+
+    this.setState({
+      usernameError: "",
+      emailError: "",
+      passError: "",
+      passConfirmError: "",
+      nameError: "",
+      keyError: ""
+    })
+
+    if(!emailInputValue || !emailRegex.test(emailInputValue)){
+      this.setState({
+        emailError: "Please enter a valid email"
+      });
+      return;
+    }
+    
+    if(passwordInputValue.length < 7){
+      this.setState({
+        passError: 'Please enter a password with at least 7 characters'
+      });
+      return;
+    }
+
+    if(passwordConfirmInputValue !== passwordInputValue) {
+      this.setState({
+        passConfirmError: "The two passwords don't match"
+      });
+      return;
+    }
 
     var account = {
-      username: this.state.usernameInputValue,
-      email: this.state.emailInputValue,
-      password: this.state.passwordInputValue,
+      username: usernameInputValue,
+      email: emailInputValue,
+      password: passwordInputValue,
       profile: {
-        fullName: this.state.firstnameInputValue + " " + this.state.lastnameInputValue
+        fullName: firstnameInputValue + " " + lastnameInputValue
       },
       role: this.props.role || 0,
-      roleKey: this.state.roleKeyInputValue
+      roleKey: roleKeyInputValue
     };
 
-
     if(account.role === 0) {
-      account.schoolId = this.props.schools[this.state.schoolInputValue]._id;
-      account.school = this.props.schools[this.state.schoolInputValue].name;
+      account.schoolId = this.props.schools[schoolInputValue]._id;
+      account.school = this.props.schools[schoolInputValue].name;
     }
 
     Accounts.createUser(account, function createUserCallback(err) {
       if(err){
-        alert(err);
+        switch(err.error) {
+          case 'bad-username': 
+            this.setState({usernameError: err.reason});
+            break;
+          case 'bad-name':
+            this.setState({nameError: err.reason});
+            break;
+          case 'bad-key':
+            this.setState({keyError: err.reason});
+            break;
+          default:
+            alert(err);
+        }
       }else{
         this.setState({ success: true });
       }
@@ -111,39 +162,45 @@ class RegistrationForm extends Component {
             floatingLabelText="Username"
             fullWidth={true}
             value={this.state.usernameInputValue}
-            onChange={this.handleInputChange.bind(this, 'username')} />
+            onChange={this.handleInputChange.bind(this, 'username')}
+            errorText={this.state.usernameError} />
           <TextField
             ref="firstname"
             floatingLabelText="First Name"
             fullWidth={true}
             value={this.state.firstnameInputValue}
-            onChange={this.handleInputChange.bind(this, 'firstname')} />
+            onChange={this.handleInputChange.bind(this, 'firstname')}
+            errorText={this.state.nameError} />
           <TextField
             ref="lastname"
             floatingLabelText="Last Name"
             fullWidth={true}
             value={this.state.lastnameInputValue}
-            onChange={this.handleInputChange.bind(this, 'lastname')} />
+            onChange={this.handleInputChange.bind(this, 'lastname')}
+            errorText={this.state.nameError} />
           <TextField
             ref="email"
             floatingLabelText="Email"
             fullWidth={true}
             value={this.state.emailInputValue}
-            onChange={this.handleInputChange.bind(this, 'email')} />
+            onChange={this.handleInputChange.bind(this, 'email')}
+            errorText={this.state.emailError} />
           <TextField
             ref="password"
             floatingLabelText="Password"
             fullWidth={true}
             value={this.state.passwordInputValue}
             onChange={this.handleInputChange.bind(this, 'password')}
-            type="password" />
+            type="password"
+            errorText={this.state.passError} />
           <TextField
             ref="passwordConfirm"
             floatingLabelText="Password Confirm"
             fullWidth={true}
             value={this.state.passwordConfirmInputValue}
             onChange={this.handleInputChange.bind(this, 'passwordConfirm')}
-            type="password" />
+            type="password"
+            errorText={this.state.passConfirmError} />
           {role === 0 &&
             <SelectField name="school"
               value={this.state.schoolInputValue}
@@ -161,7 +218,8 @@ class RegistrationForm extends Component {
             floatingLabelText="Registration Key"
             fullWidth={true}
             value={this.state.roleKeyInputValue}
-            onChange={this.handleInputChange.bind(this, 'roleKey')} />
+            onChange={this.handleInputChange.bind(this, 'roleKey')}
+            errorText={this.state.keyError} />
           <br />
           {role !== 0 &&
             <div>Note: you are registering as a {Roles[role]}.</div>
