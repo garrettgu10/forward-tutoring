@@ -20,6 +20,25 @@ const emailRegex = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
 class RegistrationForm extends Component {
   constructor(props) {
     super(props);
+
+    this.role = 0;
+
+    console.log(props);
+
+    if(props.match){
+      var role = props.match.params.role;
+      switch(role) {
+        case "tutor":
+          this.role = 1;
+          break;
+        case "admin":
+          this.role = 2;
+          break;
+        default: 
+          this.role = 0;
+      }
+    }
+
     this.state={
       usernameInputValue: "",
       firstnameInputValue: "",
@@ -56,6 +75,15 @@ class RegistrationForm extends Component {
       lastnameInputValue, 
       roleKeyInputValue, 
       schoolInputValue} = this.state;
+    
+    this.setState({
+      emailError: "",
+      passError: "",
+      passConfirmError: "",
+      usernameError: "",
+      nameError: "",
+      keyError: ""
+    })
 
     if(!emailInputValue || !emailRegex.test(emailInputValue)){
       this.setState({
@@ -85,7 +113,7 @@ class RegistrationForm extends Component {
       profile: {
         fullName: firstnameInputValue + " " + lastnameInputValue
       },
-      role: this.props.role || 0,
+      role: this.role || 0,
       roleKey: roleKeyInputValue
     };
 
@@ -126,7 +154,7 @@ class RegistrationForm extends Component {
       );
     }
 
-    const role = this.props.role || 0;
+    const role = this.role || 0;
 
     if(role === 0 && this.props.schools.length === 0){
       return (
