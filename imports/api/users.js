@@ -14,10 +14,22 @@ Meteor.methods({
     if(!this.userId) {
       throw new Meteor.Error('not-authorized', 'You are not logged in');
     }
-
-    this.unblock();
     
     if(!this.isSimulation){
+      var user = Meteor.user();
+      var tokens = user.services.email? user.services.email.verificationTokens : null;
+      
+      if(tokens && tokens.length !== 0) {
+        var then = tokens[tokens.length-1].when;
+        var now = new Date();
+        console.log(then, now);
+        if(now-then < 300000) {
+          throw new Meteor.Error('bad-timing', 'Please wait 5 minutes before sending another verification email');
+        }
+      }
+
+      this.unblock();
+      
       Accounts.sendVerificationEmail(this.userId);
     }
   },

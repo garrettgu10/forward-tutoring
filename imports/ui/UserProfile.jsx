@@ -85,6 +85,7 @@ class UserProfile extends Component {
             Email: {user.emails[0].address}<br />
             Member since: {user.createdAt.toDateString()}<br />
             {user.skype && <div>Skype: {user.skype}</div>}
+            {user.school && <div>School: {user.school}</div>}
             {user.tutorProfile &&
               <div>
                 Tutor info:

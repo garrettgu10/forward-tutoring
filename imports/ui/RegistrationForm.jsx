@@ -86,9 +86,9 @@ class RegistrationForm extends Component {
 
     const role = this.props.role || 0;
 
-    if(role === 0 || this.props.schools.length === 0){
+    if(role === 0 && this.props.schools.length === 0){
       return (
-        <div class="container">
+        <div className="container">
           Registration is not available yet. Please check back later!
         </div>
       )
