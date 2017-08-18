@@ -57,15 +57,6 @@ class RegistrationForm extends Component {
       roleKeyInputValue, 
       schoolInputValue} = this.state;
 
-    this.setState({
-      usernameError: "",
-      emailError: "",
-      passError: "",
-      passConfirmError: "",
-      nameError: "",
-      keyError: ""
-    })
-
     if(!emailInputValue || !emailRegex.test(emailInputValue)){
       this.setState({
         emailError: "Please enter a valid email"
