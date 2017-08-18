@@ -5,9 +5,35 @@ import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
 import {Email} from 'meteor/email';
-import {Accounts} from 'meteor/accounts-base'
+import {Accounts} from 'meteor/accounts-base';
+import {Days} from '../constants/constants.js';
 
 export const Users = Meteor.users;
+
+function getTimeDescription(timeNum) {
+  var day = Math.floor(timeNum/5);
+  var time = timeNum%5 + 5;
+  return Days[day] + " " + time + " PM";
+}
+
+function tutorEmail(tutor, student, time) {
+  return `Hi ${tutor.profile.fullName}, 
+
+You have been assigned to a student for consistent tutoring.
+
+Name: ${student.profile.fullName}
+Email: ${student.emails[0].address}
+Skype: ${student.skype}
+Time: ${getTimeDescription(time)}
+
+Head to the consistent tutoring portal on forwardtutoring.net to get more info.
+
+In the meantime, please actively contact your student to set up tutoring. 
+
+Thank you for volunteering with Forward Tutoring. 
+
+The Forward Tutoring Team`;
+}
 
 Meteor.methods({
   'users.sendEmail'() {
@@ -85,7 +111,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized', 'You are not logged in');
     }
 
-    var studentDoc = Users.find(student, {fields: {role: 1, tutor: 1}}).fetch()[0];
+    var studentDoc = Users.find(student).fetch()[0];
     
     if(studentDoc.role !== 0) {
       throw new Meteor.Error('not-authorized', 'You are not a student'+studentDoc.role);
@@ -96,7 +122,7 @@ Meteor.methods({
     }
 
     if(!this.isSimulation){
-      var tutorDoc = Users.find(tutor, {fields: {role: 1, 'tutorProfile.times': 1, 'tutorProfile.students': 1}}).fetch()[0];
+      var tutorDoc = Users.find(tutor).fetch()[0];
 
       if(!tutorDoc || tutorDoc.role !== 1){
         throw new Meteor.Error('bad-tutor', 'The tutor does not exist');
@@ -116,6 +142,13 @@ Meteor.methods({
 
       Users.update(tutor, {$push: {'tutorProfile.students': {id: student, time: time}}, $pull: {'tutorProfile.times': time}});
       Users.update(student, {$set: { tutor: {id: tutor, time: time} }});
+
+      Email.send({
+        from: 'Forward Tutoring <noreply@forwardtutoring.net>',
+        to: tutorDoc.emails[0].address,
+        subject: 'Forward Tutoring Consistent Tutoring',
+        html: tutorEmail(tutorDoc, studentDoc, time)
+      })
     }
   }
 })

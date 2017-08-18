@@ -37,7 +37,8 @@ export default class SendEmail extends Component {
 
     return (
       <div className="container">
-        A verification email has been sent to {email.address}.
+        A verification email has been sent to {email.address}.<br />
+        Please check your spam folder if you haven't received it.
       </div>
     )
   }

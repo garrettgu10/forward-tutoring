@@ -175,7 +175,10 @@ class TutorsList extends Component {
 export default createContainer((props) => {
   var subscription = Meteor.subscribe('user.tutorsByTimes', props.times);
   return {
-    tutors: Users.find({role: 1, "tutorProfile.times": {$in: props.times}}, {reactive: false}).fetch().shuffle(), //shuffle tutors to give an equal opportunity
+    tutors: Users.find({
+      role: 1, 
+      "tutorProfile.times": {$in: props.times}, 
+      "tutorProfile.students": {$not: { $size: 2} } }, {reactive: false}).fetch().shuffle(), //shuffle tutors to give an equal opportunity
     ready: subscription.ready(),
     ref: props.innerRef
   }
