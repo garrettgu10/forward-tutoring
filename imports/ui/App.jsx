@@ -171,7 +171,6 @@ class App extends Component {
                 <Route path="/schools" component={SchoolsList} />
                 <Route path="/" component={NotFound} />
               </Switch>
-              <Route path="/logout" component={Logout} />
             </div>
           </div>
         </Router>
