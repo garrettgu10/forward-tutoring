@@ -27,7 +27,24 @@ class LoginForm extends Component{
 
     Meteor.loginWithPassword(this.state.usernameInputValue, this.state.passwordInputValue, (err) => {
       if(err){
-        alert(err)
+        this.setState({
+          passwordError: "",
+          usernameError: ""
+        })
+        switch(err.reason) {
+          case "Incorrect password":
+            this.setState({
+              passwordError: err.reason
+            });
+            break;
+          case "User not found":
+            this.setState({
+              usernameError: err.reason
+            });
+            break;
+          default:
+            alert(err);
+        }
       }else{
         this.setState({
           success: true
@@ -53,13 +70,15 @@ class LoginForm extends Component{
             floatingLabelText="Username"
             fullWidth={true}
             value={this.state.usernameInputValue}
-            onChange={this.handleInputChange.bind(this, 'username')} />
+            onChange={this.handleInputChange.bind(this, 'username')}
+            errorText={this.state.usernameError} />
           <TextField
             ref="password"
             floatingLabelText="Password"
             fullWidth={true}
             value={this.state.passwordInputValue}
             onChange={this.handleInputChange.bind(this, 'password')}
+            errorText={this.state.passwordError}
             type="password" />
           <div style={{marginTop: "15px"}}>
             <RaisedButton label="Submit" primary={true} type="submit" />

@@ -18,6 +18,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import SendEmail from './verify-email/SendEmail.jsx';
 import VerifyEmail from './verify-email/VerifyEmail.jsx';
 import SchoolsList from './SchoolsList.jsx';
+import ForgotForm from './forgot/ForgotForm.jsx';
+import ResetPass from './forgot/ResetPass.jsx';
 
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
@@ -31,7 +33,7 @@ const Switch = ReactRouter.Switch;
 
 var NotFound = function(props){
   return(
-    <div>
+    <div className="container">
       Not found. I probably haven't written this yet.
     </div>
   )
@@ -154,6 +156,7 @@ class App extends Component {
                 <Route path="/verify" component={
                   () => <SendEmail currentUser={this.props.currentUser} />
                 } />
+                <Route path="/forgot" component={ForgotForm} />
                 <Route path="/register/tutor" component={
                   () => <RegistrationForm role={1} />
                 } />
@@ -164,6 +167,7 @@ class App extends Component {
                 <Route path="/login" component={LoginForm} />
                 <Route path="/profile/:username" component={UserProfile} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
+                <Route path="/forgot-password/:token" component={ResetPass} />
                 <Route path="/schools" component={SchoolsList} />
                 <Route path="/" component={NotFound} />
               </Switch>

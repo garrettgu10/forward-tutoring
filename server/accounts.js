@@ -6,12 +6,15 @@ import {Meteor} from 'meteor/meteor';
 import {Schools} from '../imports/api/schools.js';
 
 Accounts.urls.verifyEmail = (token) => {
-  return Meteor.absoluteUrl("verify-email/"+token);
+  return Meteor.absoluteUrl("verify-email/" + token);
+}
+
+Accounts.urls.resetPassword = (token) => {
+  return Meteor.absoluteUrl('forgot-password/' + token);
 }
 
 Accounts.emailTemplates.from = "Forward Tutoring <noreply@forwardtutoring.net>";
 Accounts.emailTemplates.siteName="forwardtutoring.net";
-
 
 Accounts.emailTemplates.verifyEmail = {
   subject() {
@@ -20,12 +23,28 @@ Accounts.emailTemplates.verifyEmail = {
   text(user, url) {
     return `Hello ${user.profile.fullName}!
 
-Click on the link below to verify your email address. If it is not a link, simply copy and paste the URL into your browser's address bar.
+Click on the link below to verify your email address. If you can't click on it, just copy and paste it into your browser's address bar.
 
 ${url}
 
 Thanks!
-Forward Tutoring`;
+The Forward Tutoring team`;
+  }
+}
+
+Accounts.emailTemplates.resetPassword = {
+  subject() {
+    return "Reset your Forward Tutoring password!";
+  },
+  text(user, url) {
+    return `Hello ${user.profile.fullName}!
+
+Click on the link below to reset your password. If you can't click on it, just copy and paste it into your browser's address bar.
+
+${url}
+
+Cheers!
+The Forward Tutoring team`
   }
 }
 
