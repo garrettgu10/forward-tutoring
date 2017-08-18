@@ -84,7 +84,9 @@ class RegistrationForm extends Component {
       );
     }
 
-    if(this.props.schools.length === 0){
+    const role = this.props.role || 0;
+
+    if(role === 0 || this.props.schools.length === 0){
       return (
         <div class="container">
           Registration is not available yet. Please check back later!
@@ -99,8 +101,6 @@ class RegistrationForm extends Component {
     if(this.props.userId){
       return <Redirect to="/" />;
     }
-
-    const role = this.props.role || 0;
 
     return (
       <div className="container">
