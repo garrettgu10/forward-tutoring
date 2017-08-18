@@ -18,33 +18,35 @@ Accounts.emailTemplates.siteName="forwardtutoring.net";
 
 Accounts.emailTemplates.verifyEmail = {
   subject() {
-    return "Activate your Forward Tutoring account now!";
+    return "Welcome to Forward Tutoring";
   },
   text(user, url) {
-    return `Hello ${user.profile.fullName}!
+    return `Hello ${user.profile.fullName},
 
-Click on the link below to verify your email address. If you can't click on it, just copy and paste it into your browser's address bar.
+Thank you for joining Forward Tutoring!
+
+Please click on the link below to verify your email address. 
 
 ${url}
 
 Thanks!
-The Forward Tutoring team`;
+Forward Tutoring`;
   }
 }
 
 Accounts.emailTemplates.resetPassword = {
   subject() {
-    return "Reset your Forward Tutoring password!";
+    return "Verify that it's you";
   },
   text(user, url) {
     return `Hello ${user.profile.fullName}!
 
-Click on the link below to reset your password. If you can't click on it, just copy and paste it into your browser's address bar.
+Click on the link below to reset your password.
 
 ${url}
 
 Cheers!
-The Forward Tutoring team`
+Forward Tutoring`
   }
 }
 
