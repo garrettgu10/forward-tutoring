@@ -112,7 +112,7 @@ Meteor.publish("user.byId", (userId) => {
 });
 
 Meteor.publish('user.tutorsByTimes', (times) => {
-  return Meteor.users.find({role: 1, "tutorProfile.times": {$in: times}}, {fields: userFields});
+  return Meteor.users.find({role: 1, "tutorProfile.times": {$in: times}, "tutorProfile.students": {$not: { $size: 2 } } }, {fields: userFields});
 });
 
 Meteor.publish('users.onlineTutors', () => {
