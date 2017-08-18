@@ -7,6 +7,11 @@ import FontIcon from 'material-ui/FontIcon';
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
 
+var Logout = function() {
+  Meteor.logout(function(err){
+    if(err) alert(err);
+  });
+}
 
 export default class Sidebar extends Component{
   constructor(props){
@@ -53,6 +58,17 @@ export default class Sidebar extends Component{
                   {currentUser.role === 0? "My Consistent Tutor" : "Consistent Tutoring"}
                 </MenuItem>
               </NavLink>
+              
+              <br />
+
+              <NavLink activeStyle={menuItemActiveStyle} to={"/profile/"+currentUser.username} className='nav-link' onTouchTap={toggle}>
+                <MenuItem>
+                  My Profile
+                </MenuItem>
+              </NavLink>
+              <MenuItem onClick={Logout}>
+                Log Out
+              </MenuItem>
             </div>
             :
             <div>

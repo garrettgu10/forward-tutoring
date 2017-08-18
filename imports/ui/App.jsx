@@ -1,26 +1,6 @@
 import React, {Component} from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ReactRouter from 'react-router-dom';
-import AppBar from 'material-ui/AppBar';
-import Sidebar from './Sidebar.jsx';
-import Forum from './Forum.jsx';
-import LoginForm from './LoginForm.jsx';
-import RegistrationForm from './RegistrationForm.jsx';
-import FlatButton from 'material-ui/FlatButton';
 import { createContainer } from 'meteor/react-meteor-data';
-import Home from './Home.jsx';
-import UserProfile from './UserProfile.jsx';
-import CircularProgress from 'material-ui/CircularProgress';
-import TutorSearch from './consistent/TutorSearch.jsx';
-import EditTutorProfile from './consistent-tutor/EditTutorProfile.jsx';
-import {blue500, blue700, teal500} from 'material-ui/styles/colors';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import SendEmail from './verify-email/SendEmail.jsx';
-import VerifyEmail from './verify-email/VerifyEmail.jsx';
-import SchoolsList from './SchoolsList.jsx';
-import ForgotForm from './forgot/ForgotForm.jsx';
-import ResetPass from './forgot/ResetPass.jsx';
-
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
 const Router = ReactRouter.BrowserRouter;
@@ -28,8 +8,26 @@ const Route = ReactRouter.Route;
 const Redirect = ReactRouter.Redirect;
 const Switch = ReactRouter.Switch;
 
-//STUB COMPONENTS FOR TESTING ROUTES, WILL BE IN THEIR OWN FILES
-//--------------------------------------------------------
+import Sidebar from './Sidebar.jsx';
+import Forum from './Forum.jsx';
+import LoginForm from './LoginForm.jsx';
+import RegistrationForm from './RegistrationForm.jsx';
+import Home from './Home.jsx';
+import UserProfile from './UserProfile.jsx';
+import TutorSearch from './consistent/TutorSearch.jsx';
+import EditTutorProfile from './consistent-tutor/EditTutorProfile.jsx';
+import SendEmail from './verify-email/SendEmail.jsx';
+import VerifyEmail from './verify-email/VerifyEmail.jsx';
+import SchoolsList from './SchoolsList.jsx';
+import ForgotForm from './forgot/ForgotForm.jsx';
+import ResetPass from './forgot/ResetPass.jsx';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FlatButton from 'material-ui/FlatButton';
+import {blue500, blue700, teal500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import CircularProgress from 'material-ui/CircularProgress';
+import AppBar from 'material-ui/AppBar';
 
 var NotFound = function(props){
   return(
@@ -60,17 +58,19 @@ var RightButtons = function(props) {
   if(props.currentUser == null){
     return(
       <div>
-        <NavLink to="/register">
-          <FlatButton style={buttonStyle} label="Sign up" />
-        </NavLink>
-        <NavLink to="/login">
-          <FlatButton style={buttonStyle} label="Log in" />
-        </NavLink>
+        <div className="mobile-hide">
+          <NavLink to="/register">
+            <FlatButton style={buttonStyle} label="Sign up" />
+          </NavLink>
+          <NavLink to="/login">
+            <FlatButton style={buttonStyle} label="Log in" />
+          </NavLink>
+        </div>
       </div>
     )
   }else{
     return (
-      <div>
+      <div className="mobile-hide">
         <NavLink to={"/profile/" + props.currentUser.username}>
           <FlatButton style={buttonStyle} label={props.currentUser.username} />
         </NavLink>
