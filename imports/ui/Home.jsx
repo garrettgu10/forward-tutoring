@@ -1,9 +1,63 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-import {blue500} from 'material-ui/styles/colors';
+import {blue500, red500, green500} from 'material-ui/styles/colors';
+import Paper from 'material-ui/Paper';
+
+import MoneyOff from 'material-ui/svg-icons/editor/money-off';
+import Timeline from 'material-ui/svg-icons/action/timeline';
+import People from 'material-ui/svg-icons/social/people';
 
 import "../css/home.css"
+
+const titleStyle = {
+  fontSize: 40, 
+  fontWeight: 100,
+  textAlign: 'center',
+  margin: '10px 0'
+}
+
+function MainSection({header, content, style, iconColor, ...props}) {
+
+  const iconStyle = {
+    paddingLeft: 50,
+    paddingRight: 50,
+    width: 150,
+    height: 150,
+    paddingTop: 10,
+    paddingBottom: 10,
+    fill: iconColor
+  }
+
+  const contentStyle = {
+    margin: '10px 0'
+  }
+
+  var Icon = props.icon;
+
+  return (
+    <Paper style={{width: 300, marginTop: 10, marginRight: 10, padding: 25, ...style}}>
+      <h2 style={titleStyle}>{header}</h2>
+      <Icon style={iconStyle}/>
+      <div style={contentStyle}>
+        {content}
+      </div>
+    </Paper>
+  )
+}
+
+function FAQ({question, answer}) {
+  const outerStyle = {
+    marginTop: 30
+  }
+
+  return (
+    <div style={outerStyle}>
+      <div>Q: {question}</div>
+      <div>A: {answer}</div>
+    </div>
+  )
+}
 
 export default function Home(props){
   const containerStyles = {
@@ -12,6 +66,13 @@ export default function Home(props){
     margin: '0'
   }
 
+  const sectionHeaderStyles = {
+    fontSize: 40, 
+    fontWeight: 100, 
+    textAlign: 'center', 
+    marginTop: 50, 
+    marginBottom: 20
+  }
 
   const {currentUser} = props;
   return(
@@ -48,7 +109,45 @@ export default function Home(props){
           <div style={{height: '100px'}}></div>
         </div>
       </div>
-      <div style={{textAlign: 'center', marginTop: '20px'}}>More info coming soon!</div>
+      <div className="container">
+        <h1 style={sectionHeaderStyles}> Why Forward Tutoring?</h1>
+        <div style={{display: 'flex', alignItems: 'stretch', justifyContent: 'center', flexWrap: 'wrap'}}>
+          <MainSection 
+            header="Free" 
+            icon={MoneyOff} 
+            iconColor={green500}
+            content="Forward Tutoring is a 501(c)(3) government certified nonprofit organization whose mission is to provide tutoring for students everywhere free of charge. We believe that learning should be accessible to every student anywhere, without any cost involved."
+            />
+          <MainSection 
+            header="Efficient" 
+            icon={Timeline} 
+            iconColor={red500}
+            content="Forward Tutoring provides students the opportunity to connect with a consistent tutor, who will assist them on a weekly basis. When these tutors are unavailable, or at any time, students can ask questions on a forum with its own group of assigned tutors."
+            />
+          <MainSection 
+            header="Experienced" 
+            icon={People} 
+            iconColor={blue500}
+            content={<div>Forward Tutoring recruits tutors from the <a href="http://tams.unt.edu">Texas Academy of Mathematics and Science</a>, an educational establishment at the University of North Texas in Denton, Texas.</div>}
+            />
+        </div>
+        <h1 style={sectionHeaderStyles}>Frequently Asked Questions</h1>
+        <FAQ
+          question="How can I set up my school with Forward Tutoring?"
+          answer="Please email us at forwardtutoringexecs@gmail.com to arrange tutoring with us!"
+        />
+        <FAQ
+          question="How can I support Forward Tutoring?"
+          answer="Your donations help us keep our site free and running. Check back here later for a link to our PayPal!"
+        />
+        <FAQ
+          question="My consistent tutor isn’t online at the moment and I really need a question answered soon. What do I do?"
+          answer="Feel free to post in the forum! We have tutors overlooking the forum every day."
+        />
+        <h1 style={sectionHeaderStyles}>Contact Info</h1>
+        <div>If you have any questions or concerns regarding our website, forum, tutors, etc. feel free to email us at <a href="mailto:forwardtutoringexecs@gmail.com">forwardtutoringexecs@gmail.com</a>!</div>
+        <div style={{textAlign: 'center', marginTop: '50px'}}>Copyright © Forward Tutoring {new Date().getFullYear()}</div>
+      </div>
     </div>
   )
 }
