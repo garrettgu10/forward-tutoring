@@ -59,6 +59,12 @@ function FAQ({question, answer}) {
   )
 }
 
+function EmailLink() {
+  return (
+    <a href="mailto:forwardtutoringexecs@gmail.com">forwardtutoringexecs@gmail.com</a>
+  )
+}
+
 export default function Home(props){
   const containerStyles = {
     backgroundColor: blue500,
@@ -134,7 +140,7 @@ export default function Home(props){
         <h1 style={sectionHeaderStyles}>Frequently Asked Questions</h1>
         <FAQ
           question="How can I set up my school with Forward Tutoring?"
-          answer="Please email us at forwardtutoringexecs@gmail.com to arrange tutoring with us!"
+          answer={<span>Please email us at <EmailLink /> to arrange tutoring with us!</span>}
         />
         <FAQ
           question="How can I support Forward Tutoring?"
@@ -145,7 +151,7 @@ export default function Home(props){
           answer="Feel free to post in the forum! We have tutors overlooking the forum every day."
         />
         <h1 style={sectionHeaderStyles}>Contact Info</h1>
-        <div>If you have any questions or concerns regarding our website, forum, tutors, etc. feel free to email us at <a href="mailto:forwardtutoringexecs@gmail.com">forwardtutoringexecs@gmail.com</a>!</div>
+        <div>If you have any questions or concerns regarding our website, forum, tutors, etc. feel free to email us at <EmailLink />!</div>
         <div style={{textAlign: 'center', marginTop: '50px'}}>Copyright © Forward Tutoring {new Date().getFullYear()}</div>
       </div>
     </div>
