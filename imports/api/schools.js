@@ -7,6 +7,13 @@ export const Schools = new Mongo.Collection('schools');
 if(Meteor.isServer) {
   Meteor.publish('schools', () => {
     return Schools.find({}, {fields: {key: 0}});
+  });
+
+  Meteor.publish('schools.withKeys', () => {
+    if(Meteor.user().role !== 2) {
+      throw new Meteor.Error('not-authorized', 'You must be an admin to do this');
+    }
+    return Schools.find({});
   })
 }
 

@@ -107,7 +107,7 @@ class SchoolsList extends Component {
 }
 
 export default createContainer((props) => {
-  var subscription = Meteor.subscribe('schools');
+  var subscription = Meteor.subscribe('schools.withKeys');
   
   return {
     ready: subscription.ready(),
