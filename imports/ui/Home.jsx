@@ -20,8 +20,7 @@ const titleStyle = {
 function MainSection({header, content, style, iconColor, ...props}) {
 
   const iconStyle = {
-    paddingLeft: 50,
-    paddingRight: 50,
+    paddingLeft: 40,
     width: 150,
     height: 150,
     paddingTop: 10,
@@ -36,7 +35,7 @@ function MainSection({header, content, style, iconColor, ...props}) {
   var Icon = props.icon;
 
   return (
-    <Paper style={{width: 300, marginTop: 10, marginRight: 10, padding: 25, ...style}}>
+    <Paper style={{width: 280, marginTop: 10, marginRight: 10, padding: 25, ...style}}>
       <h2 style={titleStyle}>{header}</h2>
       <Icon style={iconStyle}/>
       <div style={contentStyle}>
