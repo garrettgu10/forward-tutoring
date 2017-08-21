@@ -63,7 +63,7 @@ class UserProfile extends Component {
 
     if(!user) {
       return(
-        <div>
+        <div className="container">
           Error: User not found.
         </div>
       )
