@@ -18,7 +18,7 @@ import TutorSearch from './consistent/TutorSearch.jsx';
 import EditTutorProfile from './consistent-tutor/EditTutorProfile.jsx';
 import SendEmail from './verify-email/SendEmail.jsx';
 import VerifyEmail from './verify-email/VerifyEmail.jsx';
-import SchoolsList from './SchoolsList.jsx';
+import SchoolsList from './admin/SchoolsList.jsx';
 import ForgotForm from './forgot/ForgotForm.jsx';
 import ResetPass from './forgot/ResetPass.jsx';
 
