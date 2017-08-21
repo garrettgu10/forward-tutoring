@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import {Schools} from '../api/schools.js';
+import {Schools} from '../../api/schools.js';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';

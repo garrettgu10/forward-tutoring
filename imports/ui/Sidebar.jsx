@@ -7,6 +7,8 @@ import FontIcon from 'material-ui/FontIcon';
 const NavLink = ReactRouter.NavLink;
 const Link = ReactRouter.Link;
 
+import queryString from 'query-string';
+
 var Logout = function() {
   Meteor.logout(function(err){
     if(err) alert(err);
@@ -61,7 +63,7 @@ export default class Sidebar extends Component{
               
               <br />
 
-              <NavLink activeStyle={menuItemActiveStyle} to={"/profile/"+currentUser.username} className='nav-link' onTouchTap={toggle}>
+              <NavLink activeStyle={menuItemActiveStyle} to={"/profile?" + queryString.stringify({username: currentUser.username})} className='nav-link' onTouchTap={toggle}>
                 <MenuItem>
                   My Profile
                 </MenuItem>

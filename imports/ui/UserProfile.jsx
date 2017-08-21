@@ -10,6 +10,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import {Roles} from '../constants/constants.js';
 import Avatar from 'material-ui/Avatar';
 import {Days} from '../constants/constants.js';
+import queryString from 'query-string';
 
 import md5 from 'md5';
 
@@ -113,8 +114,10 @@ class UserProfile extends Component {
 }
 
 export default createContainer((props) => {
-  const username = (props.match? props.match.params.username : props.username);
-  const id = (props.match? props.match.params.id : props.id);
+  const parsed = queryString.parse(props.location.search);
+
+  const username = parsed.username || props.username;
+  const id = parsed.id || props.id;
 
   var query;
   var subscription;

@@ -5,6 +5,8 @@ import ActionClear from 'material-ui/svg-icons/content/clear';
 import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
 
+import queryString from 'query-string';
+
 export default class CommentView extends Component {
 
   delete() {
@@ -21,13 +23,14 @@ export default class CommentView extends Component {
   render() {
     const comment = this.props.commentObj;
     const canDelete = (comment.owner === this.props.currentUser._id || this.props.currentUser.role === 2);
+    const {username} = comment;
     return(
       <div key={comment._id}>
         <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
 
           <div style={{flexGrow: "1", margin: "10px 0"}}>
             <div style={{marginBottom: '10px'}}>
-              <Link to={"/profile/"+comment.username}>{comment.username}</Link> &nbsp;&nbsp;
+              <Link to={"/profile?" + queryString.stringify({username})}>{username}</Link> &nbsp;&nbsp;
               {comment.content}
             </div>
             <DateView date={comment.date} />

@@ -7,6 +7,8 @@ import Avatar from 'material-ui/Avatar';
 import {Link, Redirect} from 'react-router-dom';
 import md5 from 'md5';
 
+import queryString from 'query-string';
+
 String.prototype.colorCode = function() {
   var hash = md5(this);
 
@@ -14,9 +16,14 @@ String.prototype.colorCode = function() {
 };
 
 export default class UserLink extends Component {
+
   render() {
+    const {username} = this.props;
     return (
-      <Chip style={this.props.style} onTouchTap={() => 0} containerElement={<Link to={"/profile/" + this.props.username} />}>
+      <Chip 
+        style={this.props.style} 
+        onTouchTap={() => 0} 
+        containerElement={<Link to={"/profile?" + queryString.stringify({username})} />}>
         <Avatar backgroundColor={"#" + this.props.username.colorCode()}>
           {this.props.username.charAt(0).toUpperCase()}
         </Avatar>

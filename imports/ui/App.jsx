@@ -29,6 +29,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CircularProgress from 'material-ui/CircularProgress';
 import AppBar from 'material-ui/AppBar';
 
+import queryString from 'query-string';
+
 var NotFound = function(props){
   return(
     <div className="container">
@@ -69,10 +71,11 @@ var RightButtons = function(props) {
       </div>
     )
   }else{
+    const {username} = props.currentUser;
     return (
       <div className="mobile-hide">
-        <NavLink to={"/profile/" + props.currentUser.username}>
-          <FlatButton style={buttonStyle} label={props.currentUser.username} />
+        <NavLink to={"/profile?" + queryString.stringify({username})}>
+          <FlatButton style={buttonStyle} label={username} />
         </NavLink>
         <FlatButton style={buttonStyle} label="Logout" onClick={Logout}/>
       </div>
@@ -160,7 +163,7 @@ class App extends Component {
                 <Route path="/register/:role" component={RegistrationForm} />
                 <Route path="/register" component={RegistrationForm} />
                 <Route path="/login" component={LoginForm} />
-                <Route path="/profile/:username" component={UserProfile} />
+                <Route path="/profile" component={UserProfile} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/forgot-password/:token" component={ResetPass} />
                 <Route path="/schools" component={SchoolsList} />

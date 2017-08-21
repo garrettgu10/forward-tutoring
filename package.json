@@ -12,6 +12,7 @@
     "md5": "^2.2.1",
     "meteor-node-stubs": "~0.2.4",
     "moment-timezone": "^0.5.13",
+    "query-string": "^5.0.0",
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.6.0",
     "react-dom": "^15.6.1",
