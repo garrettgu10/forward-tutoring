@@ -114,10 +114,13 @@ class UserProfile extends Component {
 }
 
 export default createContainer((props) => {
-  const parsed = queryString.parse(props.location.search);
+  let parsed = false;
+  if(props.location){
+    parsed = queryString.parse(props.location.search);
+  }
 
-  const username = parsed.username || props.username;
-  const id = parsed.id || props.id;
+  const username = parsed? parsed.username: props.username;
+  const id = parsed? parsed.id: props.id;
 
   var query;
   var subscription;
