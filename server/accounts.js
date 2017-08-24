@@ -46,6 +46,8 @@ Click on the link below to reset your password.
 
 ${url}
 
+In case you forgot, your username is ${user.username}.
+
 Cheers!
 Forward Tutoring`
   }
