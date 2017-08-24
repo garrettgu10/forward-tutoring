@@ -40,6 +40,7 @@ export default class CommentForm extends Component {
           id="comment-input"
           floatingLabelText="Comment"
           rows={2}
+          multiLine={true}
           value={this.state.inputValue}
           onChange={this.handleInputChange.bind(this)}
           style={{flexGrow: '1'}} />
