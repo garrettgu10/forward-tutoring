@@ -93,7 +93,7 @@ Accounts.validateNewUser((user) => {
   return true;
 });
 
-const userFields = {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1, tutorProfile: 1, skype: 1, tutor: 1};
+const userFields = {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, role: 1, tutorProfile: 1, skype: 1, tutor: 1, consistent: 1};
 
 Accounts.onCreateUser((options, user) => {
   user.roleKey = options.roleKey || "";
@@ -119,4 +119,12 @@ Meteor.publish('user.tutorsByTimes', (times) => {
 
 Meteor.publish('users.onlineTutors', () => {
   return Meteor.users.find({'status.online': true, role: 1}, {fields: {_id: 1, username: 1, 'status.online': 1, role: 1} });
-})
+});
+
+Meteor.publish('users.all', () => {
+  if(Meteor.user().role !== 2){
+    throw new Meteor.Error('not-authorized', 'You are not an admin');
+    return null;
+  }
+  return Meteor.users.find({}, userFields);
+});

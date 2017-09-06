@@ -117,6 +117,12 @@ export default class EditTutorProfile extends Component {
       )
     }
 
+    if(!this.props.currentUser.consistent){
+      return (
+        <TimedRedirect redirectTo="/forum" text="You are not authorized to be a consistent tutor. Contact the Forward Tutoring execs to learn more." />
+      )
+    }
+
     return(
       <div className="container">
         <Stepper activeStep = {this.state.activeStep}>

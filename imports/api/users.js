@@ -101,6 +101,16 @@ Meteor.methods({
     Users.update(this.userId, {$set: {skype: skype}});
   },
 
+  'users.setConsistent'(id, consistent) {
+    check(id, String);
+
+    if(Meteor.user().role !== 2) {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+    
+    Users.update(id, {$set: {'consistent': consistent}});
+  },
+
   'users.chooseTutor'(tutor, time) {
     check(tutor, String);
     check(time, Number);

@@ -21,6 +21,7 @@ import VerifyEmail from './verify-email/VerifyEmail.jsx';
 import SchoolsList from './admin/SchoolsList.jsx';
 import ForgotForm from './forgot/ForgotForm.jsx';
 import ResetPass from './forgot/ResetPass.jsx';
+import UsersList from './admin/UsersList.jsx';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
@@ -166,7 +167,8 @@ class App extends Component {
                 <Route path="/profile" component={UserProfile} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/forgot-password/:token" component={ResetPass} />
-                <Route path="/schools" component={SchoolsList} />
+                <Route path="/admin/schools" component={SchoolsList} />
+                <Route path="/admin/users" component={UsersList} />
                 <Route path="/" component={NotFound} />
               </Switch>
             </div>
