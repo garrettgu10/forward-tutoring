@@ -55,11 +55,29 @@ export default class Sidebar extends Component{
                 </MenuItem>
               </NavLink>
 
-              <NavLink activeStyle={menuItemActiveStyle} to="/consistent" className='nav-link' onTouchTap={toggle}>
-                <MenuItem>
-                  {currentUser.role === 0? "My Consistent Tutor" : "Consistent Tutoring"}
-                </MenuItem>
-              </NavLink>
+              {currentUser.role !== 2 &&
+                <NavLink activeStyle={menuItemActiveStyle} to="/consistent" className='nav-link' onTouchTap={toggle}>
+                  <MenuItem>
+                    {currentUser.role === 0? "My Consistent Tutor" : "Consistent Tutoring"}
+                  </MenuItem>
+                </NavLink>
+              }
+
+              {currentUser.role === 2 &&
+                <NavLink activeStyle={menuItemActiveStyle} to="/admin/schools" className='nav-link' onTouchTap={toggle}>
+                  <MenuItem>
+                    Schools
+                  </MenuItem>
+                </NavLink>
+              }
+
+              {currentUser.role === 2 &&
+                <NavLink activeStyle={menuItemActiveStyle} to="/admin/users" className='nav-link' onTouchTap={toggle}>
+                  <MenuItem>
+                    Users
+                  </MenuItem>
+                </NavLink>
+              }
               
               <br />
 
