@@ -31,8 +31,13 @@ class UserItem extends Component {
 class UserList extends Component {
   render() {
     if(!this.props.ready) {
-      return <div>loading</div>
+      return <div className="container">loading</div>
     }
+
+    if(this.props.users.length === 0) {
+      return <div className="container">No tutors currently</div>
+    }
+
     return (
       <div className="container">
         {this.props.users.map((user) => (
