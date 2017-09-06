@@ -46,7 +46,7 @@ var logo = function(props) {
       <span>
         <span style={{fontWeight: 600}}>forward</span>
         <span style={{fontWeight: 300}}>tutoring</span>
-        <span style={{fontSize: 13}}>(alpha)</span>
+        <span style={{fontSize: 13}}>(beta)</span>
       </span>
     </Link>
   );
