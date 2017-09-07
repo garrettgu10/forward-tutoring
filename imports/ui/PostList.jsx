@@ -112,10 +112,22 @@ export default createContainer((props) => {
 
   Session.setDefault('Forum.numLoaded', INITIAL_LOAD);
   const numLoaded = Session.get('Forum.numLoaded');
-  
-  var subscription = Meteor.subscribe('posts', query, sort, 0, numLoaded);
+
+  var initialized = false;
 
   var posts = Posts.find(query, {sort: sort, limit: numLoaded});
+
+  posts.observeChanges({
+    addedBefore(id, fields){
+      if(initialized && fields.owner !== Meteor.userId()){
+        new Audio('new_post.mp3').play();
+      }
+    }
+  })
+
+  var subscription = Meteor.subscribe('posts', query, sort, 0, numLoaded, () => {
+    initialized = true;
+  });
 
   return {
     ready: subscription.ready(),
