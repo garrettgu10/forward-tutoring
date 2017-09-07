@@ -82,19 +82,19 @@ class UserProfile extends Component {
             }
           />
           <CardText style={{paddingTop: 0}}>
-            Role: {Roles[user.role].capitalize()}<br />
-            Email: {user.emails[0].address}<br />
-            Member since: {user.createdAt.toDateString()}<br />
-            {user.skype && <div>Skype: {user.skype}</div>}
-            {user.school && <div>School: {user.school}</div>}
+            <i>Role:</i> {Roles[user.role].capitalize()}<br />
+            <i>Email:</i> {user.emails[0].address}<br />
+            <i>Member since:</i> {user.createdAt.toDateString()}<br />
+            {user.skype && <div><i>Skype:</i> {user.skype}</div>}
+            {user.school && <div><i>School:</i> {user.school}</div>}
             {user.tutorProfile &&
               <div>
-                Tutor info:
+                <i>Tutor info:</i>
                 <div style={{paddingLeft: "20px"}}>
-                  Description: {user.tutorProfile.description}<br />
+                  <i>Description:</i> {user.tutorProfile.description}<br />
                   {this.props.time == null &&
                     <div>
-                      Available times:&nbsp;
+                      <i>Available times:</i>&nbsp;
                       <TimeDescriptions times={user.tutorProfile.times} />
                     </div>
                   }
@@ -103,7 +103,7 @@ class UserProfile extends Component {
             }
             {
               this.props.time != null && 
-              <div>Scheduled time: {getTimeDescription(this.props.time)}</div>
+              <div><i>Scheduled time:</i> {getTimeDescription(this.props.time)}</div>
             }
           </CardText>
         </Card>

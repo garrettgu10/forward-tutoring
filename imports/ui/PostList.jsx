@@ -120,7 +120,7 @@ export default createContainer((props) => {
   posts.observeChanges({
     addedBefore(id, fields){
       if(initialized && fields.owner !== Meteor.userId()){
-        new Audio('new_post.mp3').play();
+        //new Audio('new_post.mp3').play();
       }
     }
   })
