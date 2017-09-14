@@ -9,6 +9,8 @@ import {Redirect} from 'react-router-dom';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import CircularProgress from 'material-ui/CircularProgress';
+import Checkbox from 'material-ui/CheckBox';
+import {Link} from 'react-router-dom';
 
 import {Roles} from '../constants/constants.js';
 
@@ -22,8 +24,6 @@ class RegistrationForm extends Component {
     super(props);
 
     this.role = 0;
-
-    console.log(props);
 
     if(props.match){
       var role = props.match.params.role;
@@ -48,8 +48,15 @@ class RegistrationForm extends Component {
       passwordConfirmInputValue: "",
       schoolInputValue: 0,
       roleKeyInputValue: "",
+      termsInputValue: false,
       success: false
     }
+  }
+
+  toggleTerms() {
+    this.setState({
+      termsInputValue: !this.state.termsInputValue
+    });
   }
 
   handleInputChange(field, event){
@@ -74,6 +81,7 @@ class RegistrationForm extends Component {
       firstnameInputValue, 
       lastnameInputValue, 
       roleKeyInputValue, 
+      termsInputValue,
       schoolInputValue} = this.state;
     
     this.setState({
@@ -84,6 +92,11 @@ class RegistrationForm extends Component {
       nameError: "",
       keyError: ""
     })
+
+    if(!termsInputValue) {
+      alert("Please agree to the terms and conditions.");
+      return;
+    }
 
     if(!emailInputValue || !emailRegex.test(emailInputValue)){
       this.setState({
@@ -243,6 +256,14 @@ class RegistrationForm extends Component {
           {role !== 0 &&
             <div>Note: you are registering as a {Roles[role]}.</div>
           }
+          <br />
+          <div style={{display: 'flex'}}>
+            <Checkbox 
+              style={{width: 25}}
+              value={this.state.termsInputValue}
+              onCheck={this.toggleTerms.bind(this)}/>
+            <div>I have read and agree to the <Link to="/terms">terms and conditions</Link></div>
+          </div>
           <br />
           <RaisedButton label="Submit" primary={true} type="submit" />
 
