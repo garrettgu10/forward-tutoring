@@ -78,7 +78,7 @@ export default class Forum extends Component {
     return (
       <div className="container">
         <OnlineTutorsList />
-        <PostForm />
+        {this.props.currentUser.role !== 1 && <PostForm />}
 
         <br />
         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>

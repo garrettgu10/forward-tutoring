@@ -22,7 +22,7 @@ export default class CommentForm extends Component {
   handleSubmit(event){
     event.preventDefault();
     Meteor.call('posts.comment', this.props.postId, this.state.inputValue,
-      function commentSubmitCallback(err) {
+      (err) => {
         if(err){
           alert(err);
         }else {
