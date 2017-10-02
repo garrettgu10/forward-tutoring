@@ -23,6 +23,7 @@ import ForgotForm from './forgot/ForgotForm.jsx';
 import ResetPass from './forgot/ResetPass.jsx';
 import UsersList from './admin/UsersList.jsx';
 import Terms from './Terms.jsx';
+import TimedRedirect from './TimedRedirect.jsx';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
@@ -36,7 +37,14 @@ import queryString from 'query-string';
 var NotFound = function(props){
   return(
     <div className="container">
-      Not found. I probably haven't written this yet.
+      <TimedRedirect text={
+        <div>
+          <h1>Oops.</h1>
+          You shouldn't be here. <br />
+          Don't worry, it's probably not your fault. <br />
+          We'd appreciate it if you got in touch with us at <a href="mailto:forwardtutoringexecs@gmail.com">forwardtutoringexecs@gmail.com</a>.
+        </div>
+      } redirectTo="/" /> 
     </div>
   )
 }
