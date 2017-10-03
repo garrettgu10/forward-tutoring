@@ -1,19 +1,19 @@
 import React, {Component} from 'react';
-import moment from 'moment';
+import TimeDiff from '../helpers/TimeDiff.js';
 
 export default class DateView extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-      content: moment(props.date).fromNow()
+      content: TimeDiff(props.date)
     }
   }
 
   componentDidMount = () => {
     this.timer = setInterval(() => {
       this.setState({
-        content: moment(this.props.date).fromNow()
+        content: TimeDiff(props.date)
       })
     }, (this.props.interval || 10000));
   }
@@ -23,8 +23,9 @@ export default class DateView extends Component {
   }
 
   render() {
+    var {date} = this.props;
     return(
-      <div style={{fontStyle: 'italic', color: "#9E9E9E", ...this.props.style}}>
+      <div title={date.toDateString()+" "+date.toLocaleTimeString()} style={{fontStyle: 'italic', color: "#9E9E9E", ...this.props.style}}>
         {this.state.content}
       </div>
     );
