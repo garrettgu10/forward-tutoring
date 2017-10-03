@@ -24,6 +24,12 @@ export default class CommentView extends Component {
     const comment = this.props.commentObj;
     const canDelete = (comment.owner === this.props.currentUser._id || this.props.currentUser.role === 2);
     const {username} = comment;
+    const content = comment.content.split("\n").map((item, key) => (
+      <span key={key}>
+        {item}
+        <br />
+      </span>
+    ));
     return(
       <div key={comment._id}>
         <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
@@ -31,7 +37,7 @@ export default class CommentView extends Component {
           <div style={{flexGrow: "1", margin: "10px 0"}}>
             <div style={{marginBottom: '10px'}}>
               <Link to={"/profile?" + queryString.stringify({username})}>{username}</Link> &nbsp;&nbsp;
-              {comment.content}
+              {content}
             </div>
             <DateView date={comment.date} />
           </div>

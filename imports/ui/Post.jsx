@@ -63,6 +63,12 @@ export default class Post extends Component {
     const canComment = (this.props.currentUser._id === post.owner || this.props.currentUser.role !== 0);
     const canDelete = (this.props.currentUser._id === post.owner || this.props.currentUser.role === 2);
     const canMarkAnswered = (this.props.currentUser._id === post.owner ||  this.props.currentUser.role !== 0);
+    const content = post.content.split('\n').map((item, key) => (
+      <span key={key}>
+        {item}
+        <br />
+      </span>
+    ));
     return (
       <Card key={post._id} style={{marginTop: '25px'}}>
         <div style={{display: 'flex', alignItems: 'center'}}>
@@ -82,7 +88,7 @@ export default class Post extends Component {
         <DateView date={post.date} style={{margin: '10px 16px'}}/>
 
         <CardText>
-          {post.content}
+          {content}
         </CardText>
         <CardActions style={{display: 'flex', alignItems: 'center'}}>
           <FlatButton
