@@ -13,7 +13,7 @@ export default class DateView extends Component {
   componentDidMount = () => {
     this.timer = setInterval(() => {
       this.setState({
-        content: TimeDiff(props.date)
+        content: TimeDiff(this.props.date)
       })
     }, (this.props.interval || 10000));
   }
