@@ -101,6 +101,11 @@ class UserProfile extends Component {
                 </div>
               </div>
             }
+            {user.instant && 
+              <div>
+                <i>Assigned forum time:</i> {user.instant.day} {user.instant.hour}-{user.instant.hour+1} PM Central
+              </div>
+            }
             {
               this.props.time != null && 
               <div><i>Scheduled time:</i> {getTimeDescription(this.props.time)}</div>
