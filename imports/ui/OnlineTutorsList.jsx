@@ -12,8 +12,8 @@ class OnlineTutorsList extends Component {
     }
 
     return (
-      <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-        <div style={{padding: '0 20px'}}>Online tutors:</div>
+      <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', padding: '0 20px'}}>
+        <div>Online tutors:</div>
         {this.props.tutors.map((tutor) => {
           return(
             <UserLink style={{margin: '10px 10px'}} key={tutor._id} username={tutor.username} />

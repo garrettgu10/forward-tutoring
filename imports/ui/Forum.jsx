@@ -12,8 +12,33 @@ import TimedRedirect from './TimedRedirect.jsx';
 
 import {WaysToSortPosts, Subjects, PostStatusFilters} from '../constants/constants.js';
 
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+function convert24to12(hour){
+  var num = (hour+11)%12 + 1;
+  var suffix = hour < 12? 'AM': 'PM';
+  return num + " " + suffix;
+}
+
 String.prototype.capitalize = function(){
   return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+function HoursDisplay({instant, hours}){
+  return (
+    <div style={{display: 'flex', margin: '0px 20px'}}>
+      {instant && 
+        <div style={{flexGrow: 1, marginRight: 10}}>
+          <i>Assigned time:</i> {DAYS[instant.day]} {convert24to12(instant.hour)}-{convert24to12((instant.hour+1)%24)} Central
+        </div>
+      }
+      {hours && 
+        <div>
+          <i>Hours:</i> {hours.toFixed(2)}
+        </div>
+      }
+    </div>
+  )
 }
 
 export default class Forum extends Component {
@@ -78,6 +103,9 @@ export default class Forum extends Component {
     return (
       <div className="container">
         <OnlineTutorsList />
+        {this.props.currentUser.role === 1 && 
+          <HoursDisplay instant={this.props.currentUser.instant} hours={this.props.currentUser.hours} />
+        }
         {this.props.currentUser.role !== 1 && <PostForm />}
 
         <br />

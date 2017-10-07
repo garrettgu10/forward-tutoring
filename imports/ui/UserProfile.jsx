@@ -1,6 +1,3 @@
-/**
- * Created by garrettgu on 7/19/17.
- */
 import React, {Component} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import {Meteor} from 'meteor/meteor';
@@ -13,6 +10,8 @@ import {Days} from '../constants/constants.js';
 import queryString from 'query-string';
 
 import md5 from 'md5';
+
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
 String.prototype.capitalize = function(){
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -28,6 +27,12 @@ function getTimeDescription(timeNum) {
   var day = Math.floor(timeNum/5);
   var time = timeNum%5 + 5;
   return Days[day] + " " + time + " PM";
+}
+
+function convert24to12(hour){
+  var num = (hour+11)%12 + 1;
+  var suffix = hour < 12? 'AM': 'PM';
+  return num + " " + suffix;
 }
 
 function TimeDescriptions({times}) {
@@ -92,7 +97,7 @@ class UserProfile extends Component {
                 <i>Tutor info:</i>
                 <div style={{paddingLeft: "20px"}}>
                   <i>Description:</i> {user.tutorProfile.description}<br />
-                  {this.props.time == null &&
+                  {user.tutorProfile.times &&
                     <div>
                       <i>Available times:</i>&nbsp;
                       <TimeDescriptions times={user.tutorProfile.times} />
@@ -103,7 +108,7 @@ class UserProfile extends Component {
             }
             {user.instant && 
               <div>
-                <i>Assigned forum time:</i> {user.instant.day} {user.instant.hour}-{user.instant.hour+1} PM Central
+                <i>Assigned forum time:</i> {DAYS[user.instant.day]} {convert24to12(user.instant.hour)}-{convert24to12((user.instant.hour+1)%24)} Central
               </div>
             }
             {

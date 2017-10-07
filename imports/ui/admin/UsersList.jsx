@@ -14,7 +14,7 @@ class UserItem extends Component {
   render() {
     var {user} = this.props;
     var {username} = user;
-    var consistent = user.consistent
+    var consistent = user.consistent;
     
     return (
       <div style={{margin: '15px 0'}}>
