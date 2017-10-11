@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import MoneyOff from 'material-ui/svg-icons/editor/money-off';
 import Timeline from 'material-ui/svg-icons/action/timeline';
 import People from 'material-ui/svg-icons/social/people';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import "../css/home.css"
 
@@ -64,9 +65,9 @@ function EmailLink() {
   )
 }
 
-export default function Home(props){
+function Home(props){
   const containerStyles = {
-    backgroundColor: blue500,
+    backgroundColor: props.muiTheme.palette.primary1Color,
     width: '100%',
     margin: '0'
   }
@@ -156,3 +157,5 @@ export default function Home(props){
     </div>
   )
 }
+
+export default muiThemeable()(Home);
