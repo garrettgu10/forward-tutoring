@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 import ActionDone from 'material-ui/svg-icons/action/done';
+import Dialog from 'material-ui/Dialog';
 import {grey500, grey900} from 'material-ui/styles/colors';
 
 import Divider from 'material-ui/Divider';
@@ -25,7 +26,8 @@ export default class Post extends Component {
     super(props);
     this.state = {
       commentInputValue: "",
-      displayComments: false
+      displayComments: false,
+      deleteDialogOpen: false
     }
   }
 
@@ -48,6 +50,7 @@ export default class Post extends Component {
           alert(err);
         }
       });
+    this.closeDeleteDialog();
   }
 
   handleToggleAnswered(){
@@ -55,6 +58,18 @@ export default class Post extends Component {
       function toggleAnsweredCallback(err){
         if(err) alert(err);
       })
+  }
+
+  openDeleteDialog = () => {
+    this.setState({
+      deleteDialogOpen: true
+    });
+  }
+
+  closeDeleteDialog = () => {
+    this.setState({
+      deleteDialogOpen: false
+    })
   }
 
   render() {
@@ -103,9 +118,28 @@ export default class Post extends Component {
             </IconButton>
           }
           {canDelete &&
-            <IconButton tooltip="Delete" onTouchTap={this.handleDelete.bind(this)}>
-              <ActionDelete />
-            </IconButton>}
+            <span>
+              <IconButton tooltip="Delete" onTouchTap={this.openDeleteDialog}>
+                <ActionDelete />
+              </IconButton>
+              <Dialog
+                title="Are you sure you want to delete?"
+                actions={[
+                  <FlatButton
+                    label="No"
+                    primary={true}
+                    onClick={this.closeDeleteDialog} />, 
+                  <FlatButton
+                    label="Yes"
+                    primary={true}
+                    onClick={this.handleDelete.bind(this)} />
+                ]}
+                modal={false}
+                open={this.state.deleteDialogOpen}
+                >
+                This action cannot be undone.
+              </Dialog>
+            </span>}
         </CardActions>
 
         {this.state.displayComments &&
