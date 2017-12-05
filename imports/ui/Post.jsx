@@ -136,6 +136,7 @@ export default class Post extends Component {
                 ]}
                 modal={false}
                 open={this.state.deleteDialogOpen}
+                onRequestClose={this.closeDeleteDialog}
                 >
                 This action cannot be undone.
               </Dialog>
