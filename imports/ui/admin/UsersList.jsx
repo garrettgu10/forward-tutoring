@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
-import Checkbox from 'material-ui/CheckBox';
+import Checkbox from 'material-ui/Checkbox';
 import UserLink from '../UserLink.jsx';
 
 class UserItem extends Component {

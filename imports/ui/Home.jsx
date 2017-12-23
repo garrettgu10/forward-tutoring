@@ -51,10 +51,14 @@ function FAQ({question, answer}) {
     marginTop: 30
   }
 
+  const innerStyle = {
+    textAlign: 'center'
+  }
+
   return (
     <div style={outerStyle}>
-      <div>Q: {question}</div>
-      <div>A: {answer}</div>
+      <div style={{fontWeight: 'bold', ...innerStyle}}>Q: {question}</div>
+      <div style={innerStyle}>A: {answer}</div>
     </div>
   )
 }
@@ -112,7 +116,7 @@ function Home(props){
               </Link>
             </div>
           }
-          <div style={{height: '100px'}}></div>
+          <div style={{height: '130px'}}></div>
         </div>
       </div>
       <div className="container">
@@ -151,7 +155,7 @@ function Home(props){
           answer="Feel free to post in the forum! We have tutors overlooking the forum every day."
         />
         <h1 style={sectionHeaderStyles}>Contact Info</h1>
-        <div>If you have any questions or concerns regarding our website, forum, tutors, etc. feel free to email us at <EmailLink />!</div>
+        <div style={{textAlign: 'center'}}>If you have any questions or concerns regarding our website, forum, tutors, etc. feel free to email us at <EmailLink />!</div>
         <div style={{textAlign: 'center', marginTop: '50px'}}>Copyright © Forward Tutoring {new Date().getFullYear()}</div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import {Redirect} from 'react-router-dom';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import CircularProgress from 'material-ui/CircularProgress';
-import Checkbox from 'material-ui/CheckBox';
+import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router-dom';
 
 import {Roles} from '../constants/constants.js';

@@ -87,19 +87,19 @@ class UserProfile extends Component {
             }
           />
           <CardText style={{paddingTop: 0}}>
-            <i>Role:</i> {Roles[user.role].capitalize()}<br />
-            <i>Email:</i> {user.emails[0].address}<br />
-            <i>Member since:</i> {user.createdAt.toDateString()}<br />
-            {user.skype && <div><i>Skype:</i> {user.skype}</div>}
-            {user.school && <div><i>School:</i> {user.school}</div>}
+            <b>Role:</b> {Roles[user.role].capitalize()}<br />
+            <b>Email:</b> {user.emails[0].address}<br />
+            <b>Member since:</b> {user.createdAt.toDateString()}<br />
+            {user.skype && <div><b>Skype:</b> {user.skype}</div>}
+            {user.school && <div><b>School:</b> {user.school}</div>}
             {user.tutorProfile &&
               <div>
-                <i>Tutor info:</i>
+                <b>Tutor info:</b>
                 <div style={{paddingLeft: "20px"}}>
-                  <i>Description:</i> {user.tutorProfile.description}<br />
+                  <b>Description:</b> {user.tutorProfile.description}<br />
                   {user.tutorProfile.times &&
                     <div>
-                      <i>Available times:</i>&nbsp;
+                      <b>Available times:</b>&nbsp;
                       <TimeDescriptions times={user.tutorProfile.times} />
                     </div>
                   }
@@ -108,12 +108,12 @@ class UserProfile extends Component {
             }
             {user.instant && 
               <div>
-                <i>Assigned forum time:</i> {DAYS[user.instant.day]} {convert24to12(user.instant.hour)}-{convert24to12((user.instant.hour+1)%24)} Central
+                <b>Assigned forum time:</b> {DAYS[user.instant.day]} {convert24to12(user.instant.hour)}-{convert24to12((user.instant.hour+1)%24)} Central
               </div>
             }
             {
               this.props.time != null && 
-              <div><i>Scheduled time:</i> {getTimeDescription(this.props.time)}</div>
+              <div><b>Scheduled time:</b> {getTimeDescription(this.props.time)}</div>
             }
           </CardText>
         </Card>

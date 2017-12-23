@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import Checkbox from 'material-ui/Checkbox';
 import SelectField from 'material-ui/SelectField';
-import Checkbox from 'material-ui/CheckBox';
 import {
   Table,
   TableBody,

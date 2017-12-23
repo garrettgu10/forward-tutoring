@@ -150,7 +150,7 @@ class App extends Component {
             <AppBar
               title={logo()}
               style={{position: "fixed", width: "100%", backgroundColor: muiTheme.palette.primary2Color}}
-              onLeftIconButtonTouchTap = {this.toggleSidebar.bind(this)}
+              onLeftIconButtonClick = {this.toggleSidebar.bind(this)}
               iconElementRight={<RightButtons currentUser={this.props.currentUser}/>}
             />
 

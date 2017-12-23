@@ -5,7 +5,6 @@ import PostForm from "./PostForm.jsx";
 import PostList from './PostList.jsx';
 import OnlineTutorsList from './OnlineTutorsList.jsx';
 
-import CheckBox from 'material-ui/CheckBox';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TimedRedirect from './TimedRedirect.jsx';
