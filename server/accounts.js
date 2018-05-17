@@ -1,22 +1,25 @@
 /**
  * Created by garrettgu on 7/19/17.
  */
+ //This file contains the schema for a user and the various email temples for a user
 import {Accounts} from 'meteor/accounts-base';
 import {Meteor} from 'meteor/meteor';
 import {Schools} from '../imports/api/schools.js';
 import {TUTOR_KEY, ADMIN_KEY} from './registration-keys.js';
 
+//Url generator for verifying accounts
 Accounts.urls.verifyEmail = (token) => {
   return Meteor.absoluteUrl("verify-email/" + token);
 }
-
+//Url generator for resetting the account password
 Accounts.urls.resetPassword = (token) => {
   return Meteor.absoluteUrl('forgot-password/' + token);
 }
 
+//Templates for the emails
 Accounts.emailTemplates.from = "Forward Tutoring <noreply@forwardtutoring.net>";
 Accounts.emailTemplates.siteName="forwardtutoring.net";
-
+//Verify account
 Accounts.emailTemplates.verifyEmail = {
   subject() {
     return "Welcome to Forward Tutoring";
@@ -26,7 +29,7 @@ Accounts.emailTemplates.verifyEmail = {
 
 Thank you for joining Forward Tutoring!
 
-Please click on the link below to verify your email address. 
+Please click on the link below to verify your email address.
 
 ${url}
 
@@ -34,7 +37,7 @@ Thanks!
 Forward Tutoring`;
   }
 }
-
+//Reset password
 Accounts.emailTemplates.resetPassword = {
   subject() {
     return "Verify that it's you";
@@ -52,7 +55,6 @@ Cheers!
 Forward Tutoring`
   }
 }
-
 Accounts.validateNewUser((user) => {
   if(user.username === "") {
     throw new Meteor.Error('bad-username', "Username may not be empty");
@@ -80,7 +82,7 @@ Accounts.validateNewUser((user) => {
         return false;
       }
       break;
-    case 2: 
+    case 2:
       if(user.roleKey !== ADMIN_KEY){
         throw new Meteor.Error('bad-key', 'Invalid registration key');
         return false;

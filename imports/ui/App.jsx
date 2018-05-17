@@ -44,7 +44,7 @@ var NotFound = function(props){
           Don't worry, it's probably not your fault. <br />
           We'd appreciate it if you got in touch with us at <a href="mailto:forwardtutoringexecs@gmail.com">forwardtutoringexecs@gmail.com</a>.
         </div>
-      } redirectTo="/" /> 
+      } redirectTo="/" />
     </div>
   )
 }
@@ -55,7 +55,6 @@ var logo = function(props) {
       <span>
         <span style={{fontWeight: 600}}>forward</span>
         <span style={{fontWeight: 300}}>tutoring</span>
-        <span style={{fontSize: 13}}>(beta)</span>
       </span>
     </Link>
   );
