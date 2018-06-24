@@ -47,7 +47,7 @@ export default class Sidebar extends Component{
             <MenuItem>Main</MenuItem>
           </NavLink>
 
-          {currentUser? 
+          {currentUser?
             <div>
               <NavLink activeStyle={menuItemActiveStyle} to='/forum' className='nav-link' onTouchTap={toggle}>
                 <MenuItem>
@@ -79,6 +79,14 @@ export default class Sidebar extends Component{
                 </NavLink>
               }
               
+              {currentUser.role === 0 &&
+                <NavLink activeStyle={menuItemActiveStyle} to='/logtutorhours' className='nav-link' onTouchTap={toggle}>
+                  <MenuItem>
+                    Log Tutor Hours
+                  </MenuItem>
+                </NavLink>
+              }
+
               <br />
 
               <NavLink activeStyle={menuItemActiveStyle} to={"/profile?" + queryString.stringify({username: currentUser.username})} className='nav-link' onTouchTap={toggle}>

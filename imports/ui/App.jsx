@@ -24,6 +24,7 @@ import ResetPass from './forgot/ResetPass.jsx';
 import UsersList from './admin/UsersList.jsx';
 import Terms from './Terms.jsx';
 import TimedRedirect from './TimedRedirect.jsx';
+import HourFourm from './HourFourm.jsx';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
@@ -165,6 +166,7 @@ class App extends Component {
                   () => <Forum currentUser={this.props.currentUser} />
                 } />
                 <Route path="/consistent" component={this.ConsistentPanel} />
+                <Route path="/logtutorhours" component={HourFourm}/>
                 <Route path="/verify" component={
                   () => <SendEmail currentUser={this.props.currentUser} />
                 } />

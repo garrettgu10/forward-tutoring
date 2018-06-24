@@ -3,3 +3,4 @@ node_modules/
 settings.json
 mup.js
 server/registration-keys.js
+.deploy/
