@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import Checkbox from 'material-ui/Checkbox';
 import UserLink from '../UserLink.jsx';
+import TextField from 'material-ui/TextField';
 
 class UserItem extends Component {
   handleConsistentCheck = () => {
@@ -15,7 +16,7 @@ class UserItem extends Component {
     var {user} = this.props;
     var {username} = user;
     var consistent = user.consistent;
-    
+
     return (
       <div style={{margin: '15px 0'}}>
         <UserLink username={username} />
@@ -24,6 +25,7 @@ class UserItem extends Component {
           checked={consistent}
           onCheck={this.handleConsistentCheck} />
       </div>
+
     );
   }
 }
@@ -40,9 +42,15 @@ class UserList extends Component {
 
     return (
       <div className="container">
-        {this.props.users.map((user) => (
-          <UserItem key={user._id} user={user} />
-        ))}
+        <TextField
+          ref="name"
+          floatingLabelText="Name"
+          fullWidth={true} />
+        <div className="container">
+          {this.props.users.map((user) => (
+            <UserItem key={user._id} user={user} />
+          ))}
+        </div>
       </div>
     );
   }
