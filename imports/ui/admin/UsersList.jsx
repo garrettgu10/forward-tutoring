@@ -29,13 +29,31 @@ class UserItem extends Component {
     );
   }
 }
+//TODO: place this component/userlink in a separate file, use sessions with search data, call createContainer 
+class List extends Component {
+    constructor(props)
+    {
+      super(props)
+    }
+    render()
+    {
+      return (
+        <div className="container">
+          {this.props.results.map((user) => (
+            <UserItem key={user._id} user={user} />
+          ))}
+        </div>
+      );
+    }
+}
 
 class UserList extends Component {
   constructor(props)
   {
+    super(props)
     this.state = {
       text : '',
-      results : [],
+      results : []
     }
   }
 
@@ -45,14 +63,16 @@ class UserList extends Component {
     this.state.text = query
     if(this.state.text.length >= 2)
     {
-      findUsers();
+      this.findResults()
     }
   }
 
-  findUsers()
+  findResults()
   {
-      let result = this.props.users.find({username : this.state.text});
-      this.state.results = result;
+    //console.log(this.props.users);
+    let result = Meteor.users.find({role: 1, username: this.state.text}).fetch()
+    this.state.results = result;
+    //console.log(result)
   }
 
   render() {
@@ -72,9 +92,7 @@ class UserList extends Component {
           fullWidth={true}
           onChange = {this.handleChange.bind(this)}/>
         <div className="container">
-          {this.state.results.map((user) => (
-            <UserItem key={user._id} user={user} />
-          ))}
+          <List results = {this.state.results}/>
         </div>
       </div>
     );
