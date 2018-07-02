@@ -31,6 +31,30 @@ class UserItem extends Component {
 }
 
 class UserList extends Component {
+  constructor(props)
+  {
+    this.state = {
+      text : '',
+      results : [],
+    }
+  }
+
+  handleChange(e)
+  {
+    var query = e.target.value
+    this.state.text = query
+    if(this.state.text.length >= 2)
+    {
+      findUsers();
+    }
+  }
+
+  findUsers()
+  {
+      let result = this.props.users.find({username : this.state.text});
+      this.state.results = result;
+  }
+
   render() {
     if(!this.props.ready) {
       return <div className="container">loading</div>
@@ -45,9 +69,10 @@ class UserList extends Component {
         <TextField
           ref="name"
           floatingLabelText="Name"
-          fullWidth={true} />
+          fullWidth={true}
+          onChange = {this.handleChange.bind(this)}/>
         <div className="container">
-          {this.props.users.map((user) => (
+          {this.state.results.map((user) => (
             <UserItem key={user._id} user={user} />
           ))}
         </div>
