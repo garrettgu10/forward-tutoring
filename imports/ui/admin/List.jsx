@@ -29,7 +29,6 @@ class UserItem extends Component {
     );
   }
 }
-//TODO: place this component/userlink in a separate file, use sessions with search data, call createContainer
 class List extends Component {
     render()
     {
@@ -40,7 +39,7 @@ class List extends Component {
       if(this.props.users.length === 0) {
         return <div className="container">No tutors currently</div>
       }
-      
+
       return (
         <div className="container">
           {this.props.users.map((user) => (
@@ -53,9 +52,11 @@ class List extends Component {
 
 export default createContainer((props) => {
   var query = {};
-  query.username = Session.get("Admin.query");
+  var search = Session.get("Admin.query");
+  query.username = {$regex : '(' + search + '\\S+|' + search + ')'};
+  console.log(query.username);
   query.role = 1;
-
+//TODO: use regex to make search bar not as clunky ( gm is the correct regex maybe idk)
   var subscription = Meteor.subscribe('users.all', query);
   var users = Meteor.users.find(query).fetch();
   return {

@@ -16,11 +16,8 @@ export default class UsersList extends Component {
   handleChange(e)
   {
     var query = e.target.value;
-    if(query.length >= 2)
-    {
-      Session.set('Admin.query', query);
-      this.state.text = query;
-    }
+    Session.set('Admin.query', query);
+    this.state.text = query;
   }
 
   render() {
