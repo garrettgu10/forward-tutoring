@@ -26,12 +26,12 @@ String.prototype.capitalize = function(){
 function HoursDisplay({instant, hours}){
   return (
     <div style={{display: 'flex', margin: '0px 20px'}}>
-      {instant && 
+      {instant &&
         <div style={{flexGrow: 1, marginRight: 10}}>
           <i>Assigned time:</i> {DAYS[instant.day]} {convert24to12(instant.hour)}-{convert24to12((instant.hour+1)%24)} Central
         </div>
       }
-      {typeof hours !== 'undefined' && 
+      {typeof hours !== 'undefined' &&
         <div>
           <i>Hours:</i> {hours.toFixed(2)}
         </div>
@@ -47,7 +47,9 @@ export default class Forum extends Component {
       onlyShowUserPosts: true,
       sortBy: 'Latest update',
       filterBySubject: 'all',
-      filterByStatus: 'All'
+      filterByStatus: 'All',
+      filterByFocus: 'none',
+      filteredSubjects: Subjects,
     }
 
     if(this.props.currentUser && this.props.currentUser.role !== 0){
@@ -58,6 +60,7 @@ export default class Forum extends Component {
     Session.set('Forum.sortBy', this.state.sortBy);
     Session.set('Forum.filterBySubject', this.state.filterBySubject);
     Session.set('Forum.filterByStatus', this.state.filterByStatus);
+    Session.set("Forum.filterByFocus", this.state.filterByFocus);
   }
 
   handleShowPostsChange(event, index, value) {
@@ -88,21 +91,43 @@ export default class Forum extends Component {
     });
   }
 
+  handleFilterByFocusChange(event, index, value) {
+    Session.set('Forum.filterByFocus', value);
+    this.setState({
+      filterByFocus: value
+    });
+  }
   render () {
     const selectFieldStyle = {
       marginRight: '10px'
     }
 
+    switch(this.state.filterByFocus)
+    {
+      case "none":
+        this.state.filteredSubjects = Subjects;
+        break;
+      case "standardized":
+        this.state.filteredSubjects = Subjects.slice(3, 6);
+        break;
+      case "traditional":
+        this.state.filteredSubjects = Subjects.slice(0, 3);
+        break;
+      case "other":
+        this.state.filteredSubjects = Subjects.slice(-1);
+        break;
+    }
+    //console.log(this.state.filteredSubjects);
     if(!this.props.currentUser) {
       return (
         <Redirect to="/login" />
       )
     }
-    
+
     return (
       <div className="container">
         <OnlineTutorsList />
-        {this.props.currentUser.role === 1 && 
+        {this.props.currentUser.role === 1 &&
           <HoursDisplay instant={this.props.currentUser.instant} hours={this.props.currentUser.hours} />
         }
         {this.props.currentUser.role !== 1 && <PostForm />}
@@ -119,10 +144,21 @@ export default class Forum extends Component {
           </SelectField>
           <SelectField
             style={selectFieldStyle}
+            floatingLabelText="Filter by focus"
+            value={this.state.filterByFocus}
+            onChange={this.handleFilterByFocusChange.bind(this)} >
+            <MenuItem key="none" value="none" primaryText="None"/>
+            <MenuItem key="standardized" value="standardized" primaryText="Standardized Testing"/>
+            <MenuItem key="traditional" value="traditional" primaryText="Traditional Subjects"/>
+            <MenuItem key="other" value="other" primaryText="Other"/>
+          </SelectField>
+          <SelectField
+            style={selectFieldStyle}
             floatingLabelText="Filter by subject"
             value={this.state.filterBySubject}
             onChange={this.handleFilterBySubjectChange.bind(this)}>
-            {Subjects.map((subject) => {
+            {
+              this.state.filteredSubjects.map((subject) => {
               return(
                 <MenuItem key={subject} value={subject} primaryText={subject.capitalize()} />
               );

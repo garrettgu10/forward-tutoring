@@ -5,6 +5,7 @@ import UserLink from '../UserLink.jsx';
 import TextField from 'material-ui/TextField';
 
 class UserItem extends Component {
+  //TODO: Make it so admins can update assigned times/dates from panel
   handleConsistentCheck = () => {
     var {user} = this.props;
     var {_id} = user;
@@ -54,9 +55,8 @@ export default createContainer((props) => {
   var query = {};
   var search = Session.get("Admin.query");
   query.username = {$regex : '(' + search + '\\S+|' + search + ')'};
-  console.log(query.username);
+  //console.log(query.username);
   query.role = 1;
-//TODO: use regex to make search bar not as clunky ( gm is the correct regex maybe idk)
   var subscription = Meteor.subscribe('users.all', query);
   var users = Meteor.users.find(query).fetch();
   return {

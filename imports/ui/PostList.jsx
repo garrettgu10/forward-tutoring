@@ -5,6 +5,8 @@ import Post from './Post.jsx';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import {Subjects} from '../constants/constants.js';
+
 const INITIAL_LOAD = 10; //number of posts loaded initially
 const ADDED_LOAD = 5; //number of posts loaded each time the button is pressed
 
@@ -20,7 +22,7 @@ class PostList extends Component {
 
   loadMore() {
     /*this.setState({loadingMore: true});
-    Meteor.subscribe('posts', this.props.query, this.props.sort, this.numLoaded, ADDED_LOAD, 
+    Meteor.subscribe('posts', this.props.query, this.props.sort, this.numLoaded, ADDED_LOAD,
       {onReady: () => {
         this.setState({loadingMore: false});
       }}
@@ -57,7 +59,7 @@ class PostList extends Component {
           );
         })}
         <br />
-        {shouldShowLoadMore && 
+        {shouldShowLoadMore &&
           <RaisedButton onClick={this.loadMore.bind(this)} label="load more" disabled={this.state.loadingMore} primary={true} fullWidth={true} />
         }
         {!this.props.ready &&
@@ -73,6 +75,9 @@ class PostList extends Component {
 export default createContainer((props) => {
 
   const sortBy = Session.get('Forum.sortBy');
+
+  const focusFilter = Session.get('Forum.filterByFocus');
+  const filteredSubjects = [];
 
   const subjectFilter = Session.get('Forum.filterBySubject');
 
@@ -100,6 +105,27 @@ export default createContainer((props) => {
       break;
     default:
       //do nothing
+  }
+
+  switch(focusFilter)
+  {
+    case "none":
+      filteredSubjects = Subjects;
+      break;
+    case "standardized":
+      filteredSubjects = Subjects.slice(3, 6);
+      break;
+    case "traditional":
+      filteredSubjects = Subjects.slice(0, 3);
+      break;
+    case "other":
+      filteredSubjects = Subjects.slice(-1);
+      break;
+  }
+
+  if(focusFilter !== 'none' && subjectFilter === 'all')
+  {
+    query.subject = {$in: filteredSubjects};
   }
 
   if(subjectFilter !== 'all'){
