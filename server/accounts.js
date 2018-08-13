@@ -104,6 +104,8 @@ Accounts.onCreateUser((options, user) => {
   user.school = options.school;
   if(user.role === 1){
     user.hours = 0;
+    user.instant.day = - 1;
+    user.instant.hour = -1;
   }
 
   user.profile = options.profile || {};

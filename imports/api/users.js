@@ -111,6 +111,15 @@ Meteor.methods({
     Users.update(id, {$set: {'consistent': consistent}});
   },
 
+  'users.setInstant'(id, instant) {
+    check(id, String);
+    if(Meteor.user().role !== 2) {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+
+    Users.update(id, {$set : {'instant' : instant}});
+  },
+
   'users.chooseTutor'(tutor, time) {
     check(tutor, String);
     check(time, Number);
