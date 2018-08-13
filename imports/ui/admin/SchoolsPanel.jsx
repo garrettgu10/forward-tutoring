@@ -78,7 +78,7 @@ class SchoolItem extends Component {
   }
 }
 
-class SchoolsList extends Component {
+class SchoolsPanel extends Component {
   render() {
     var {ready, schools} = this.props;
 
@@ -113,4 +113,4 @@ export default createContainer((props) => {
     ready: subscription.ready(),
     schools: Schools.find({}).fetch()
   }
-}, SchoolsList);
+}, SchoolsPanel);

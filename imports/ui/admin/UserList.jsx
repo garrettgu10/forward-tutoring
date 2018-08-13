@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import Checkbox from 'material-ui/Checkbox';
-import UserLink from '../UserLink.jsx';
+import UserLink from '../UserLink';
 import TextField from 'material-ui/TextField';
 
 class UserItem extends Component {
@@ -30,7 +30,7 @@ class UserItem extends Component {
     );
   }
 }
-class List extends Component {
+class UserList extends Component {
     render()
     {
       if(!this.props.ready) {
@@ -64,4 +64,4 @@ export default createContainer((props) => {
     query: query,
     users: users
   };
-}, List)
+}, UserList)

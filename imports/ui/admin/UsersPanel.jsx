@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import TextField from 'material-ui/TextField';
-import List from './List.jsx'
+import UserList from './UserList'
 
 
-export default class UsersList extends Component {
+export default class UsersPanel extends Component {
   constructor(props)
   {
     super(props);
@@ -29,7 +29,7 @@ export default class UsersList extends Component {
           fullWidth={true}
           onChange = {this.handleChange.bind(this)}/>
         <div className="container">
-          <List />
+          <UserList />
         </div>
       </div>
     );

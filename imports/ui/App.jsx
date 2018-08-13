@@ -18,10 +18,10 @@ import TutorSearch from './consistent/TutorSearch.jsx';
 import EditTutorProfile from './consistent-tutor/EditTutorProfile.jsx';
 import SendEmail from './verify-email/SendEmail.jsx';
 import VerifyEmail from './verify-email/VerifyEmail.jsx';
-import SchoolsList from './admin/SchoolsList.jsx';
+import SchoolsPanel from './admin/SchoolsPanel.jsx';
 import ForgotForm from './forgot/ForgotForm.jsx';
 import ResetPass from './forgot/ResetPass.jsx';
-import UsersList from './admin/UsersList.jsx';
+import UsersPanel from './admin/UsersPanel.jsx';
 import Terms from './Terms.jsx';
 import TimedRedirect from './TimedRedirect.jsx';
 import HourFourm from './HourFourm.jsx';
@@ -177,8 +177,8 @@ class App extends Component {
                 <Route path="/profile" component={UserProfile} />
                 <Route path="/verify-email/:token" component={VerifyEmail} />
                 <Route path="/forgot-password/:token" component={ResetPass} />
-                <Route path="/admin/schools" component={SchoolsList} />
-                <Route path="/admin/users" component={UsersList} />
+                <Route path="/admin/schools" component={SchoolsPanel} />
+                <Route path="/admin/users" component={UsersPanel} />
                 <Route path="/terms" component={Terms} />
                 <Route path="/" component={NotFound} />
               </Switch>
