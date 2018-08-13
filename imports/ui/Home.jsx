@@ -103,7 +103,7 @@ function Home(props){
               <Link to="/consistent">
                 <RaisedButton 
                   className="home_button" 
-                  label={currentUser.role === 0? "My Consistent Tutor" : "Consistent Tutoring"} />
+                  label={currentUser.role === 0? "ForwardTutoring Live" : "ForwardTutoring Live for Tutors"} />
               </Link>
             </div>
             :
