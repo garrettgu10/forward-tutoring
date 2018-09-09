@@ -31,7 +31,7 @@ function HoursDisplay({instant, hours}){
           <i>Assigned time:</i> {DAYS[instant.day]} {convert24to12(instant.hour)}-{convert24to12((instant.hour+1)%24)} Central
         </div>
       }
-      {typeof hours !== 'undefined' || instant.day !== -1  &&
+      {typeof hours !== 'undefined' && instant.day !== -1  &&
         <div>
           <i>Hours:</i> {hours.toFixed(2)}
         </div>
