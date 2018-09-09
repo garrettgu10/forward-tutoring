@@ -76,7 +76,7 @@ class UserItem extends Component {
     console.log(this.state);
 
     return (
-      <div style={{margin: '15px 0'}}>
+      <div style={{margin: '15px 0', height : '100px'}}>
         <UserLink username={username} />
         <Checkbox
           style = {{'float' : 'left', 'width' : '350px', 'marginTop' : '32px'}}

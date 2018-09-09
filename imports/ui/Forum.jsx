@@ -26,12 +26,12 @@ String.prototype.capitalize = function(){
 function HoursDisplay({instant, hours}){
   return (
     <div style={{display: 'flex', margin: '0px 20px'}}>
-      {instant &&
+      {instant.day !== -1 &&
         <div style={{flexGrow: 1, marginRight: 10}}>
           <i>Assigned time:</i> {DAYS[instant.day]} {convert24to12(instant.hour)}-{convert24to12((instant.hour+1)%24)} Central
         </div>
       }
-      {typeof hours !== 'undefined' &&
+      {typeof hours !== 'undefined' || instant.day === -1  &&
         <div>
           <i>Hours:</i> {hours.toFixed(2)}
         </div>

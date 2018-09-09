@@ -43,13 +43,14 @@ Accounts.emailTemplates.resetPassword = {
     return "Verify that it's you";
   },
   text(user, url) {
-    return `Hello ${user.profile.fullName}!
+    return `Hello ${user.profile.fullName},
 
-Click on the link below to reset your password.
+You have requested to reset your Forward Tutoring Account.  Click on the link below to reset your password.
 
 ${url}
 
 In case you forgot, your username is ${user.username}.
+If you did not request to reset your password, please disregard this email.
 
 Cheers!
 Forward Tutoring`

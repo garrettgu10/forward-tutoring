@@ -49,7 +49,7 @@ export default class ResetPass extends Component {
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
-
+          <h1 style={{fontSize: '40px', fontWeight: '200', marginBottom: '0'}}>Reset Your Password</h1>
           <TextField
             type="password"
             value={this.state.password}

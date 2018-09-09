@@ -34,7 +34,7 @@ export default class ForgotForm extends Component {
       return (
         <TimedRedirect 
           redirectTo="/" 
-          text="A password reset email has been sent. Please follow the instructions in the email." />
+          text="A password reset email has been sent. Please follow the instructions in the email.  Please check your spam folder if you haven't received it." />
       )
     }
 
