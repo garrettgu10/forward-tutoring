@@ -71,11 +71,11 @@ Accounts.validateNewUser((user) => {
 
   switch(user.role) {
     case 0:
-      var school = Schools.find({_id: user.schoolId}).fetch()[0];
-      if(!school || school.key !== user.roleKey){
-        throw new Meteor.Error('bad-key', 'Invalid registration key');
-        return false;
-      }
+      // var school = Schools.find({_id: user.schoolId}).fetch()[0];
+      // if(!school || school.key !== user.roleKey){
+      //   throw new Meteor.Error('bad-key', 'Invalid registration key');
+      //   return false;
+      // }
       break;
     case 1:
       if(user.roleKey !== TUTOR_KEY){
@@ -101,7 +101,7 @@ const userFields = {_id: 1, emails: 1, profile: 1, username: 1, createdAt: 1, ro
 Accounts.onCreateUser((options, user) => {
   user.roleKey = options.roleKey || "";
   user.role = options.role || 0;
-  user.schoolId = options.schoolId;
+  // user.schoolId = options.schoolId;
   user.school = options.school;
   if(user.role === 1){
     user.hours = 0;

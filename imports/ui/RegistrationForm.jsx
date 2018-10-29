@@ -46,7 +46,7 @@ class RegistrationForm extends Component {
       emailInputValue: "",
       passwordInputValue: "",
       passwordConfirmInputValue: "",
-      schoolInputValue: 0,
+      schoolInputValue: "middle",
       roleKeyInputValue: "",
       termsInputValue: false,
       success: false
@@ -66,8 +66,10 @@ class RegistrationForm extends Component {
   }
 
   handleSchoolInputChange(event, value){
+    //console.log(value);
+    const options = ["middle", "high"]
     this.setState({
-      schoolInputValue: value
+      schoolInputValue: options[value]
     })
   }
 
@@ -131,8 +133,9 @@ class RegistrationForm extends Component {
     };
 
     if(account.role === 0) {
-      account.schoolId = this.props.schools[schoolInputValue]._id;
-      account.school = this.props.schools[schoolInputValue].name;
+      // account.schoolId = this.props.schools[schoolInputValue]._id;
+      // account.school = this.props.schools[schoolInputValue].name;
+      account.school = schoolInputValue;
     }
 
     Accounts.createUser(account, function createUserCallback(err) {
@@ -238,16 +241,12 @@ class RegistrationForm extends Component {
               value={this.state.schoolInputValue}
               onChange={this.handleSchoolInputChange.bind(this)}
               floatingLabelText="School">
-              {this.props.schools.map((school, index) => (
-                <MenuItem
-                  key={school._id}
-                  value={index}
-                  primaryText={school.name} />
-              ))}
+              <MenuItem key="middle" value="middle" primaryText="Middle" />
+              <MenuItem key="high" value="high" primaryText="High" />
             </SelectField>
           }
           <TextField
-            floatingLabelText="Registration Key"
+            floatingLabelText="Registration Key (if you do not know, leave this blank)"
             fullWidth={true}
             value={this.state.roleKeyInputValue}
             onChange={this.handleInputChange.bind(this, 'roleKey')}
