@@ -245,12 +245,12 @@ class RegistrationForm extends Component {
               <MenuItem key="high" value="high" primaryText="High" />
             </SelectField>
           }
-          <TextField
-            floatingLabelText="Registration Key (leave blank if registering after 2017)"
+          {role !== 0 && <TextField
+            floatingLabelText="Registration Key"
             fullWidth={true}
             value={this.state.roleKeyInputValue}
             onChange={this.handleInputChange.bind(this, 'roleKey')}
-            errorText={this.state.keyError} />
+            errorText={this.state.keyError} />}
           <br />
           {role !== 0 &&
             <div>Note: you are registering as a {Roles[role]}.</div>
