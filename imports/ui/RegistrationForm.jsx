@@ -246,7 +246,7 @@ class RegistrationForm extends Component {
             </SelectField>
           }
           <TextField
-            floatingLabelText="Registration Key (if you do not know, leave this blank)"
+            floatingLabelText="Registration Key (leave blank if registering after 2017)"
             fullWidth={true}
             value={this.state.roleKeyInputValue}
             onChange={this.handleInputChange.bind(this, 'roleKey')}
