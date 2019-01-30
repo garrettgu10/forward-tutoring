@@ -10,6 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import TimedRedirect from './TimedRedirect.jsx';
 
 import {WaysToSortPosts, Subjects, PostStatusFilters} from '../constants/constants.js';
+import { Meteor } from 'meteor/meteor';
 
 const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
@@ -23,17 +24,21 @@ String.prototype.capitalize = function(){
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-function HoursDisplay({instant, hours}){
+function HoursDisplay({shifts, hours}){
   return (
     <div style={{display: 'flex', margin: '0px 20px'}}>
-      {instant.day !== -1 &&
+      {shifts.length !== 0 &&
         <div style={{flexGrow: 1, marginRight: 10}}>
-          <i>Assigned time:</i> {DAYS[instant.day]} {convert24to12(instant.hour)}-{convert24to12((instant.hour+1)%24)} Central
+          <i>Assigned time:</i>
+          {shifts.map((shift) => {
+            return <div key={shift.day * 10 + shift.hour}>{DAYS[shift.day]} {convert24to12(shift.hour)}-{convert24to12((shift.hour+1)%24)} Central</div>
+          })}
         </div>
       }
-      {typeof hours !== 'undefined' && instant.day !== -1  &&
+      {typeof hours !== 'undefined' && shifts.length !== 0  &&
         <div>
-          <i>Hours:</i> {hours.toFixed(2)}
+          <i>Hours:</i> 
+          {hours.toFixed(2)}
         </div>
       }
     </div>
@@ -124,11 +129,18 @@ export default class Forum extends Component {
       )
     }
 
+    if(!this.props.ready)
+    {
+      return (
+        <div>loading</div>
+      );
+    }
+
     return (
       <div className="container">
         <OnlineTutorsList />
-        {this.props.currentUser.role === 1 &&
-          <HoursDisplay instant={this.props.currentUser.instant} hours={this.props.currentUser.hours} />
+        {this.props.ready && this.props.currentUser.role === 1 &&
+          <HoursDisplay shifts={this.props.currentUser.shifts} hours={this.props.currentUser.hours} />
         }
         {this.props.currentUser.role !== 1 && <PostForm />}
 

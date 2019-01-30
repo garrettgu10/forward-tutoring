@@ -163,7 +163,7 @@ class App extends Component {
 
                 <Route exact path="/" component={() => <Home currentUser={this.props.currentUser} />} />
                 <Route path="/forum" component={
-                  () => <Forum currentUser={this.props.currentUser} />
+                  () => <Forum currentUser={this.props.currentUser} ready={this.props.ready}/>
                 } />
                 <Route path="/consistent" component={this.ConsistentPanel} />
                 <Route path="/logtutorhours" component={HourFourm}/>

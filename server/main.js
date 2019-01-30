@@ -5,7 +5,6 @@ import { Schools } from '../imports/api/schools.js';
 
 const frequency = 3; //minutes
 const numHours = frequency/60; //number of hours distributed for each checkpoint
-
 SyncedCron.add({
   name: `Distribute hours every ${frequency} minutes`,
   schedule: function(parser){
@@ -16,8 +15,9 @@ SyncedCron.add({
     var day = date.getDay();
     var hour = date.getHours();
     console.log(day, hour);
+    //console.log(Users.find({'status.online': true, role: 1, shifts : {$elemMatch : {day, hour}}}).fetch());
     Users.update(
-      {'status.online': true, role: 1, 'instant.day': day, 'instant.hour': hour},
+      {'status.online': true, role: 1, shifts : {$elemMatch : {day, hour}}},
       {$inc: {hours: numHours}},
       {multi: true}
     );
