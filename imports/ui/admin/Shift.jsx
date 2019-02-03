@@ -20,23 +20,25 @@ class Shift extends Component
     constructor(props)
     {
         super(props);
-        this.state = {
-            currDay : this.props.day,
-            currHour : this.props.hour,
-        }
+        this.state = {...props.shift}
     }
     handleDayChange(event, index, value)
     {
-        this.setState({currDay : value});
+        this.setState({day : value}, () => {
+            console.log(this.state);
+            Meteor.call('users.updateShift', this.props.user._id, this.props.shift.id, this.state.day, this.state.hour);
+        });
     }
     handleHourChange(event, index, value)
     {
-        this.setState({currHour : value});
+        this.setState({hour : value}, () => {
+            console.log(this.state);
+            Meteor.call('users.updateShift', this.props.user._id, this.props.shift.id, this.state.day, this.state.hour);
+        });
     }
     handleRemove()
     {
-        //TODO: Implement call
-        Meteor.call('user.removeShift', this.state.currDay, this.state.currHour);
+        Meteor.call('users.removeShift', this.props.user._id, this.props.shift.id);
     }
     render()
     {
@@ -44,7 +46,7 @@ class Shift extends Component
             <div style={{display : 'flex'}}>
                 <SelectField
                     floatingLabelText='Day'
-                    value = {this.state.currDay}
+                    value = {this.state.day}
                     onChange = {this.handleDayChange.bind(this)}
                 >
                 {Days.map((day, index) => {
@@ -55,7 +57,7 @@ class Shift extends Component
                 <SelectField
                     style={{marginLeft : '10px'}}
                     floatingLabelText='Hour'
-                    value = {this.state.currHour}
+                    value = {this.state.hour}
                     onChange={this.handleHourChange.bind(this)}
                 >
                 {SHIFT_TIMES.map((time) =>{

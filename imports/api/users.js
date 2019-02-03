@@ -2,6 +2,7 @@
  * Created by garrettgu on 7/19/17.
  */
 import {Meteor} from 'meteor/meteor';
+import {Random} from 'meteor/random';
 import {Mongo} from 'meteor/mongo';
 import {check} from 'meteor/check';
 import {Email} from 'meteor/email';
@@ -120,6 +121,31 @@ Meteor.methods({
     Users.update(id, {$set : {'instant' : instant}});
   },
 
+  'users.addShift'(id) {
+    if(Meteor.user().role !== 2)
+    {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+    //console.log('lol');
+    Users.update(id, {$addToSet: {'shifts' : {"id" : Random.id(), "day" : -1, "hour" : -1}}});
+  },
+  'users.removeShift'(id, shiftID)
+  {
+    if(Meteor.user().role !== 2)
+    {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+    Users.update(id, {$pull : {'shifts' : {id : shiftID}}});
+  },
+  'users.updateShift'(id, shiftID, day, hour)
+  {
+    if(Meteor.user().role !== 2)
+    {
+      throw new Meteor.Error('not-authorized', 'You are not an admin');
+    }
+    Users.update({"_id" : id, "shifts.id" : shiftID}, {$set : {'shifts.$' : {id: shiftID, day, hour}}});
+  },
+  //db.users.updateOne({"_id" : "2vzYmoKiuH3P8pv5q", "shifts" : {day : oldDay, time: oldTime}}, {$set : {'shifts.$' : {day : newDay, time: newTime}}})
   'users.chooseTutor'(tutor, time) {
     check(tutor, String);
     check(time, Number);
